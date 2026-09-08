@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_blocks_brand_cards",
+  "info": {
+    "displayName": "Brand Card"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "varient": {
+      "type": "enumeration",
+      "enum": [
+        "suitable",
+        "unsuitable"
+      ]
+    },
+    "items": {
+      "type": "component",
+      "component": "blocks.brand-item",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

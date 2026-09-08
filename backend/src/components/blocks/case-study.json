@@ -1,0 +1,59 @@
+{
+  "collectionName": "components_blocks_case_studies",
+  "info": {
+    "displayName": "Case Study"
+  },
+  "options": {},
+  "attributes": {
+    "clientName": {
+      "type": "string"
+    },
+    "beforeImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "afterImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "beforeLabel": {
+      "type": "string"
+    },
+    "afterLabel": {
+      "type": "string"
+    },
+    "mobileBeforeImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "afterMobileImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_blocks_problem_cards",
+  "info": {
+    "displayName": "Problem Card"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "identifier": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

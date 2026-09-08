@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_sections_problem_assessments",
+  "info": {
+    "displayName": "Problem Assessment"
+  },
+  "options": {},
+  "attributes": {
+    "header": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false
+    },
+    "problemCards": {
+      "type": "component",
+      "component": "blocks.problem-cards",
+      "repeatable": true
+    },
+    "summaryText": {
+      "type": "text"
+    },
+    "submitButton": {
+      "type": "component",
+      "component": "shared.button",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}

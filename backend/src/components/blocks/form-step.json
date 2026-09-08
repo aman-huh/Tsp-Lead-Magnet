@@ -1,0 +1,42 @@
+{
+  "collectionName": "components_blocks_form_steps",
+  "info": {
+    "displayName": "Form Step"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "formTitle": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "fields": {
+      "type": "component",
+      "component": "blocks.form-field",
+      "repeatable": true
+    },
+    "primaryButton": {
+      "type": "component",
+      "component": "shared.button",
+      "repeatable": false
+    },
+    "footerText": {
+      "type": "text"
+    },
+    "showEstimate": {
+      "type": "boolean"
+    },
+    "layout": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "two-column"
+      ]
+    }
+  },
+  "config": {}
+}

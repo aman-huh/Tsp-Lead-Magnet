@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_blocks_footer_intros",
+  "info": {
+    "displayName": "Footer Intro"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "subDescription": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

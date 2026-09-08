@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_sections_brand_fits",
+  "info": {
+    "displayName": "Brand Fit"
+  },
+  "options": {},
+  "attributes": {
+    "header": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false
+    },
+    "suitableCard": {
+      "type": "component",
+      "component": "blocks.brand-card",
+      "repeatable": false
+    },
+    "unsuitableCard": {
+      "type": "component",
+      "component": "blocks.brand-card",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}

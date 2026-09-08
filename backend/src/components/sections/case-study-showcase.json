@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_sections_case_study_showcases",
+  "info": {
+    "displayName": "CaseStudy Showcase"
+  },
+  "options": {},
+  "attributes": {
+    "header": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false
+    },
+    "caseStudies": {
+      "type": "component",
+      "component": "blocks.case-study",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

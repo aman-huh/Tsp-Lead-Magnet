@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_sections_our_works",
+  "info": {
+    "displayName": "Our Work"
+  },
+  "options": {},
+  "attributes": {
+    "header": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false
+    },
+    "projects": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::brand.brand"
+    }
+  },
+  "config": {}
+}

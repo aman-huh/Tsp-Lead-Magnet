@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_section_headers",
+  "info": {
+    "displayName": "Section Header"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "mobileTitle": {
+      "type": "string"
+    },
+    "mobileDescription": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

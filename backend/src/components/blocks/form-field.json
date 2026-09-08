@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_blocks_form_fields",
+  "info": {
+    "displayName": "Form Field"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "placeholder": {
+      "type": "string"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "text",
+        "email",
+        "phone",
+        "url",
+        "textarea",
+        "radio",
+        "select"
+      ]
+    },
+    "required": {
+      "type": "boolean"
+    },
+    "options": {
+      "type": "component",
+      "component": "blocks.option",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

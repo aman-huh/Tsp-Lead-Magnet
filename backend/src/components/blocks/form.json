@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_blocks_forms",
+  "info": {
+    "displayName": "Form"
+  },
+  "options": {},
+  "attributes": {
+    "Steps": {
+      "type": "component",
+      "component": "blocks.form-step",
+      "repeatable": true
+    },
+    "pricingTiers": {
+      "type": "component",
+      "component": "blocks.budget-range",
+      "repeatable": true
+    },
+    "successMessage": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

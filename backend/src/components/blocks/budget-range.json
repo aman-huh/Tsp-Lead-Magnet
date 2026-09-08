@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_blocks_budget_ranges",
+  "info": {
+    "displayName": "Budget Range"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "minAmount": {
+      "type": "integer"
+    },
+    "maxAmount": {
+      "type": "integer"
+    },
+    "recommended": {
+      "type": "boolean"
+    }
+  },
+  "config": {}
+}

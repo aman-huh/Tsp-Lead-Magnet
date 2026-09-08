@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_blocks_layouts",
+  "info": {
+    "displayName": "Layout"
+  },
+  "options": {},
+  "attributes": {
+    "direction": {
+      "type": "enumeration",
+      "enum": [
+        "row",
+        "column"
+      ]
+    }
+  },
+  "config": {}
+}

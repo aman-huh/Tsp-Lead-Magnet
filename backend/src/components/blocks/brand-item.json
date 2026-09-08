@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_blocks_brand_items",
+  "info": {
+    "displayName": "Brand Item"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

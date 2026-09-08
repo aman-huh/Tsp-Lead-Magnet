@@ -1,0 +1,41 @@
+{
+  "collectionName": "components_sections_our_processes",
+  "info": {
+    "displayName": "Our Process"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "mobileEyebrow": {
+      "type": "string"
+    },
+    "header": {
+      "type": "component",
+      "component": "shared.section-header",
+      "repeatable": false
+    },
+    "desktopCards": {
+      "type": "component",
+      "component": "blocks.process-card",
+      "repeatable": true
+    },
+    "mobileCards": {
+      "type": "component",
+      "component": "sections.process-card-mobile",
+      "repeatable": true
+    },
+    "CTA": {
+      "type": "component",
+      "component": "shared.button",
+      "repeatable": false
+    },
+    "desktopCta": {
+      "type": "component",
+      "component": "shared.button",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
