@@ -19,13 +19,18 @@ export interface ButtonProps {
   disabled?: boolean;
 }
 
-function DiagonalArrow({ className = "" }: { className?: string }) {
+function DiagonalArrow({ className = "", size = "md" }: { className?: string; size?: "sm" | "md" | "lg" }) {
+  const sizeClasses = {
+    sm: "w-3.5 h-3.5",
+    md: "w-4 h-4",
+    lg: "w-4 h-4 sm:w-[1.125rem] sm:h-[1.125rem]",
+  };
   return (
     <svg
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={`w-[clamp(1rem,4.2vw,1.25rem)] h-[clamp(1rem,4.2vw,1.25rem)] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0 ${className}`}
+      className={`${sizeClasses[size]} transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0 ${className}`}
       aria-hidden="true"
     >
       <path
@@ -46,10 +51,15 @@ function DiagonalArrow({ className = "" }: { className?: string }) {
   );
 }
 
-function RightArrow({ className = "" }: { className?: string }) {
+function RightArrow({ className = "", size = "md" }: { className?: string; size?: "sm" | "md" | "lg" }) {
+  const sizeClasses = {
+    sm: "text-xs",
+    md: "text-sm",
+    lg: "text-base sm:text-[17px]",
+  };
   return (
     <span
-      className={`transition-transform duration-300 group-hover:translate-x-1 shrink-0 ${className}`}
+      className={`transition-transform duration-300 group-hover:translate-x-1 shrink-0 ${sizeClasses[size]} ${className}`}
       aria-hidden="true"
     >
       →
@@ -83,7 +93,7 @@ export default function Button({
 
   const customRadiusMatch = className.match(/(^|\s)(rounded(?:-[a-z0-9\[\]]+)?)/);
   const customRadius = customRadiusMatch ? customRadiusMatch[2] : null;
-  const shapeClass = customRadius || (shape === "rounded" ? "rounded-[14px] sm:rounded-[18px]" : "rounded-full");
+  const shapeClass = customRadius || (shape === "rounded" ? "rounded-[12px] sm:rounded-[14px]" : "rounded-full");
 
   const offsetColorClass =
     theme === "light" ? "bg-[#3145DD]" : "bg-[#95E7D3]";
@@ -93,29 +103,29 @@ export default function Button({
   const hasCustomGap = /(^|\s)gap-/.test(className);
 
   const pillPaddings = {
-    sm: "px-[clamp(0.75rem,4.2vw,1rem)] py-[clamp(0.25rem,4.2vw,0.5rem)]",
-    md: "px-[clamp(1rem,4.2vw,1.25rem)] py-[clamp(0.375rem,4.2vw,0.65rem)]",
-    lg: "px-[clamp(1.25rem,4.2vw,1.75rem)] py-[clamp(0.55rem,4.2vw,0.875rem)]",
+    sm: "px-[clamp(0.75rem,1.5vw,1rem)] py-[clamp(0.25rem,0.7vw,0.4rem)]",
+    md: "px-[clamp(1rem,1.8vw,1.25rem)] py-[clamp(0.375rem,0.9vw,0.55rem)]",
+    lg: "px-[clamp(1.25rem,2vw,1.5rem)] py-[clamp(0.5rem,1.2vw,0.7rem)]",
   };
 
   const roundedPaddings = {
-    sm: "px-[clamp(0.75rem,4.2vw,1rem)] py-[clamp(0.25rem,4.2vw,0.5rem)]",
-    md: "px-[clamp(1rem,4.2vw,1.25rem)] py-[clamp(0.375rem,4.2vw,0.65rem)]",
-    lg: "px-[clamp(1.25rem,4.2vw,1.75rem)] py-[clamp(0.55rem,4.2vw,0.875rem)]",
+    sm: "px-[clamp(0.75rem,1.5vw,1rem)] py-[clamp(0.25rem,0.7vw,0.4rem)]",
+    md: "px-[clamp(1rem,1.8vw,1.25rem)] py-[clamp(0.375rem,0.9vw,0.55rem)]",
+    lg: "px-[clamp(1.25rem,2vw,1.5rem)] py-[clamp(0.5rem,1.2vw,0.7rem)]",
   };
 
   const sizePaddings = shape === "rounded" ? roundedPaddings : pillPaddings;
 
   const sizeTextSizes = {
-    sm: "text-[clamp(0.8125rem,4.2vw,0.875rem)]",
-    md: "text-[clamp(0.875rem,4.2vw,1.125rem)]",
-    lg: "text-[clamp(1rem,4.2vw,1.5rem)]",
+    sm: "text-[clamp(0.75rem,0.8vw,0.8125rem)]",
+    md: "text-[clamp(0.8125rem,1vw,0.875rem)]",
+    lg: "text-[clamp(0.9375rem,1.2vw,1.0625rem)]",
   };
 
   const sizeGaps = {
-    sm: "gap-[clamp(0.375rem,4.2vw,0.5rem)]",
-    md: "gap-[clamp(0.5rem,4.2vw,0.75rem)]",
-    lg: "gap-[clamp(0.625rem,4.2vw,0.875rem)]",
+    sm: "gap-1.5",
+    md: "gap-[clamp(0.375rem,0.8vw,0.5rem)]",
+    lg: "gap-[clamp(0.5rem,1vw,0.625rem)]",
   };
 
   const appliedPadding = hasCustomPadding ? "" : sizePaddings[size];
@@ -156,7 +166,11 @@ export default function Button({
 
   const arrow =
     showArrow &&
-    (arrowType === "diagonal" ? <DiagonalArrow /> : <RightArrow />);
+    (arrowType === "diagonal" ? (
+      <DiagonalArrow size={size} />
+    ) : (
+      <RightArrow size={size} />
+    ));
 
   const content = (
     <>
@@ -166,10 +180,10 @@ export default function Button({
   );
 
   const isFullWidth = className.includes("w-full");
-  const returnsToAutoWidth = /(^|\s)sm:w-auto(\s|$)/.test(className);
+  const returnsToAutoWidthMatch = className.match(/(^|\s)(sm|md|lg):w-auto(\s|$)/);
   const containerWidthClass = isFullWidth
-    ? returnsToAutoWidth
-      ? "w-full sm:w-auto"
+    ? returnsToAutoWidthMatch
+      ? `w-full ${returnsToAutoWidthMatch[2]}:w-auto`
       : "w-full"
     : "";
 

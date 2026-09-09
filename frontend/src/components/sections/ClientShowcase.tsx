@@ -208,7 +208,7 @@ export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
                   size="lg"
                   text={action.text}
                   url={action.url}
-                  className="w-full sm:w-auto px-[clamp(1.25rem,4vw,1.5rem)] sm:px-[clamp(1.25rem,1.6vw,1.75rem)] py-[clamp(0.625rem,2.8vw,0.75rem)] sm:py-[clamp(0.55rem,0.8vw,0.875rem)] text-[clamp(0.9375rem,3.6vw,1rem)] sm:text-[clamp(1rem,1.333vw,1.5rem)]"
+                  className="w-full sm:w-auto justify-center"
                 />
               );
             })}

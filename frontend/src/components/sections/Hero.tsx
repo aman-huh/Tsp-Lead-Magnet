@@ -60,8 +60,7 @@ export default function Hero({ data }: HeroProps) {
                   arrowType="right"
                   text={buttonText}
                   url={buttonUrl}
-                  className="w-full lg:w-auto justify-center py-[clamp(0.625rem,2vw,0.875rem)] px-[clamp(1.25rem,3vw,1.75rem)] text-[clamp(0.875rem,2.2vw,1.5rem)]"
-                  containerClassName="w-full lg:w-auto"
+                  className="w-full lg:w-auto justify-center"
                 />
               </div>
             </div>

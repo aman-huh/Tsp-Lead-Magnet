@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Page",
+    "description": "Slug-based pages built from reusable section components"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.hero",
+        "sections.problem-assessment",
+        "sections.solution-highlights",
+        "sections.case-study-showcase",
+        "sections.brand-fit",
+        "sections.our-work",
+        "sections.client-showcase",
+        "sections.our-process",
+        "sections.faq",
+        "sections.footer"
+      ]
+    }
+  }
+}

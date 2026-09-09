@@ -217,7 +217,6 @@ export default function OurProcess({ data }: OurProcessProps) {
               variant="solid"
               showArrow={false}
               size="md"
-              className="px-[clamp(1rem,2vw,1.75rem)] py-[clamp(0.5rem,1vw,0.875rem)] text-[clamp(0.8125rem,1vw,0.9375rem)] font-medium"
               text={ctaText}
               url={ctaUrl}
             />
