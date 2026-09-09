@@ -8,14 +8,54 @@ interface FAQProps {
 }
 
 const DEFAULT_QUESTIONS: FaqItem[] = [
-  { id: 1, question: "Does the store remain live throughout the project?" },
-  { id: 2, question: "Can the work be timed around peak trading?" },
-  { id: 3, question: "How is a redesign priced?" },
-  { id: 4, question: "Does this require a new theme or a replatform?" },
-  { id: 5, question: "What happens to our existing apps and integrations?" },
-  { id: 6, question: "What is the impact on SEO?" },
-  { id: 7, question: "Can you work alongside our developer?" },
-  { id: 8, question: "How does an offshore team operate in practice?" },
+  {
+    id: 1,
+    question: "Does the store remain live throughout the project?",
+    answer:
+      "Yes, absolutely. All design, development, and testing take place in a staging environment. Your live store remains completely unaffected and fully operational until we are ready for a seamless cutover.",
+  },
+  {
+    id: 2,
+    question: "Can the work be timed around peak trading?",
+    answer:
+      "Yes. We plan milestones around your commercial calendar, freezing major deployments during critical promotional or seasonal trading periods to safeguard your revenue.",
+  },
+  {
+    id: 3,
+    question: "How is a redesign priced?",
+    answer:
+      "We work on fixed-scope project pricing with clear deliverable milestones, or dedicated monthly retainers depending on the scale and ongoing requirements of your store.",
+  },
+  {
+    id: 4,
+    question: "Does this require a new theme or a replatform?",
+    answer:
+      "Not necessarily. We assess whether optimizing your existing theme, building custom bespoke components, or migrating to Shopify 2.0 / headless best serves your long-term margins.",
+  },
+  {
+    id: 5,
+    question: "What happens to our existing apps and integrations?",
+    answer:
+      "We audit your entire tech stack to retain essential integrations, consolidate redundant subscriptions, and ensure third-party scripts don't degrade your storefront's loading speed.",
+  },
+  {
+    id: 6,
+    question: "What is the impact on SEO?",
+    answer:
+      "We strictly preserve your URL structures, canonical tags, redirects, and metadata. In fact, our performance improvements and structured schema typically enhance organic visibility.",
+  },
+  {
+    id: 7,
+    question: "Can you work alongside our developer?",
+    answer:
+      "Yes. We frequently collaborate with in-house engineers, handling specialized UX/UI design, design systems, and frontend components while your team focuses on backend operations.",
+  },
+  {
+    id: 8,
+    question: "How does an offshore team operate in practice?",
+    answer:
+      "We provide dedicated project managers, daily async updates via Slack, and scheduled weekly syncs aligned with your working hours to ensure transparent and frictionless collaboration.",
+  },
 ];
 
 export default function FAQ({ data }: FAQProps) {
@@ -35,7 +75,7 @@ export default function FAQ({ data }: FAQProps) {
   };
 
   return (
-    <section className="w-full bg-white py-16 sm:py-24 2xl:py-32 px-0 sm:px-12 2xl:px-20 3xl:px-[89.5px]">
+    <section className="w-full bg-white pt-[clamp(4.5rem,7vw,9.5rem)] pb-[clamp(5rem,8vw,11rem)] px-0 sm:px-12 2xl:px-20 3xl:px-[89.5px]">
       <div className="max-w-[1920px] mx-auto w-full">
         <div className="mb-8 sm:mb-14 2xl:mb-16 px-6 sm:px-0">
           <h2 className="font-heading font-medium text-[36px] sm:text-[52px] 2xl:text-[62px] 3xl:text-[70px] leading-[1.1] tracking-[-0.02em] text-[#0F1D07]">
@@ -49,7 +89,7 @@ export default function FAQ({ data }: FAQProps) {
             )}
           </h2>
           {(description || heading?.mobileDescription) && (
-            <p className="font-satoshi text-[16px] 2xl:text-[18px] text-[#4A5568] mt-3 sm:mt-4 max-w-2xl">
+            <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-normal leading-[1.5] text-[#4A5568] mt-3 sm:mt-4 max-w-2xl">
               {heading?.mobileDescription ? (
                 <>
                   <span className="block lg:hidden">{heading.mobileDescription}</span>
@@ -65,7 +105,13 @@ export default function FAQ({ data }: FAQProps) {
         <div className="w-full flex flex-col gap-0 sm:gap-4.75">
           {rawQuestions.map((item, index) => {
             const isOpen = openIndex === index;
-            const answerText = item.answer?.trim();
+            const fallbackItem =
+              DEFAULT_QUESTIONS.find(
+                (dq) =>
+                  dq.question?.toLowerCase().trim() ===
+                    item.question?.toLowerCase().trim() || dq.id === item.id
+              ) || DEFAULT_QUESTIONS[index % DEFAULT_QUESTIONS.length];
+            const answerText = item.answer?.trim() || fallbackItem?.answer;
 
             return (
               <div

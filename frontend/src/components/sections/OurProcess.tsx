@@ -195,7 +195,7 @@ export default function OurProcess({ data }: OurProcessProps) {
   const rows = chunkCardsIntoRows(cards);
 
   return (
-    <section className="bg-[#0F1D07] py-[clamp(4rem,6vw,9rem)] px-[clamp(1.25rem,4.2vw,5.6875rem)] text-white">
+    <section className="bg-[#0F1D07] pt-[clamp(5rem,7.5vw,10rem)] pb-[clamp(5.5rem,8.5vw,11.5rem)] px-[clamp(1.25rem,4.2vw,5.6875rem)] text-white">
       <div className="max-w-[1920px] mx-auto w-full">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 sm:gap-8 lg:gap-12">
           <div className="flex flex-col gap-3 sm:gap-5 lg:gap-8">
@@ -205,7 +205,7 @@ export default function OurProcess({ data }: OurProcessProps) {
             <h2 className="font-delight! text-[clamp(1.75rem,3.8vw,3.2rem)] font-medium text-white leading-[1.08] tracking-[-0.02em] max-w-170">
               {title}
             </h2>
-            <p className="text-white text-[clamp(0.75rem,2vw,1.0625rem)] font-satoshi font-normal leading-[1.6] max-w-[95%] lg:max-w-[90%]">
+            <p className="text-white text-[clamp(0.8125rem,4.2vw,1.125rem)] font-satoshi font-normal leading-[1.5] max-w-[95%] lg:max-w-[90%]">
               {description}
             </p>
           </div>

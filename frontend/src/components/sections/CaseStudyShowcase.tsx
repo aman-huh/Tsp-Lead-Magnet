@@ -57,7 +57,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
 
   return (
     <div
-      className={`relative w-full h-[724px] md:h-242 rounded-sm overflow-hidden touch-none select-none bg-white ${
+      className={`relative w-full h-[724px] md:h-auto md:aspect-[1720/969] rounded-xl md:rounded-2xl overflow-hidden touch-none select-none bg-white ${
         isVertical ? "cursor-ns-resize" : "cursor-ew-resize"
       }`}
       onPointerDown={handlePointerDown}
@@ -264,7 +264,7 @@ export default function CaseStudyShowcase({ data }: CaseStudyShowcaseProps) {
   );
 
   return (
-    <section className="px-[clamp(1.25rem,4.2vw,5.6875rem)] py-[clamp(3rem,4.2vw,6.5rem)] bg-[#F5F5F5] max-w-[1920px] mx-auto">
+    <section className="px-[clamp(1.25rem,4.2vw,5.6875rem)] pt-[clamp(4rem,6vw,7.5rem)] pb-[clamp(5rem,8vw,10rem)] bg-[#F5F5F5] max-w-[1920px] mx-auto">
       <div className="w-full flex flex-col gap-y-[clamp(0.75rem,4.2vw,1.25rem)] mb-[clamp(1.5rem,4.2vw,3.625rem)]">
         <h2 className="font-delight! text-[clamp(2.125rem,4.2vw,5rem)] font-medium leading-tight 2xl:leading-[1.12] tracking-[-0.01em] w-full lg:w-[78%]">
           {header?.mobileTitle ? (
@@ -276,7 +276,7 @@ export default function CaseStudyShowcase({ data }: CaseStudyShowcaseProps) {
             title
           )}
         </h2>
-        <p className="font-satoshi text-[clamp(0.9375rem,4.2vw,1.25rem)] font-medium leading-[1.6] tracking-normal w-full lg:w-[60%]">
+        <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-normal leading-[1.5] tracking-normal w-full lg:w-[60%]">
           {header?.mobileDescription ? (
             <>
               <span className="block lg:hidden">{header.mobileDescription}</span>

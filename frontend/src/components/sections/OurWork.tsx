@@ -30,7 +30,7 @@ export default function OurWork({ data }: OurWorkProps) {
 
   return (
     <section className="bg-[#F5F5F5]">
-      <div className="px-[clamp(1.25rem,4.2vw,5.6875rem)] pt-[clamp(2.5rem,4.2vw,6.5rem)]">
+      <div className="px-[clamp(1.25rem,4.2vw,5.6875rem)] pt-[clamp(4.5rem,7vw,9rem)]">
         <div className="w-full flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-[clamp(1.5rem,4.2vw,2.5rem)]">
           <div className="w-full lg:w-[78%] flex flex-col gap-y-[clamp(0.75rem,4.2vw,1.25rem)]">
             <h1 className="font-delight! text-[clamp(2.125rem,4.2vw,5rem)] leading-tight 2xl:leading-[1.12] tracking-[-0.01em]">
@@ -44,7 +44,7 @@ export default function OurWork({ data }: OurWorkProps) {
               )}
             </h1>
             {(description || header?.mobileDescription) && (
-              <p className="font-satoshi text-[clamp(0.9375rem,4.2vw,1.25rem)] font-medium leading-[1.6] tracking-normal max-w-3xl">
+              <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-normal leading-[1.5] tracking-normal max-w-3xl">
                 {header?.mobileDescription ? (
                   <>
                     <span className="block lg:hidden">{header.mobileDescription}</span>

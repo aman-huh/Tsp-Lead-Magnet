@@ -176,7 +176,7 @@ export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
   };
 
   return (
-    <section className="bg-[#95E7D30D] pt-[clamp(6rem,24vw,7rem)] sm:pt-0 flex flex-col justify-between overflow-hidden sm:min-h-screen">
+    <section className="bg-[#95E7D30D] pt-[clamp(6rem,24vw,7rem)] sm:pt-[clamp(4.5rem,6vw,7.5rem)] flex flex-col justify-between overflow-hidden sm:min-h-screen">
       <div className="max-w-[1920px] mx-auto sm:my-auto w-full px-[clamp(1.5rem,6vw,2rem)] sm:px-[clamp(3rem,4.2vw,5rem)] text-left sm:text-center flex flex-col items-start sm:items-center">
         <div className="w-full max-w-4xl 2xl:max-w-6xl 3xl:max-w-7xl">
           {badge && (
@@ -190,7 +190,7 @@ export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
           </h2>
 
           {description && (
-            <p className="font-satoshi font-semibold text-[clamp(0.9375rem,4vw,1rem)] sm:text-[clamp(1rem,1.028vw,1.125rem)] 3xl:text-[clamp(1.125rem,1.04vw,1.25rem)] text-[#0F1D07]/90 leading-relaxed max-w-xl 2xl:max-w-2xl sm:mx-auto mt-[clamp(1.5rem,5vw,1.75rem)] sm:mt-[clamp(1.5rem,1.828vw,2rem)]">
+            <p className="font-satoshi font-normal sm:font-semibold text-[clamp(0.8125rem,4.2vw,1.125rem)] text-[#0F1D07]/90 leading-[1.5] max-w-xl 2xl:max-w-2xl sm:mx-auto mt-[clamp(1.5rem,5vw,1.75rem)] sm:mt-[clamp(1.5rem,1.828vw,2rem)]">
               {description}
             </p>
           )}

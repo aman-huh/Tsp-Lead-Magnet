@@ -12,6 +12,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [logoIsDark, setLogoIsDark] = useState(true);
   const [buttonIsDark, setButtonIsDark] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
@@ -84,6 +85,9 @@ export default function Navbar({ className = "" }: NavbarProps) {
     let rafId: number | null = null;
 
     const checkColors = () => {
+      const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+      setIsScrolled(scrollY > 20);
+
       if (rafId) return;
       rafId = requestAnimationFrame(() => {
         rafId = null;
@@ -119,6 +123,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
 
   const effectiveLogoDark = isMenuOpen || logoIsDark;
   const effectiveButtonDark = isMenuOpen || buttonIsDark;
+  const showButtonBg = isMenuOpen || isScrolled;
 
   return (
     <>
@@ -133,13 +138,10 @@ export default function Navbar({ className = "" }: NavbarProps) {
               className="font-medium text-[24px] sm:text-[32px] tracking-tight flex items-center transition-colors duration-400 ease-[cubic-bezier(0.76,0,0.24,1)]"
               style={{
                 fontFamily: "var(--font-heading)",
-                color: effectiveLogoDark ? "#ffffff" : "#3145DD",
+                color: effectiveLogoDark ? "#FFFFFF" : "#3145DD",
               }}
             >
-              <span className="sr-only">Thumbstack</span>
               <svg
-                width="194"
-                height="32"
                 viewBox="0 0 194 32"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -171,10 +173,13 @@ export default function Navbar({ className = "" }: NavbarProps) {
           aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
           onClick={() => setIsMenuOpen((prev) => !prev)}
           style={{
-            backgroundColor: effectiveButtonDark
-              ? "rgba(181, 253, 236, 0.58)"
-              : "rgba(181, 253, 236, 0.75)",
-            backdropFilter: "blur(12px)",
+            backgroundColor: showButtonBg
+              ? effectiveButtonDark
+                ? "rgba(181, 253, 236, 0.58)"
+                : "rgba(181, 253, 236, 0.75)"
+              : "transparent",
+            backdropFilter: showButtonBg ? "blur(12px)" : "none",
+            WebkitBackdropFilter: showButtonBg ? "blur(12px)" : "none",
           }}
         >
           <svg

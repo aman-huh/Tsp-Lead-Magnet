@@ -31,7 +31,7 @@ const satoshi = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Lead Magnet",
+  title: "Thumbstack - Lead Magnet",
   description: "Lead Magnet Platform",
 };
 
