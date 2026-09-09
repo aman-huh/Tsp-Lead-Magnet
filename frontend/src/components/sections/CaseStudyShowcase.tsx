@@ -85,7 +85,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
                 alt={study?.afterImage?.alternativeText || study?.afterLabel || "After"}
                 fill
                 sizes="100vw"
-                className="object-cover pointer-events-none select-none"
+                className="object-cover object-top pointer-events-none select-none"
                 draggable={false}
                 unoptimized
               />
@@ -98,7 +98,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
           alt={study?.afterImage?.alternativeText || study?.afterLabel || "After"}
           fill
           sizes="100vw"
-          className={`object-cover pointer-events-none select-none ${isVertical ? "object-top" : "object-center"}`}
+          className="object-cover object-top pointer-events-none select-none"
           draggable={false}
           unoptimized
         />
@@ -132,7 +132,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
                   alt={study?.beforeImage?.alternativeText || study?.beforeLabel || "Before"}
                   fill
                   sizes="100vw"
-                  className="object-cover pointer-events-none select-none"
+                  className="object-cover object-top pointer-events-none select-none"
                   draggable={false}
                   unoptimized
                 />
@@ -145,7 +145,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
             alt={study?.beforeImage?.alternativeText || study?.beforeLabel || "Before"}
             fill
             sizes="100vw"
-            className={`object-cover pointer-events-none select-none ${isVertical ? "object-top" : "object-center"}`}
+            className="object-cover object-top pointer-events-none select-none"
             draggable={false}
             unoptimized
           />
