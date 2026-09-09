@@ -47,8 +47,8 @@ pnpm-debug.log*
 
 # OS & Editor Junk
 .DS_Store
-Thumbs.db
-Desktop.ini
-.idea/
-.vscode/
 *.swp
+
+# Migration & temporary scripts
+*.mjs
+backend/migrate-to-page.mjs

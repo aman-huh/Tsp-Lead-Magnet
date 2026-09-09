@@ -9,6 +9,7 @@ import ClientShowcase from "@/components/sections/ClientShowcase";
 import OurProcess from "@/components/sections/OurProcess";
 import FAQ from "@/components/sections/Faq";
 import FooterReveal from "@/components/sections/FooterReveal";
+import AuditBar from "@/components/shared/AuditBar";
 import { getLandingPage } from "@/services/landing";
 import { getBrands } from "@/services/brand";
 import {
@@ -104,6 +105,7 @@ export default async function Home() {
           <FAQ data={faqSection} />
         </main>
       </FooterReveal>
+      <AuditBar />
     </>
   );
 }

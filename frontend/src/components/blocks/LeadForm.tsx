@@ -37,17 +37,16 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
     if (Array.isArray(val)) {
       return val.join(",");
     }
-    if ((field.type === "radio" || field.type === "select") && field.options?.[0] && !isMultiSelectField(field)) {
-      return field.options[0].value;
-    }
     return "";
   };
 
   const handleFieldChange = (fieldId: number, value: string) => {
+    setError(null);
     setFormValues((prev) => ({ ...prev, [String(fieldId)]: value }));
   };
 
   const handleMultiSelectToggle = (fieldId: number, value: string) => {
+    setError(null);
     setFormValues((prev) => {
       const current = prev[String(fieldId)];
       const list = Array.isArray(current)
@@ -68,11 +67,28 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
       const list = Array.isArray(val) ? val : val ? [val] : [];
       return list.includes(optionValue);
     }
-    const current = typeof val === "string" ? val : (field.options?.[0]?.value ?? "");
-    return current === optionValue;
+    return typeof val === "string" && val === optionValue;
   };
 
   const handleNext = async () => {
+    // Validate required fields in the current step
+    const currentFields = step?.fields ?? [];
+    for (const f of currentFields) {
+      if (f.required) {
+        const val = formValues[String(f.id)];
+        const isEmpty =
+          val === undefined ||
+          val === null ||
+          val === "" ||
+          (Array.isArray(val) && val.length === 0);
+        if (isEmpty) {
+          setError(`Please complete "${f.label}" to continue.`);
+          return;
+        }
+      }
+    }
+    setError(null);
+
     if (currentStep < totalSteps - 1) {
       const nextStep = currentStep + 1;
       setCurrentStep(nextStep);
@@ -202,8 +218,7 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
   const getSelectedBudgetId = (tiers: BudgetRange[]): string => {
     const budget = formValues["__budget"];
     if (typeof budget === "string") return budget;
-    const recommended = tiers.find((t) => t.recommended);
-    return String((recommended ?? tiers[0])?.id ?? "");
+    return "";
   };
 
   const formatINR = (amount?: number) =>
