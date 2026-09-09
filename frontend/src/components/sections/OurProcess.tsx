@@ -15,13 +15,13 @@ function DefaultLightbulbIcon() {
 }
 
 function ContentCardItem({ card }: { card: ProcessCard }) {
-  const ctaText = card.cta?.text || `Explore ${card.title || "More"}`;
+  const ctaText = "Explore";
   const ctaUrl = card.cta?.url || "#";
   const hasHoverList = card.hoverList && card.hoverList.length > 0;
 
   return (
-    <div className="bg-[#1B2F10] hover:bg-[#254419] rounded-xl p-[clamp(1rem,2vw,2.25rem)] flex flex-col justify-between min-h-[clamp(16.25rem,20vw,20rem)] lg:h-105.25 w-full relative group overflow-hidden transition-all duration-300">
-      <div className="flex flex-col justify-between h-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] opacity-100 translate-y-0 group-hover:opacity-0 group-hover:-translate-y-3">
+    <div className="bg-[#1B2F10] hover:bg-[#254419] rounded-xl p-[clamp(1rem,2vw,2.25rem)] flex flex-col justify-between min-h-[clamp(16.25rem,20vw,20rem)] lg:h-105.25 h-full w-full relative group overflow-hidden transition-all duration-300">
+      <div className="flex flex-col justify-between flex-1 h-full w-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] opacity-100 translate-y-0 group-hover:opacity-0 group-hover:-translate-y-3">
         <div>
           <div className="w-[clamp(1.5rem,2vw,2.25rem)] h-[clamp(1.5rem,2vw,2.25rem)] relative mb-4 sm:mb-6 flex items-center">
             {card.icon?.url ? (
@@ -46,7 +46,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
           </p>
         </div>
 
-        <div className="pt-3 sm:pt-6">
+        <div className="pt-3 sm:pt-6 mt-auto">
           <Link
             href={ctaUrl}
             className="inline-flex items-center gap-1.5 sm:gap-2 text-white font-medium text-[clamp(0.75rem,1vw,0.9375rem)] hover:text-white/80 transition-colors"
