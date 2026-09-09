@@ -8,6 +8,7 @@ import {
   BrandCard,
   ListItem,
   ProcessCard,
+  ProcessCardMobile,
   FaqItem,
 } from "./shared";
 import { LeadForm } from "./form";
@@ -75,10 +76,12 @@ export interface OurProcessSection {
   id: number;
   __component: "sections.our-process";
   eyebrow?: string;
+  mobileEyebrow?: string | null;
   header?: SectionHeader;
   CTA?: ButtonComponent;
   cards?: ProcessCard[];
   desktopCards?: ProcessCard[];
+  mobileCards?: ProcessCardMobile[];
 }
 
 export interface FaqSection {

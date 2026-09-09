@@ -26,6 +26,9 @@ importers:
       better-sqlite3:
         specifier: 12.8.0
         version: 12.8.0
+      cloudinary:
+        specifier: ^2.11.0
+        version: 2.11.0
       fs-extra:
         specifier: ^10.0.0
         version: 10.1.0

@@ -22,6 +22,7 @@
     "@strapi/provider-upload-cloudinary": "^5.52.3",
     "@strapi/strapi": "5.52.2",
     "better-sqlite3": "12.8.0",
+    "cloudinary": "^2.11.0",
     "fs-extra": "^10.0.0",
     "mime-types": "^2.1.27",
     "pg": "^8.23.0",

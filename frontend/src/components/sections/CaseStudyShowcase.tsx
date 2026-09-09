@@ -16,7 +16,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
 
   useEffect(() => {
     const checkOrientation = () => {
-      setIsVertical(window.innerWidth < 1024);
+      setIsVertical(window.innerWidth < 768);
     };
     checkOrientation();
     window.addEventListener("resize", checkOrientation);
@@ -57,7 +57,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
 
   return (
     <div
-      className={`relative w-full h-[724px] lg:h-242 rounded-sm overflow-hidden touch-none select-none bg-white ${
+      className={`relative w-full h-[724px] md:h-242 rounded-sm overflow-hidden touch-none select-none bg-white ${
         isVertical ? "cursor-ns-resize" : "cursor-ew-resize"
       }`}
       onPointerDown={handlePointerDown}
@@ -67,7 +67,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
     >
       {study?.afterMobileImage?.url ? (
         <>
-          <div className="block lg:hidden absolute inset-0 w-full h-full pointer-events-none select-none">
+          <div className="block md:hidden absolute inset-0 w-full h-full pointer-events-none select-none">
             <Image
               src={getStrapiMediaUrl(study.afterMobileImage.url)}
               alt={study.afterMobileImage.alternativeText || study?.afterLabel || "After"}
@@ -78,7 +78,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
               unoptimized
             />
           </div>
-          <div className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none select-none">
+          <div className="hidden md:block absolute inset-0 w-full h-full pointer-events-none select-none">
             {afterImage && (
               <Image
                 src={getStrapiMediaUrl(afterImage)}
@@ -114,7 +114,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
       >
         {study?.mobileBeforeImage?.url ? (
           <>
-            <div className="block lg:hidden absolute inset-0 w-full h-full pointer-events-none select-none">
+            <div className="block md:hidden absolute inset-0 w-full h-full pointer-events-none select-none">
               <Image
                 src={getStrapiMediaUrl(study.mobileBeforeImage.url)}
                 alt={study.mobileBeforeImage.alternativeText || study?.beforeLabel || "Before"}
@@ -125,7 +125,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
                 unoptimized
               />
             </div>
-            <div className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none select-none">
+            <div className="hidden md:block absolute inset-0 w-full h-full pointer-events-none select-none">
               {beforeImage && (
                 <Image
                   src={getStrapiMediaUrl(beforeImage)}
@@ -249,10 +249,11 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
 }
 
 export default function CaseStudyShowcase({ data }: CaseStudyShowcaseProps) {
+  const header = data?.header;
   const title =
-    data?.header?.title || "Where is the storefront costing you margin?";
+    header?.title || "Where is the storefront costing you margin?";
   const description =
-    data?.header?.description ||
+    header?.description ||
     "Select what applies. Most brands recognise three or four — and rarely the one they contacted us about.";
 
   const caseStudies = data?.caseStudies ?? [];
@@ -265,11 +266,25 @@ export default function CaseStudyShowcase({ data }: CaseStudyShowcaseProps) {
   return (
     <section className="px-[clamp(1.25rem,4.2vw,5.6875rem)] py-[clamp(3rem,4.2vw,6.5rem)] bg-[#F5F5F5] max-w-[1920px] mx-auto">
       <div className="w-full flex flex-col gap-y-[clamp(0.75rem,4.2vw,1.25rem)] mb-[clamp(1.5rem,4.2vw,3.625rem)]">
-        <h1 className="font-delight! text-[clamp(2.125rem,4.2vw,5rem)] font-medium leading-tight 2xl:leading-[1.12] tracking-[-0.01em] w-full lg:w-[78%]">
-          {title}
-        </h1>
+        <h2 className="font-delight! text-[clamp(2.125rem,4.2vw,5rem)] font-medium leading-tight 2xl:leading-[1.12] tracking-[-0.01em] w-full lg:w-[78%]">
+          {header?.mobileTitle ? (
+            <>
+              <span className="block lg:hidden">{header.mobileTitle}</span>
+              <span className="hidden lg:block">{title}</span>
+            </>
+          ) : (
+            title
+          )}
+        </h2>
         <p className="font-satoshi text-[clamp(0.9375rem,4.2vw,1.25rem)] font-medium leading-[1.6] tracking-normal w-full lg:w-[60%]">
-          {description}
+          {header?.mobileDescription ? (
+            <>
+              <span className="block lg:hidden">{header.mobileDescription}</span>
+              <span className="hidden lg:block">{description}</span>
+            </>
+          ) : (
+            description
+          )}
         </p>
       </div>
 

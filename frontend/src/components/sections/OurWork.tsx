@@ -11,8 +11,9 @@ interface OurWorkProps {
 }
 
 export default function OurWork({ data }: OurWorkProps) {
-  const title = data?.header?.title || "Our Work";
-  const description = data?.header?.description || "";
+  const header = data?.header;
+  const title = header?.title || "Our Work";
+  const description = header?.description || "";
   const projects = (data?.projects ?? []).filter(
     (b) => b.desktopImage?.url || b.mobileImage?.url
   );
@@ -33,11 +34,25 @@ export default function OurWork({ data }: OurWorkProps) {
         <div className="w-full flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-[clamp(1.5rem,4.2vw,2.5rem)]">
           <div className="w-full lg:w-[78%] flex flex-col gap-y-[clamp(0.75rem,4.2vw,1.25rem)]">
             <h1 className="font-delight! text-[clamp(2.125rem,4.2vw,5rem)] leading-tight 2xl:leading-[1.12] tracking-[-0.01em]">
-              {title}
+              {header?.mobileTitle ? (
+                <>
+                  <span className="block lg:hidden">{header.mobileTitle}</span>
+                  <span className="hidden lg:block">{title}</span>
+                </>
+              ) : (
+                title
+              )}
             </h1>
-            {description && (
+            {(description || header?.mobileDescription) && (
               <p className="font-satoshi text-[clamp(0.9375rem,4.2vw,1.25rem)] font-medium leading-[1.6] tracking-normal max-w-3xl">
-                {description}
+                {header?.mobileDescription ? (
+                  <>
+                    <span className="block lg:hidden">{header.mobileDescription}</span>
+                    <span className="hidden lg:block">{description}</span>
+                  </>
+                ) : (
+                  description
+                )}
               </p>
             )}
           </div>

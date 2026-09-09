@@ -28,20 +28,35 @@ const variantStyles: Record<
 };
 
 export default function SolutionHighlights({ data }: SolutionHighlightsProps) {
+  const header = data?.header;
   const title =
-    data?.header?.title || "Discounting is not a conversion strategy.";
+    header?.title || "Discounting is not a conversion strategy.";
   const description =
-    data?.header?.description ||
+    header?.description ||
     "The trading calendar has taught shoppers here to wait. When a storefront doesn't make the case for a product at full price, the promotion has to — and margin pays for it. We redesign Shopify stores so the buying argument sits on the page, not in the discount code.";
 
   return (
     <section className="mt-[clamp(2.75rem,4.2vw,5rem)] mb-[clamp(2.5rem,4.2vw,5.5rem)] px-[clamp(1.25rem,4.2vw,5.6875rem)] max-w-[1920px] mx-auto">
       <div className="flex flex-col gap-y-[clamp(0.75rem,4.2vw,1.25rem)] mb-[clamp(1.75rem,4.2vw,3.25rem)] w-full max-w-full">
-        <h1 className="font-delight! text-[clamp(2.125rem,4.2vw,5rem)] font-medium leading-[1.12] tracking-[-0.01em] w-full">
-          {title}
-        </h1>
+        <h2 className="font-delight! text-[clamp(2.125rem,4.2vw,5rem)] font-medium leading-[1.12] tracking-[-0.01em] w-full">
+          {header?.mobileTitle ? (
+            <>
+              <span className="block lg:hidden">{header.mobileTitle}</span>
+              <span className="hidden lg:block">{title}</span>
+            </>
+          ) : (
+            title
+          )}
+        </h2>
         <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-normal leading-[1.5] tracking-normal w-auto max-w-xl 2xl:max-w-2xl">
-          {description}
+          {header?.mobileDescription ? (
+            <>
+              <span className="block lg:hidden">{header.mobileDescription}</span>
+              <span className="hidden lg:block">{description}</span>
+            </>
+          ) : (
+            description
+          )}
         </p>
       </div>
       <div className="mt-[clamp(2rem,4.2vw,4.5rem)] grid grid-cols-1 lg:grid-cols-3 gap-[clamp(1.5rem,3vw,3.5rem)] w-full">
@@ -64,7 +79,7 @@ function SolutionHighlightCard({ feature }: { feature?: Feature }) {
 
   return (
     <div
-      className={`w-full min-h-[clamp(20rem,30vw,30rem)] rounded-[clamp(16px,4.2vw,30px)] p-[clamp(1.25rem,3vw,2.5rem)] flex flex-col justify-between gap-4 overflow-hidden ${variant.container}`}
+      className={`w-full min-h-[clamp(21.5rem,32vw,30rem)] rounded-[clamp(20px,4.2vw,30px)] p-6 sm:p-8 lg:p-[clamp(1.75rem,3vw,2.5rem)] flex flex-col justify-between gap-6 overflow-hidden ${variant.container}`}
     >
       <div className="w-full h-[clamp(9.5rem,28vw,14rem)] relative flex items-center justify-start shrink-0">
         {illustrationUrl && (
@@ -84,12 +99,12 @@ function SolutionHighlightCard({ feature }: { feature?: Feature }) {
 
       <div className="flex flex-col gap-y-2.5">
         <h3
-          className={`font-heading font-normal text-[clamp(1.125rem,2vw,1.75rem)] leading-snug tracking-normal ${variant.title}`}
+          className={`font-heading font-normal text-[20px] sm:text-[22px] lg:text-[clamp(1.125rem,2vw,1.75rem)] leading-snug tracking-normal ${variant.title}`}
         >
           {feature?.title}
         </h3>
         <p
-          className={`font-satoshi font-normal text-[clamp(0.75rem,1vw,0.875rem)] leading-[1.5] tracking-normal ${variant.desc}`}
+          className={`font-satoshi font-normal text-[14px] sm:text-[15px] lg:text-[clamp(0.75rem,1vw,0.875rem)] leading-[1.5] tracking-normal ${variant.desc}`}
         >
           {feature?.description}
         </p>

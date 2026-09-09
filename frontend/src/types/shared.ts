@@ -4,6 +4,8 @@ export interface SectionHeader {
   id: number;
   title: string;
   description?: string;
+  mobileTitle?: string | null;
+  mobileDescription?: string | null;
 }
 
 export interface ButtonComponent {
@@ -72,6 +74,13 @@ export interface ProcessCard {
   cta?: ButtonComponent | null;
   media?: StrapiMedia | null;
   hoverList?: ListItem[];
+}
+
+export interface ProcessCardMobile {
+  id: number;
+  title?: string | null;
+  description?: string | null;
+  icon?: StrapiMedia | null;
 }
 
 export interface FaqItem {

@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "@/components/shared/Button";
-import { OurProcessSection, ProcessCard } from "@/types";
+import { OurProcessSection, ProcessCard, ProcessCardMobile } from "@/types";
 import { getStrapiMediaUrl } from "@/lib/fetcher";
 
 interface OurProcessProps {
@@ -23,6 +23,115 @@ function DefaultLightbulbIcon() {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+    </svg>
+  );
+}
+
+function MobileCardIcon({ title }: { title?: string | null }) {
+  const t = (title || "").toLowerCase();
+
+  if (t.includes("ui") || t.includes("design")) {
+    return (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        className="w-6 h-6 text-white/90"
+      >
+        <path
+          d="M9 18h6M10 22h4M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
+
+  if (t.includes("web")) {
+    return (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        className="w-6 h-6 text-white/90"
+      >
+        <rect x="3" y="3" width="18" height="6" rx="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M19 9v3a2 2 0 0 1-2 2H9a2 2 0 0 0-2 2v5" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="5" y="18" width="4" height="4" rx="1" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    );
+  }
+
+  if (t.includes("app") || t.includes("mobile")) {
+    return (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        className="w-6 h-6 text-white/90"
+      >
+        <path
+          d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
+
+  if (t.includes("ai") || t.includes("auto")) {
+    return (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        className="w-6 h-6 text-white/90"
+      >
+        <path
+          d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
+
+  if (t.includes("commerce")) {
+    return (
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        className="w-6 h-6 text-white/90"
+      >
+        <rect x="3" y="4" width="18" height="12" rx="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M2 20h20" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      className="w-6 h-6 text-white/90"
+    >
+      <circle cx="6" cy="6" r="3" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="18" cy="18" r="3" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="18" cy="6" r="3" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M8.5 8.5l7 7M8.5 6h6.5M18 8.5v6.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -197,14 +306,18 @@ function getRowGridTemplate(row: ProcessCard[]): string {
 
 export default function OurProcess({ data }: OurProcessProps) {
   const eyebrow = data?.eyebrow || "Our Process";
+  const mobileEyebrow = data?.mobileEyebrow || eyebrow;
   const title =
     data?.header?.title || "Every Capability Runs Through The Same System.";
+  const mobileTitle = data?.header?.mobileTitle || title;
   const description =
     data?.header?.description ||
     "Whether we are building a Shopify store, a custom website, a CMS platform, or a mobile app ecosystem, the process stays connected.";
+  const mobileDescription = data?.header?.mobileDescription || description;
   const ctaText = data?.CTA?.text || "Explore Our Services";
   const ctaUrl = data?.CTA?.url || "#services";
   const cards = data?.desktopCards || data?.cards || [];
+  const mobileCards = data?.mobileCards || [];
   const rows = chunkCardsIntoRows(cards);
 
   return (
@@ -212,19 +325,18 @@ export default function OurProcess({ data }: OurProcessProps) {
       <div className="max-w-[1920px] mx-auto w-full">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 lg:gap-12">
           <div className="flex flex-col gap-8">
-            {eyebrow && (
-              <p className="text-white/60 text-[14px] 2xl:text-[15px] font-satoshi font-normal tracking-wide">
-                {eyebrow}
-              </p>
-            )}
+            <p className="text-white/60 text-[14px] 2xl:text-[15px] font-satoshi font-normal tracking-wide">
+              <span className="block lg:hidden">{mobileEyebrow}</span>
+              <span className="hidden lg:block">{eyebrow}</span>
+            </p>
             <h2 className="font-delight! text-[34px] sm:text-[42px] 2xl:text-[50px] 3xl:text-[64px] font-medium text-white leading-[1.08] tracking-[-0.02em] max-w-167.5">
-              {title}
+              <span className="block lg:hidden">{mobileTitle}</span>
+              <span className="hidden lg:block">{title}</span>
             </h2>
-            {description && (
-              <p className="text-white text-[15px] 2xl:text-[16px] 3xl:text-[17px] font-satoshi font-normal leading-relaxed max-w-[90%]">
-                {description}
-              </p>
-            )}
+            <p className="text-white text-[15px] 2xl:text-[16px] 3xl:text-[17px] font-satoshi font-normal leading-relaxed max-w-[90%]">
+              <span className="block lg:hidden">{mobileDescription}</span>
+              <span className="hidden lg:block">{description}</span>
+            </p>
           </div>
 
           <div className="shrink-0 self-start lg:self-center">
@@ -239,7 +351,44 @@ export default function OurProcess({ data }: OurProcessProps) {
           </div>
         </div>
 
-        <div className="mt-14 sm:mt-16 2xl:mt-20 flex flex-col gap-6 2xl:gap-8">
+        {/* Mobile View: Single-card smooth horizontal scroll */}
+        {mobileCards.length > 0 && (
+          <div
+            data-lenis-prevent
+            className="flex lg:hidden overflow-x-auto gap-3 sm:gap-4 no-scrollbar -mx-6 sm:-mx-12 px-6 sm:px-12 mt-8 pb-3 scroll-smooth"
+          >
+            {mobileCards.map((card) => (
+              <div
+                key={card.id}
+                className="w-[260px] sm:w-[280px] shrink-0 rounded-[8px] bg-[#263622] p-4 sm:p-4.5 flex flex-col justify-start min-h-[270px] select-none"
+              >
+                <div className="h-6 w-6 mb-5 sm:mb-6 flex items-center justify-start">
+                  {card.icon?.url ? (
+                    <Image
+                      src={getStrapiMediaUrl(card.icon.url)}
+                      alt={card.title || "Capability icon"}
+                      width={24}
+                      height={24}
+                      className="h-6 w-6 object-contain"
+                    />
+                  ) : (
+                    <MobileCardIcon title={card.title} />
+                  )}
+                </div>
+                <h3 className="font-delight text-[17px] sm:text-[18px] font-medium leading-tight text-white mb-2.5">
+                  {card.title}
+                </h3>
+                <p className="font-satoshi text-[13px] sm:text-[13.5px] font-normal leading-[1.6] text-[#9EAFA0] flex-1">
+                  {card.description}
+                </p>
+              </div>
+            ))}
+            <div className="w-1 shrink-0" aria-hidden="true" />
+          </div>
+        )}
+
+        {/* Desktop View: Grid Layout */}
+        <div className="hidden lg:flex flex-col gap-6 2xl:gap-8 mt-14 sm:mt-16 2xl:mt-20">
           {rows.map((row, rowIndex) => {
             const template = getRowGridTemplate(row);
 

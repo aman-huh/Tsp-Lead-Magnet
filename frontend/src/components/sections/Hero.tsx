@@ -28,17 +28,29 @@ export default function Hero({ data }: HeroProps) {
       <div className="relative mx-auto px-0 lg:px-[clamp(3.5rem,4.2vw,6.25rem)] max-w-[1920px] w-full lg:pt-0 lg:mt-[clamp(6rem,6vw,9.2rem)] flex-1 flex flex-col pb-0 lg:pb-[clamp(3.5rem,4.2vw,5.375rem)]">
         <div className="flex flex-col lg:flex-row gap-0 lg:gap-[clamp(2rem,4.2vw,3rem)] flex-1 items-stretch">
           <div className="w-full lg:w-[55%] flex flex-col justify-between px-[clamp(1.25rem,4.2vw,2rem)] lg:px-0 pt-[clamp(6rem,14vw,7.5rem)] lg:pt-0 pb-[clamp(1.5rem,4vw,2rem)] lg:pb-0 h-auto">
-            <div className="space-y-[clamp(1.25rem,4.2vw,2rem)] mb-[clamp(3rem,6vw,4.5rem)] lg:mb-0 my-0">
-              <div className="flex flex-col gap-y-[clamp(0.75rem,4.2vw,1.25rem)]">
-                <h1 className="font-heading! text-[clamp(3.12rem,4.2vw,5rem)] text-white leading-[1.14] tracking-[-0.02em]">
-                  {title}
-                </h1>
-                {description && (
-                  <p className="w-full lg:w-[85%] font-satoshi text-[clamp(0.9375rem,4.2vw,1.25rem)] font-normal text-white/90 sm:text-white leading-[1.6] tracking-normal">
-                    {description}
-                  </p>
+            <div className="flex flex-col gap-y-[clamp(1rem,3.2vw,1.5rem)] mb-[clamp(3rem,6vw,4.5rem)] lg:mb-0 my-0">
+              <h1 className="font-heading! text-[clamp(3.12rem,4.2vw,5rem)] text-white leading-[1.25] lg:leading-[1.14] tracking-[-0.02em]">
+                {header?.mobileTitle ? (
+                  <>
+                    <span className="block lg:hidden">{header.mobileTitle}</span>
+                    <span className="hidden lg:block">{title}</span>
+                  </>
+                ) : (
+                  title
                 )}
-              </div>
+              </h1>
+              {(description || header?.mobileDescription) && (
+                <p className="w-full lg:w-[85%] font-satoshi text-[14px] sm:text-[15px] lg:text-[clamp(0.9375rem,4.2vw,1.25rem)] font-normal text-white/90 sm:text-white leading-[1.6] tracking-normal">
+                  {header?.mobileDescription ? (
+                    <>
+                      <span className="block lg:hidden">{header.mobileDescription}</span>
+                      <span className="hidden lg:block">{description}</span>
+                    </>
+                  ) : (
+                    description
+                  )}
+                </p>
+              )}
               <div className="w-full lg:w-auto">
                 <Button
                   theme="dark"

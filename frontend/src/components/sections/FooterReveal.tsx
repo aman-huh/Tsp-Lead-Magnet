@@ -31,16 +31,17 @@ export default function FooterReveal({
 
       if (travel <= 0) {
         contentRef.current.style.transform = "";
-        footerRef.current.style.transform = "translateY(100%)";
+        footerRef.current.style.transform = "translate3d(0, 100%, 0)";
         footerRef.current.style.visibility = "hidden";
-      } else if (travel >= spacerHeight) {
-        contentRef.current.style.transform = `translateY(${spacerHeight}px)`;
-        footerRef.current.style.transform = "translateY(0%)";
-        footerRef.current.style.visibility = "visible";
       } else {
-        const progress = travel / spacerHeight;
-        contentRef.current.style.transform = `translateY(${travel}px)`;
-        footerRef.current.style.transform = `translateY(${(1 - progress) * 100}%)`;
+        contentRef.current.style.transform = `translate3d(0, ${travel}px, 0)`;
+
+        if (travel >= spacerHeight) {
+          footerRef.current.style.transform = "translate3d(0, 0%, 0)";
+        } else {
+          const progress = Math.min(1, Math.max(0, travel / spacerHeight));
+          footerRef.current.style.transform = `translate3d(0, ${(1 - progress) * 100}%, 0)`;
+        }
         footerRef.current.style.visibility = "visible";
       }
     };
@@ -49,15 +50,17 @@ export default function FooterReveal({
 
     if (lenis) {
       lenis.on("scroll", update);
+    } else {
+      window.addEventListener("scroll", update, { passive: true });
     }
-    window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
 
     return () => {
       if (lenis) {
         lenis.off("scroll", update);
+      } else {
+        window.removeEventListener("scroll", update);
       }
-      window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
     };
   }, [lenis]);
@@ -69,7 +72,7 @@ export default function FooterReveal({
       </div>
       <div
         ref={spacerRef}
-        className="h-140 sm:h-150 2xl:h-165 3xl:h-180 w-full pointer-events-none"
+        className="h-[100dvh] lg:h-140 sm:h-150 2xl:h-165 3xl:h-180 w-full pointer-events-none"
       />
       <Footer ref={footerRef} data={footerData} />
     </div>

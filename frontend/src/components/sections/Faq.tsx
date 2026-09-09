@@ -21,8 +21,9 @@ const DEFAULT_QUESTIONS: FaqItem[] = [
 export default function FAQ({ data }: FAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const title = data?.heading?.title || "FAQ";
-  const description = data?.heading?.description;
+  const heading = data?.heading;
+  const title = heading?.title || "FAQ";
+  const description = heading?.description;
 
   const rawQuestions =
     data?.questions && data.questions.length > 0
@@ -34,20 +35,34 @@ export default function FAQ({ data }: FAQProps) {
   };
 
   return (
-    <section className="w-full bg-white py-20 sm:py-24 2xl:py-32 px-6 sm:px-12 2xl:px-20 3xl:px-[89.5px]">
+    <section className="w-full bg-white py-16 sm:py-24 2xl:py-32 px-0 sm:px-12 2xl:px-20 3xl:px-[89.5px]">
       <div className="max-w-[1920px] mx-auto w-full">
-        <div className="mb-10 sm:mb-14 2xl:mb-16">
-          <h2 className="font-delight! text-[44px] sm:text-[52px] 2xl:text-[62px] 3xl:text-[70px] font-medium leading-[1.1] tracking-[-0.02em] text-[#0F1D07]">
-            {title}
+        <div className="mb-8 sm:mb-14 2xl:mb-16 px-6 sm:px-0">
+          <h2 className="font-heading font-medium text-[36px] sm:text-[52px] 2xl:text-[62px] 3xl:text-[70px] leading-[1.1] tracking-[-0.02em] text-[#0F1D07]">
+            {heading?.mobileTitle ? (
+              <>
+                <span className="block lg:hidden">{heading.mobileTitle}</span>
+                <span className="hidden lg:block">{title}</span>
+              </>
+            ) : (
+              title
+            )}
           </h2>
-          {description && (
+          {(description || heading?.mobileDescription) && (
             <p className="font-satoshi text-[16px] 2xl:text-[18px] text-[#4A5568] mt-3 sm:mt-4 max-w-2xl">
-              {description}
+              {heading?.mobileDescription ? (
+                <>
+                  <span className="block lg:hidden">{heading.mobileDescription}</span>
+                  <span className="hidden lg:block">{description}</span>
+                </>
+              ) : (
+                description
+              )}
             </p>
           )}
         </div>
 
-        <div className="w-full flex flex-col gap-4.75">
+        <div className="w-full flex flex-col gap-0 sm:gap-4.75">
           {rawQuestions.map((item, index) => {
             const isOpen = openIndex === index;
             const answerText = item.answer?.trim();
@@ -55,15 +70,15 @@ export default function FAQ({ data }: FAQProps) {
             return (
               <div
                 key={item.id || index}
-                className="border-b border-[#000000] transition-colors duration-150"
+                className="w-full border-b border-[#E5E5E5] sm:border-[#000000] transition-colors duration-150"
               >
                 <button
                   type="button"
                   onClick={() => toggleItem(index)}
-                  className="w-full py-5 sm:py-6 2xl:py-7 flex items-center justify-between gap-6 text-left cursor-pointer group select-none"
+                  className="w-full py-5 sm:py-6 2xl:py-7 px-6 sm:px-0 flex items-center justify-between gap-6 text-left cursor-pointer group select-none"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-heading font-medium text-[20px] sm:text-[24px] 2xl:text-[28px] 3xl:text-[32px] leading-[1.35] tracking-[0.01em] text-[#0F1D07] group-hover:text-black transition-colors">
+                  <span className="font-heading font-normal text-[17px] sm:text-[24px] 2xl:text-[28px] 3xl:text-[32px] leading-[1.4] tracking-[0.01em] text-[#0F1D07] group-hover:text-black transition-colors">
                     {item.question}
                   </span>
                   <span
@@ -84,7 +99,7 @@ export default function FAQ({ data }: FAQProps) {
                         : "grid-rows-[0fr] opacity-0 pb-0"
                     }`}
                   >
-                    <div className="overflow-hidden">
+                    <div className="overflow-hidden px-6 sm:px-0">
                       <p className="font-satoshi text-[15px] sm:text-[16px] 2xl:text-[17px] 3xl:text-[18px] text-[#4A5568] leading-relaxed max-w-4xl">
                         {answerText}
                       </p>

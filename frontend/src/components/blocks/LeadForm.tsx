@@ -359,7 +359,7 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
         )}
       </div>
 
-      <div className="mt-6">
+      <div className="mt-32 sm:mt-36 lg:mt-6 pb-6 lg:pb-0">
         {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
         <Button
           text={isSubmitting ? "Submitting..." : buttonText}

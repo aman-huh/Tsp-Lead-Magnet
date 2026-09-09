@@ -6,11 +6,12 @@ interface BrandFitProps {
 }
 
 export default function BrandFit({ data }: BrandFitProps) {
+  const header = data?.header;
   const title =
-    data?.header?.title ||
+    header?.title ||
     "Where this engagement works, and where it does not.";
   const description =
-    data?.header?.description ||
+    header?.description ||
     "The trading calendar has taught shoppers here to wait. When a storefront doesn't make the case for a product at full price, the promotion has to — and margin pays for it. We redesign Shopify stores so the buying argument sits on the page, not in the discount code.";
 
   const suitableCard = data?.suitableCard;
@@ -21,11 +22,27 @@ export default function BrandFit({ data }: BrandFitProps) {
       <div className="w-full flex flex-col xl:flex-row items-stretch justify-between gap-[clamp(2.5rem,5vw,4.5rem)]">
         <div className="w-full xl:w-[38%] 2xl:w-[42%] flex flex-col justify-center self-stretch">
           <h2 className="font-delight! text-[clamp(1.875rem,4.2vw,4.375rem)] font-medium leading-[1.1] tracking-[-0.02em] text-[#0F1D07]">
-            {title}
+            {header?.mobileTitle ? (
+              <>
+                <span className="block lg:hidden">{header.mobileTitle}</span>
+                <span className="hidden lg:block">{title}</span>
+              </>
+            ) : (
+              title
+            )}
           </h2>
-          <p className="font-satoshi font-medium text-[clamp(0.9375rem,4.2vw,1.125rem)] leading-relaxed text-[#0F1D07] mt-[clamp(1.25rem,3vw,2rem)] max-w-2xl xl:max-w-none">
-            {description}
-          </p>
+          {(description || header?.mobileDescription) && (
+            <p className="font-satoshi font-medium text-[clamp(0.9375rem,4.2vw,1.125rem)] leading-relaxed text-[#0F1D07] mt-[clamp(1.25rem,3vw,2rem)] max-w-2xl xl:max-w-none">
+              {header?.mobileDescription ? (
+                <>
+                  <span className="block lg:hidden">{header.mobileDescription}</span>
+                  <span className="hidden lg:block">{description}</span>
+                </>
+              ) : (
+                description
+              )}
+            </p>
+          )}
         </div>
 
         <div className="w-full xl:w-[62%] 2xl:w-[58%] flex flex-col sm:flex-row gap-[clamp(1.25rem,3vw,2rem)] items-stretch justify-end self-stretch">
