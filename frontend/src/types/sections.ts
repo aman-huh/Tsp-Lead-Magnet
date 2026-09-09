@@ -79,6 +79,7 @@ export interface OurProcessSection {
   mobileEyebrow?: string | null;
   header?: SectionHeader;
   CTA?: ButtonComponent;
+  desktopCta?: ButtonComponent[];
   cards?: ProcessCard[];
   desktopCards?: ProcessCard[];
   mobileCards?: ProcessCardMobile[];

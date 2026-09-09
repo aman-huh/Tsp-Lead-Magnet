@@ -26,6 +26,7 @@ export async function getLandingPage() {
         "populate[sections][on][sections.client-showcase][populate][services]": "*",
         "populate[sections][on][sections.our-process][populate][header]": "*",
         "populate[sections][on][sections.our-process][populate][CTA]": "*",
+        "populate[sections][on][sections.our-process][populate][desktopCta]": "*",
         "populate[sections][on][sections.our-process][populate][desktopCards][populate]": "*",
         "populate[sections][on][sections.our-process][populate][mobileCards][populate]": "*",
         "populate[sections][on][sections.faq][populate][heading]": "*",

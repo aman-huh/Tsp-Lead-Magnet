@@ -1,6 +1,14 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  Lightbulb,
+  PaintRoller,
+  Smartphone,
+  Sparkles,
+  ShoppingBag,
+  Cpu,
+} from "lucide-react";
 import Button from "@/components/shared/Button";
 import { OurProcessSection, ProcessCard, ProcessCardMobile } from "@/types";
 import { getStrapiMediaUrl } from "@/lib/fetcher";
@@ -10,131 +18,72 @@ interface OurProcessProps {
 }
 
 function DefaultLightbulbIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      className="w-7 h-7 text-white/90"
-    >
-      <path
-        d="M9 18h6M10 22h4M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
+  return <Lightbulb className="w-7 h-7 text-white/90" strokeWidth={1.8} />;
 }
 
 function MobileCardIcon({ title }: { title?: string | null }) {
   const t = (title || "").toLowerCase();
 
   if (t.includes("ui") || t.includes("design")) {
-    return (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        className="w-6 h-6 text-white/90"
-      >
-        <path
-          d="M9 18h6M10 22h4M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    );
+    return <Lightbulb className="w-6 h-6 text-white/90" strokeWidth={1.8} />;
   }
-
-  if (t.includes("web")) {
-    return (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        className="w-6 h-6 text-white/90"
-      >
-        <rect x="3" y="3" width="18" height="6" rx="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M19 9v3a2 2 0 0 1-2 2H9a2 2 0 0 0-2 2v5" strokeLinecap="round" strokeLinejoin="round" />
-        <rect x="5" y="18" width="4" height="4" rx="1" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    );
+  if (t.includes("web") || t.includes("site")) {
+    return <PaintRoller className="w-6 h-6 text-white/90" strokeWidth={1.8} />;
   }
-
   if (t.includes("app") || t.includes("mobile")) {
-    return (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        className="w-6 h-6 text-white/90"
-      >
-        <path
-          d="M12 2L14.4 9.6L22 12L14.4 14.4L12 22L9.6 14.4L2 12L9.6 9.6L12 2Z"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    );
+    return <Smartphone className="w-6 h-6 text-white/90" strokeWidth={1.8} />;
   }
-
   if (t.includes("ai") || t.includes("auto")) {
-    return (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        className="w-6 h-6 text-white/90"
-      >
-        <path
-          d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.04"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.04"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    );
+    return <Sparkles className="w-6 h-6 text-white/90" strokeWidth={1.8} />;
+  }
+  if (t.includes("commerce") || t.includes("e-com")) {
+    return <ShoppingBag className="w-6 h-6 text-white/90" strokeWidth={1.8} />;
+  }
+  if (t.includes("iot") || t.includes("innov")) {
+    return <Cpu className="w-6 h-6 text-white/90" strokeWidth={1.8} />;
   }
 
-  if (t.includes("commerce")) {
-    return (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        className="w-6 h-6 text-white/90"
-      >
-        <rect x="3" y="4" width="18" height="12" rx="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M2 20h20" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    );
-  }
-
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      className="w-6 h-6 text-white/90"
-    >
-      <circle cx="6" cy="6" r="3" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="18" cy="18" r="3" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="18" cy="6" r="3" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M8.5 8.5l7 7M8.5 6h6.5M18 8.5v6.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
+  return <Lightbulb className="w-6 h-6 text-white/90" strokeWidth={1.8} />;
 }
+
+const DEFAULT_MOBILE_CARDS: ProcessCardMobile[] = [
+  {
+    id: 1,
+    title: "UI/UX Design",
+    description:
+      "Human-centered UI/UX design blending creativity, usability, and aesthetics for memorable experiences.",
+  },
+  {
+    id: 2,
+    title: "Websites",
+    description:
+      "Fast, scalable, and beautiful websites crafted for performance, engagement, and lasting impact.",
+  },
+  {
+    id: 3,
+    title: "Mobile Apps",
+    description:
+      "Seamless Android and iOS apps delivering intuitive experiences and powerful business functionality.",
+  },
+  {
+    id: 4,
+    title: "AI & Automation",
+    description:
+      "Smart systems that streamline processes, enhance decisions, and unlock next-level efficiency.",
+  },
+  {
+    id: 5,
+    title: "E-Commerce",
+    description:
+      "Custom online stores and marketplaces engineered for growth, flexibility, and effortless user journeys.",
+  },
+  {
+    id: 6,
+    title: "IoT & Innovation",
+    description:
+      "Connected devices and embedded systems bringing digital intelligence into real-world products.",
+  },
+];
 
 function ContentCardItem({ card }: { card: ProcessCard }) {
   const ctaText = card.cta?.text || `Explore ${card.title || "More"}`;
@@ -306,36 +255,49 @@ function getRowGridTemplate(row: ProcessCard[]): string {
 
 export default function OurProcess({ data }: OurProcessProps) {
   const eyebrow = data?.eyebrow || "Our Process";
-  const mobileEyebrow = data?.mobileEyebrow || eyebrow;
+  const mobileEyebrow = data?.mobileEyebrow || "Services.";
   const title =
     data?.header?.title || "Every Capability Runs Through The Same System.";
-  const mobileTitle = data?.header?.mobileTitle || title;
+  const mobileTitle =
+    data?.header?.mobileTitle || "Lets Build Something Exceptional Together";
   const description =
     data?.header?.description ||
     "Whether we are building a Shopify store, a custom website, a CMS platform, or a mobile app ecosystem, the process stays connected.";
-  const mobileDescription = data?.header?.mobileDescription || description;
+  const mobileDescription =
+    data?.header?.mobileDescription ||
+    "Powerful digital services designed to support your brand’s full journey.";
   const ctaText = data?.CTA?.text || "Explore Our Services";
   const ctaUrl = data?.CTA?.url || "#services";
   const cards = data?.desktopCards || data?.cards || [];
-  const mobileCards = data?.mobileCards || [];
+  const mobileCards =
+    data?.mobileCards && data.mobileCards.length > 0
+      ? data.mobileCards
+      : DEFAULT_MOBILE_CARDS;
   const rows = chunkCardsIntoRows(cards);
 
+  const primaryMobileCta = {
+    text: data?.desktopCta?.[0]?.text || "Get My Instant Quote",
+    url: data?.desktopCta?.[0]?.url || "#quote",
+  };
+  const secondaryMobileCta = {
+    text: data?.desktopCta?.[1]?.text || "Book a Free Call",
+    url: data?.desktopCta?.[1]?.url || "#book-call",
+  };
+
   return (
-    <section className="bg-[#0F1D07] py-20 sm:py-28 2xl:py-36 3xl:py-40 px-6 sm:px-12 2xl:px-36 3xl:px-40 text-white">
+    <section className="bg-[#0F1D07] py-12 sm:py-16 lg:py-28 2xl:py-36 3xl:py-40 px-6 sm:px-12 2xl:px-36 3xl:px-40 text-white">
       <div className="max-w-[1920px] mx-auto w-full">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 lg:gap-12">
+        {/* Desktop Header */}
+        <div className="hidden lg:flex lg:items-center justify-between gap-8 lg:gap-12">
           <div className="flex flex-col gap-8">
             <p className="text-white/60 text-[14px] 2xl:text-[15px] font-satoshi font-normal tracking-wide">
-              <span className="block lg:hidden">{mobileEyebrow}</span>
-              <span className="hidden lg:block">{eyebrow}</span>
+              {eyebrow}
             </p>
             <h2 className="font-delight! text-[34px] sm:text-[42px] 2xl:text-[50px] 3xl:text-[64px] font-medium text-white leading-[1.08] tracking-[-0.02em] max-w-167.5">
-              <span className="block lg:hidden">{mobileTitle}</span>
-              <span className="hidden lg:block">{title}</span>
+              {title}
             </h2>
             <p className="text-white text-[15px] 2xl:text-[16px] 3xl:text-[17px] font-satoshi font-normal leading-relaxed max-w-[90%]">
-              <span className="block lg:hidden">{mobileDescription}</span>
-              <span className="hidden lg:block">{description}</span>
+              {description}
             </p>
           </div>
 
@@ -351,41 +313,70 @@ export default function OurProcess({ data }: OurProcessProps) {
           </div>
         </div>
 
-        {/* Mobile View: Single-card smooth horizontal scroll */}
-        {mobileCards.length > 0 && (
-          <div
-            data-lenis-prevent
-            className="flex lg:hidden overflow-x-auto gap-3 sm:gap-4 no-scrollbar -mx-6 sm:-mx-12 px-6 sm:px-12 mt-8 pb-3 scroll-smooth"
-          >
-            {mobileCards.map((card) => (
-              <div
-                key={card.id}
-                className="w-[260px] sm:w-[280px] shrink-0 rounded-[8px] bg-[#263622] p-4 sm:p-4.5 flex flex-col justify-start min-h-[270px] select-none"
-              >
-                <div className="h-6 w-6 mb-5 sm:mb-6 flex items-center justify-start">
-                  {card.icon?.url ? (
-                    <Image
-                      src={getStrapiMediaUrl(card.icon.url)}
-                      alt={card.title || "Capability icon"}
-                      width={24}
-                      height={24}
-                      className="h-6 w-6 object-contain"
-                    />
-                  ) : (
-                    <MobileCardIcon title={card.title} />
-                  )}
-                </div>
-                <h3 className="font-delight text-[17px] sm:text-[18px] font-medium leading-tight text-white mb-2.5">
-                  {card.title}
-                </h3>
-                <p className="font-satoshi text-[13px] sm:text-[13.5px] font-normal leading-[1.6] text-[#9EAFA0] flex-1">
-                  {card.description}
-                </p>
+        {/* Mobile Header */}
+        <div className="flex lg:hidden flex-col">
+          <p className="text-[#8E9F8D] text-[14px] sm:text-[15px] font-satoshi font-normal tracking-normal mb-2.5">
+            {mobileEyebrow}
+          </p>
+          <h2 className="font-delight! text-[32px] sm:text-[36px] font-medium text-white leading-[1.12] tracking-[-0.02em] max-w-xs">
+            {mobileTitle}
+          </h2>
+          <p className="text-[#A8B7A7] text-[14px] sm:text-[15px] font-satoshi font-normal leading-[1.55] mt-3.5 max-w-[95%]">
+            {mobileDescription}
+          </p>
+        </div>
+
+        {/* Mobile View: 2 cards visible side-by-side with smooth horizontal scroll */}
+        <div
+          data-lenis-prevent
+          className="flex lg:hidden overflow-x-auto gap-3 sm:gap-4 no-scrollbar -mx-6 sm:-mx-12 px-6 sm:px-12 mt-8 pb-1 scroll-smooth snap-x snap-mandatory"
+        >
+          {mobileCards.map((card) => (
+            <div
+              key={card.id}
+              className="w-[calc((100vw-60px)/2)] sm:w-[240px] shrink-0 rounded-[14px] bg-[#243320] p-4 sm:p-5 flex flex-col justify-start min-h-[270px] select-none snap-start"
+            >
+              <div className="h-6 w-6 mb-5 flex items-center justify-start text-white/90">
+                {card.icon?.url ? (
+                  <Image
+                    src={getStrapiMediaUrl(card.icon.url)}
+                    alt={card.title || "Capability icon"}
+                    width={24}
+                    height={24}
+                    className="h-6 w-6 object-contain"
+                  />
+                ) : (
+                  <MobileCardIcon title={card.title} />
+                )}
               </div>
-            ))}
-            <div className="w-1 shrink-0" aria-hidden="true" />
-          </div>
-        )}
+              <h3 className="font-delight text-[17px] sm:text-[18px] font-medium leading-tight text-white mb-2.5">
+                {card.title}
+              </h3>
+              <p className="font-satoshi text-[13px] sm:text-[13.5px] font-normal leading-[1.5] text-[#9EAFA0] flex-1">
+                {card.description}
+              </p>
+            </div>
+          ))}
+          <div className="w-1 shrink-0" aria-hidden="true" />
+        </div>
+
+        {/* Mobile CTA Buttons */}
+        <div className="flex lg:hidden flex-col gap-3 w-full mt-8">
+          <Link
+            href={primaryMobileCta.url}
+            className="w-full h-[50px] sm:h-[52px] rounded-full bg-[#F3F4F6] active:bg-white text-[#0F1D07] font-satoshi font-medium text-[15px] sm:text-[16px] flex items-center justify-center gap-2 transition-colors shadow-sm cursor-pointer"
+          >
+            <span>{primaryMobileCta.text}</span>
+            <span className="text-[17px] leading-none">→</span>
+          </Link>
+          <Link
+            href={secondaryMobileCta.url}
+            className="w-full h-[50px] sm:h-[52px] rounded-full bg-transparent active:bg-white/5 border border-white/20 text-white font-satoshi font-medium text-[15px] sm:text-[16px] flex items-center justify-center gap-2 transition-colors cursor-pointer"
+          >
+            <span>{secondaryMobileCta.text}</span>
+            <span className="text-[17px] leading-none">→</span>
+          </Link>
+        </div>
 
         {/* Desktop View: Grid Layout */}
         <div className="hidden lg:flex flex-col gap-6 2xl:gap-8 mt-14 sm:mt-16 2xl:mt-20">
