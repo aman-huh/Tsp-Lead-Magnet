@@ -122,7 +122,6 @@ export interface FooterSection {
   quickLinks?: FooterLink[];
   contacts?: FooterContact[];
   marquee?: string | null;
-  address?: string | null;
 }
 
 export type LandingPageSection =

@@ -27,9 +27,6 @@
     },
     "marquee": {
       "type": "text"
-    },
-    "address": {
-      "type": "text"
     }
   },
   "config": {}
