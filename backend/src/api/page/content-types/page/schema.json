@@ -35,6 +35,11 @@
         "sections.faq",
         "sections.footer"
       ]
+    },
+    "auditBar": {
+      "type": "component",
+      "component": "shared.audit-bar",
+      "repeatable": false
     }
   }
 }

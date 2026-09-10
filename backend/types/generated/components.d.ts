@@ -377,6 +377,21 @@ export interface SectionsSolutionHighlights extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedAuditBar extends Struct.ComponentSchema {
+  collectionName: 'components_shared_audit_bars';
+  info: {
+    displayName: 'AuditBar';
+    icon: 'bell';
+  };
+  attributes: {
+    auditText: Schema.Attribute.String;
+    leadForm: Schema.Attribute.Component<'blocks.form', false>;
+    primaryButtonText: Schema.Attribute.String;
+    secondaryButtonText: Schema.Attribute.String;
+    secondaryButtonUrl: Schema.Attribute.String;
+  };
+}
+
 export interface SharedButton extends Struct.ComponentSchema {
   collectionName: 'components_shared_buttons';
   info: {
@@ -458,6 +473,7 @@ declare module '@strapi/strapi' {
       'sections.problem-assessment': SectionsProblemAssessment;
       'sections.process-card-mobile': SectionsProcessCardMobile;
       'sections.solution-highlights': SectionsSolutionHighlights;
+      'shared.audit-bar': SharedAuditBar;
       'shared.button': SharedButton;
       'shared.list-item': SharedListItem;
       'shared.section-header': SharedSectionHeader;

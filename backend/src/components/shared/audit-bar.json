@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_shared_audit_bars",
+  "info": {
+    "displayName": "AuditBar",
+    "icon": "bell"
+  },
+  "options": {},
+  "attributes": {
+    "auditText": {
+      "type": "string"
+    },
+    "primaryButtonText": {
+      "type": "string"
+    },
+    "secondaryButtonText": {
+      "type": "string"
+    },
+    "secondaryButtonUrl": {
+      "type": "string"
+    },
+    "leadForm": {
+      "type": "component",
+      "component": "blocks.form",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}
