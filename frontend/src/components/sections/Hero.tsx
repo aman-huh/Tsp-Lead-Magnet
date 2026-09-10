@@ -74,7 +74,7 @@ export default function Hero({ data }: HeroProps) {
           <div className="w-full lg:w-[55%] flex flex-col justify-between px-[clamp(1.25rem,4.2vw,2rem)] lg:px-0 pt-[clamp(6rem,14vw,7.5rem)] lg:pt-0 pb-[clamp(1.5rem,4vw,2rem)] lg:pb-0 h-auto">
             <div className="flex flex-col gap-y-[clamp(1.5rem,3.2vw,1.5rem)] mb-[clamp(4.5rem,6vw,5rem)] lg:mb-0 my-0">
               <div className="space-y-5">
-                <h1 className="font-heading! text-[clamp(2.5rem,4.2vw,5rem)] text-white leading-tight tracking-[-0.02em]">
+                <h1 className="font-heading! text-[clamp(2.2rem,4.2vw,5rem)] text-white leading-relaxed md:leading-tight tracking-[-0.02em]">
                 {header?.mobileTitle ? (
                   <>
                     <span className="block lg:hidden">{renderTitle(header.mobileTitle)}</span>

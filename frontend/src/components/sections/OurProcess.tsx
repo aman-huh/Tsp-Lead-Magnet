@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Lightbulb } from "lucide-react";
@@ -15,15 +17,55 @@ function DefaultLightbulbIcon() {
 }
 
 function ContentCardItem({ card }: { card: ProcessCard }) {
+  const [isTapped, setIsTapped] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
   const ctaText = "Explore";
   const ctaUrl = card.cta?.url || "#";
   const hasHoverList = card.hoverList && card.hoverList.length > 0;
 
+  useEffect(() => {
+    if (!isTapped) return;
+    const handleOutsideClick = (e: MouseEvent | TouchEvent) => {
+      if (cardRef.current && !cardRef.current.contains(e.target as Node)) {
+        setIsTapped(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("touchstart", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("touchstart", handleOutsideClick);
+    };
+  }, [isTapped]);
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    if (!hasHoverList) return;
+    const target = e.target as HTMLElement;
+    if (isTapped && target.closest("a")) {
+      return;
+    }
+    setIsTapped((prev) => !prev);
+  };
+
   return (
-    <div className="bg-[#1B2F10] hover:bg-[#254419] rounded-[12px] p-[clamp(1rem,2vw,2.25rem)] flex flex-col justify-between aspect-[331/421] h-full w-full relative group overflow-hidden transition-all duration-300">
-      <div className="flex flex-col justify-between flex-1 h-full w-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] opacity-100 translate-y-0 group-hover:opacity-0 group-hover:-translate-y-3">
+    <div
+      ref={cardRef}
+      onClick={handleCardClick}
+      className={`bg-[#1B2F10] ${
+        isTapped ? "bg-[#243D1A]" : "hover:bg-[#254419]"
+      } rounded-[12px] p-[clamp(0.875rem,2vw,2.25rem)] flex flex-col justify-between aspect-[331/421] min-h-[260px] sm:min-h-[280px] lg:min-h-0 h-full w-full relative group overflow-hidden transition-all duration-300 ${
+        hasHoverList ? "cursor-pointer" : ""
+      }`}
+    >
+      <div
+        className={`flex flex-col justify-between flex-1 h-full w-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+          isTapped
+            ? "opacity-0 -translate-y-3 pointer-events-none"
+            : "opacity-100 translate-y-0 lg:group-hover:opacity-0 lg:group-hover:-translate-y-3"
+        }`}
+      >
         <div>
-          <div className="w-[clamp(1.5rem,2vw,2.25rem)] h-[clamp(1.5rem,2vw,2.25rem)] relative mb-4 sm:mb-6 flex items-center">
+          <div className="w-[clamp(1.5rem,2vw,2.25rem)] h-[clamp(1.5rem,2vw,2.25rem)] relative mb-3 sm:mb-6 flex items-center">
             {card.icon?.url ? (
               <Image
                 src={getStrapiMediaUrl(card.icon.url)}
@@ -37,11 +79,11 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
             )}
           </div>
 
-          <h3 className="text-white font-medium text-[clamp(1rem,1.8vw,1.75rem)] tracking-[-0.01em] mb-2 sm:mb-3 font-delight! leading-tight">
+          <h3 className="text-white font-medium text-[clamp(1rem,1.8vw,1.75rem)] tracking-[-0.01em] mb-2 sm:mb-3 font-delight! leading-[1.15] sm:leading-tight">
             {card.title}
           </h3>
 
-          <p className="text-[#95A897] font-satoshi text-[clamp(0.75rem,1vw,0.9375rem)] leading-relaxed line-clamp-4 sm:line-clamp-none">
+          <p className="text-[#95A897] font-satoshi text-[clamp(0.75rem,1vw,0.9375rem)] leading-snug sm:leading-normal lg:leading-relaxed line-clamp-4 sm:line-clamp-none">
             {card.description}
           </p>
         </div>
@@ -49,6 +91,12 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
         <div className="pt-3 sm:pt-6 mt-auto">
           <Link
             href={ctaUrl}
+            onClick={(e) => {
+              if (hasHoverList && !isTapped) {
+                e.preventDefault();
+                setIsTapped(true);
+              }
+            }}
             className="inline-flex items-center gap-1.5 sm:gap-2 text-white font-medium text-[clamp(0.75rem,1vw,0.9375rem)] hover:text-white/80 transition-colors"
           >
             <span>{ctaText}</span>
@@ -58,7 +106,13 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
       </div>
 
       {hasHoverList && (
-        <div className="absolute inset-0 z-20 bg-[#243D1A] p-[clamp(0.75rem,2vw,2.25rem)] flex flex-col justify-start opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:duration-500 ease-out pointer-events-none group-hover:pointer-events-auto rounded-[12px] overflow-y-auto no-scrollbar">
+        <div
+          className={`absolute inset-0 z-20 bg-[#243D1A] p-[clamp(0.75rem,2vw,2.25rem)] flex flex-col justify-start transition-opacity duration-300 ease-out rounded-[12px] overflow-y-auto no-scrollbar ${
+            isTapped
+              ? "opacity-100 pointer-events-auto"
+              : "opacity-0 pointer-events-none lg:group-hover:opacity-100 lg:group-hover:pointer-events-auto lg:group-hover:duration-500"
+          }`}
+        >
           <ul className="divide-y divide-white/15 w-full">
             {card.hoverList?.map((item, idx) => (
               <li
@@ -66,7 +120,11 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
                 style={{
                   ["--enter-delay" as string]: `${idx * 45}ms`,
                 }}
-                className="flex items-start gap-2 sm:gap-3 2xl:gap-3.5 py-2 sm:py-2.5 2xl:py-3.5 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] delay-0 group-hover:[transition-delay:var(--enter-delay)]"
+                className={`flex items-start gap-2 sm:gap-3 2xl:gap-3.5 py-1.5 sm:py-2.5 2xl:py-3.5 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+                  isTapped
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-4 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 delay-0 lg:group-hover:[transition-delay:var(--enter-delay)]"
+                }`}
               >
                 <svg
                   viewBox="0 0 10 18"
@@ -79,7 +137,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
                 >
                   <path d="M1.5 1.5L8.5 9L1.5 16.5" />
                 </svg>
-                <span className="text-white font-satoshi text-[clamp(0.6875rem,1vw,0.96875rem)] leading-[1.35] sm:leading-snug">
+                <span className="text-white font-satoshi text-[clamp(0.6875rem,1vw,0.96875rem)] leading-[1.25] sm:leading-snug">
                   {item.Text || item.text}
                 </span>
               </li>

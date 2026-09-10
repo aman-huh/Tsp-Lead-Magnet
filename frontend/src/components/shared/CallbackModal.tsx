@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { LeadForm as LeadFormType } from "@/types";
 import { submitLead } from "@/services/lead";
+import { useLenis } from "@/components/providers/SmoothScroll";
 
 interface CallbackModalProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ export default function CallbackModal({
   onClose,
   data,
 }: CallbackModalProps) {
+  const lenis = useLenis();
   const [formValues, setFormValues] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -23,8 +25,13 @@ export default function CallbackModal({
   useEffect(() => {
     if (!isOpen) return;
 
-    const originalOverflow = document.body.style.overflow;
+    if (lenis) {
+      lenis.stop();
+    }
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
     document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -35,10 +42,14 @@ export default function CallbackModal({
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.body.style.overflow = originalOverflow;
+      if (lenis) {
+        lenis.start();
+      }
+      document.body.style.overflow = originalBodyOverflow;
+      document.documentElement.style.overflow = originalHtmlOverflow;
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, lenis]);
 
   if (!isOpen) return null;
 
@@ -98,23 +109,31 @@ export default function CallbackModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-6 overflow-y-auto"
-      onClick={onClose}
+      id="callback-modal"
+      data-modal="callback"
+      data-lenis-prevent="true"
+      className="fixed inset-0 z-[999] flex items-center justify-center p-3 sm:p-5 md:p-6 overflow-y-auto overscroll-contain no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
     >
       <div
-        className="relative w-full max-w-[580px] max-h-[92vh] overflow-y-auto bg-white shadow-2xl my-auto rounded-none p-8 sm:p-10 md:p-12 text-gray-900"
+        className="fixed inset-0 bg-black/60 cursor-pointer touch-none"
+        aria-hidden="true"
+        onClick={onClose}
+      />
+      <div
+        data-lenis-prevent="true"
+        className="relative w-full sm:min-w-[580px] md:min-w-[620px] max-w-[580px] sm:max-w-[620px] md:max-w-[660px] max-h-[92vh] sm:max-h-[88vh] bg-[#FAFAFC] rounded-none p-[clamp(1.125rem,3.5vw,2rem)] shadow-[0_20px_60px_rgba(0,0,0,0.3)] my-auto text-[#111827] z-10 flex flex-col justify-between overflow-y-auto overscroll-contain"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-6 right-6 sm:top-8 sm:right-8 z-10 flex h-8 w-8 items-center justify-center text-gray-500 hover:text-black transition-colors cursor-pointer"
-          aria-label="Close modal"
+          aria-label="Close callback modal"
+          className="absolute top-5 right-5 sm:top-6 sm:right-6 w-7 h-7 flex items-center justify-center text-[#111827] hover:opacity-60 transition-opacity cursor-pointer"
         >
           <svg
             className="w-5 h-5"
-            fill="none"
             viewBox="0 0 24 24"
+            fill="none"
             stroke="currentColor"
             strokeWidth="1.75"
           >
@@ -127,10 +146,10 @@ export default function CallbackModal({
         </button>
 
         {submitted ? (
-          <div className="text-center py-8 space-y-4">
-            <div className="w-12 h-12 rounded-full bg-green-100 text-green-700 flex items-center justify-center mx-auto">
+          <div className="text-center py-8 sm:py-14 space-y-3 sm:space-y-4">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-100 text-green-700 flex items-center justify-center mx-auto">
               <svg
-                className="w-6 h-6"
+                className="w-5 h-5 sm:w-6 sm:h-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -139,81 +158,88 @@ export default function CallbackModal({
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="font-heading text-[28px] sm:text-[32px] text-[#1F2A37]">
+            <h2 className="font-nohemi text-[clamp(1.25rem,4.5vw,1.875rem)] font-normal text-[#111827] leading-tight">
               Thanks! We'll be in touch soon.
             </h2>
-            <p className="text-gray-500 text-sm">
+            <p className="font-satoshi text-[#555555] text-[clamp(0.75rem,2.8vw,0.875rem)]">
               We received your information and will reach out shortly.
             </p>
-            <div className="pt-3">
+            <div className="pt-3 sm:pt-4">
               <button
                 type="button"
                 onClick={onClose}
-                className="py-3 px-8 rounded-full bg-[#1F1E1B] hover:bg-black text-white text-[15px] font-medium transition-colors cursor-pointer"
+                className="font-satoshi py-3 px-8 rounded-full bg-[#242120] hover:bg-black text-white text-[clamp(0.8125rem,3vw,0.9375rem)] font-medium transition-all cursor-pointer shadow-md active:scale-[0.99]"
               >
                 Done
               </button>
             </div>
           </div>
         ) : (
-          <div>
-            <div className="pr-8">
-              <h2 className="font-heading text-[30px] sm:text-[36px] md:text-[40px] text-[#1F2A37] font-normal tracking-tight leading-tight">
-                {formTitle}
-              </h2>
-              {description && (
-                <p className="text-[13px] sm:text-[13.5px] text-[#4B5563] mt-2 font-normal leading-relaxed whitespace-pre-line">
-                  {description}
-                </p>
-              )}
+          <div className="flex flex-col justify-between flex-1">
+            <div>
+              <div className="mb-3 sm:mb-4 pr-8">
+                <h2 className="font-nohemi text-[clamp(1.25rem,4.5vw,1.875rem)] font-normal text-[#111827] leading-[1.15] tracking-tight">
+                  {formTitle}
+                </h2>
+                {description && (
+                  <p className="font-satoshi text-[#555555] text-[clamp(0.6875rem,2.5vw,0.8125rem)] leading-relaxed mt-1 whitespace-pre-line">
+                    {description}
+                  </p>
+                )}
+              </div>
+
+              <div className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
+                {fields.map((field) => {
+                  const inputType =
+                    field.type === "phone"
+                      ? "tel"
+                      : field.type === "email"
+                        ? "email"
+                        : "text";
+
+                  return (
+                    <div key={field.id}>
+                      <label className="font-nohemi block text-[clamp(0.875rem,3.2vw,1.0625rem)] font-normal text-[#111827] mb-2">
+                        {field.label}
+                      </label>
+                      <input
+                        type={inputType}
+                        value={formValues[String(field.id)] || ""}
+                        onChange={(e) => {
+                          setError(null);
+                          setFormValues((prev) => ({
+                            ...prev,
+                            [String(field.id)]: e.target.value,
+                          }));
+                        }}
+                        placeholder={field.placeholder ?? ""}
+                        required={field.required}
+                        className="font-satoshi w-full px-4 sm:px-5 py-2.5 sm:py-3.5 rounded-full border border-[#D1D5DB] focus:outline-none focus:border-[#18181B] focus:ring-1 focus:ring-[#18181B] text-[clamp(0.75rem,2.8vw,0.875rem)] text-[#111827] bg-[#F1F1F3] placeholder-[#8E8E93] transition-all duration-200"
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
-            <div className="mt-7 sm:mt-8 space-y-5 sm:space-y-6">
-              {fields.map((field) => {
-                const inputType =
-                  field.type === "phone"
-                    ? "tel"
-                    : field.type === "email"
-                      ? "email"
-                      : "text";
-
-                return (
-                  <div key={field.id}>
-                    <label className="font-heading text-[15px] sm:text-[16px] text-[#1F2A37] block mb-2 font-normal">
-                      {field.label}
-                    </label>
-                    <input
-                      type={inputType}
-                      value={formValues[String(field.id)] || ""}
-                      onChange={(e) => {
-                        setError(null);
-                        setFormValues((prev) => ({
-                          ...prev,
-                          [String(field.id)]: e.target.value,
-                        }));
-                      }}
-                      placeholder={field.placeholder ?? ""}
-                      required={field.required}
-                      className="w-full h-12 sm:h-13 bg-[#F2F2F2] border border-black/15 rounded-full px-5 text-[14px] sm:text-[15px] text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-black/30 transition-all"
-                    />
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="mt-8">
-              {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
+            <div className="mt-5 sm:mt-10 md:mt-16">
+              {error && <p className="text-red-500 text-xs sm:text-sm mb-2.5">{error}</p>}
               <button
                 type="button"
                 disabled={isSubmitting}
                 onClick={() => handleSubmit()}
-                className="w-full py-4 px-6 rounded-full bg-[#1F1E1B] hover:bg-black text-white text-[15.5px] sm:text-[16px] font-medium transition-colors flex items-center justify-center cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                className="font-satoshi w-full bg-[#242120] hover:bg-black text-white font-medium py-2.5 sm:py-3.5 md:py-4 px-5 sm:px-6 rounded-full transition-all duration-200 flex justify-center items-center gap-2 text-[clamp(0.8125rem,3vw,0.96875rem)] cursor-pointer shadow-md active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? "Submitting..." : buttonText}
+                <span>{isSubmitting ? "Booking..." : buttonText}</span>
+                {!isSubmitting && <span className="text-[clamp(0.875rem,3.5vw,1.0625rem)]">→</span>}
               </button>
-              {footerText && (
-                <p className="text-[12px] sm:text-[12.5px] text-[#4B5563] text-center mt-3">
+              {footerText ? (
+                <p className="font-satoshi text-[clamp(0.625rem,2.2vw,0.75rem)] mt-2 text-center text-[#555555]">
                   {footerText}
+                </p>
+              ) : (
+                <p className="text-[11px] mt-2 text-center invisible select-none" aria-hidden="true">
+                  &nbsp;
                 </p>
               )}
             </div>

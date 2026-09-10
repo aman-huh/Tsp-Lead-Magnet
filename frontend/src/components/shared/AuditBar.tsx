@@ -23,7 +23,6 @@ export default function AuditBar({
   const lenis = useLenis();
 
   useEffect(() => {
-    // Pop up from below shortly after mount
     const timer = setTimeout(() => {
       setIsVisible(true);
     }, 400);
@@ -36,7 +35,6 @@ export default function AuditBar({
       onPrimaryClick();
       return;
     }
-    // Default: smooth scroll to lead form at the top
     const target = document.getElementById("lead-form") || document.querySelector("form");
     if (target) {
       if (lenis) {
@@ -54,7 +52,7 @@ export default function AuditBar({
       onSecondaryClick();
       return;
     }
-    // Default: smooth scroll to footer contact section or call
+
     const target = document.getElementById("footer") || document.querySelector("footer");
     if (target) {
       if (lenis) {
@@ -75,8 +73,8 @@ export default function AuditBar({
       role="region"
       aria-label="Bottom notification and quick quote action"
     >
-      <div className="grid items-center gap-3 rounded-[24px] border border-black/[0.08] bg-white px-5 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.14)] md:min-h-[78px] md:grid-cols-[minmax(0,1fr)_242px_208px] md:gap-4 md:py-3">
-        <p className="flex min-h-7 w-full items-center justify-start font-nohemi text-[15px] font-medium leading-snug text-[#0F1D07] text-left md:w-auto md:min-h-12 md:text-[18px] md:leading-normal whitespace-nowrap select-none">
+      <div className="grid items-center gap-1.5 rounded-[clamp(1.25rem,2vw,1.5rem)] border border-black/[0.08] bg-white px-3.5 md:px-5 py-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.14)] md:min-h-[78px] md:grid-cols-[minmax(0,1fr)_242px_208px] md:gap-4 md:py-3">
+        <p className="flex min-h-7 w-full items-center justify-start font-nohemi text-[clamp(0.9rem,1.25vw,1.125rem)] font-medium leading-snug text-[#0F1D07] text-left md:w-auto md:min-h-12 md:leading-normal whitespace-nowrap select-none">
           {auditText}
         </p>
 
@@ -87,10 +85,10 @@ export default function AuditBar({
             theme="light"
             variant="solid"
             shape="pill"
-            size="lg"
+            size="md"
             arrowType="right"
             noHover
-            className="h-[clamp(2.5rem,8vw,2.75rem)] w-full justify-center px-3 text-[13px] font-medium leading-none tracking-normal whitespace-nowrap active:scale-[0.97] md:h-12 md:px-5 md:text-[16px]"
+            className="h-[clamp(2.2rem,8vw,2.75rem)] w-full justify-center px-3 text-[clamp(0.75rem,1.2vw,1rem)] font-medium leading-none tracking-normal whitespace-nowrap active:scale-[0.97] md:h-12 md:px-5"
           />
 
           <Button
@@ -99,10 +97,10 @@ export default function AuditBar({
             theme="light"
             variant="outline"
             shape="pill"
-            size="lg"
+            size="md"
             arrowType="right"
             noHover
-            className="h-[clamp(2.5rem,8vw,2.75rem)] w-full justify-center !border-[#0F1D07] px-3 text-[13px] font-medium leading-none tracking-normal whitespace-nowrap active:scale-[0.97] md:h-12 md:px-5 md:text-[16px]"
+            className="h-[clamp(2.2rem,8vw,2.75rem)] w-full justify-center !bg-white hover:!bg-gray-50 !border-[#0F1D07] px-3 text-[clamp(0.75rem,1.2vw,1rem)] font-medium leading-none tracking-normal whitespace-nowrap active:scale-[0.97] md:h-12 md:px-5"
           />
         </div>
       </div>

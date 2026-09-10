@@ -182,10 +182,10 @@ export default function ModalForm({
     const isMulti = isMultiSelectField(field);
     return (
       <div key={field.id}>
-        <label className="font-heading text-[clamp(0.9375rem,4.2vw,1.25rem)] leading-[160%] tracking-tight text-[#1F2A37] block mb-2.5">
+        <label className="font-nohemi block text-[clamp(0.875rem,3.2vw,1.0625rem)] font-normal text-[#111827] mb-2 sm:mb-2.5">
           {field.label}
         </label>
-        <div className="flex flex-wrap gap-2.5">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2.5 sm:gap-3">
           {field.options?.map((option) => {
             const active = isOptionActive(field, option.value);
             const [title, subtitle] = option.label.split("\n");
@@ -214,23 +214,27 @@ export default function ModalForm({
                     }
                   }
                 }}
-                className="px-5 py-2.5 rounded-full border border-[#D1D5DB] bg-white hover:border-black/40 transition-colors cursor-pointer flex items-center gap-3"
+                className={`w-full sm:w-auto flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full border text-[clamp(0.75rem,2.6vw,0.875rem)] font-satoshi transition-all duration-200 cursor-pointer text-left ${
+                  active
+                    ? "border-[#18181B] text-[#111827] bg-white shadow-sm"
+                    : "border-[#D1D5DB] text-[#111827] bg-transparent hover:border-[#9CA3AF]"
+                }`}
               >
                 {isMulti ? (
                   <span
-                    className={`w-5 h-5 rounded-[4px] flex items-center justify-center shrink-0 transition-colors ${
+                    className={`w-4 h-4 rounded-[4px] border-[1.5px] flex items-center justify-center shrink-0 transition-colors ${
                       active
-                        ? "bg-black text-white"
-                        : "border border-black/40"
+                        ? "border-[#18181B] bg-[#18181B] text-white"
+                        : "border-[#4B5563]"
                     }`}
                   >
                     {active && (
                       <svg
-                        className="w-3.5 h-3.5"
+                        className="w-2.5 h-2.5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
-                        strokeWidth="2.5"
+                        strokeWidth="3"
                       >
                         <path
                           strokeLinecap="round"
@@ -242,23 +246,23 @@ export default function ModalForm({
                   </span>
                 ) : (
                   <span
-                    className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+                    className={`w-4 h-4 rounded-full border-[1.5px] flex items-center justify-center shrink-0 transition-colors ${
                       active
-                        ? "border border-black"
-                        : "border border-black/60"
+                        ? "border-[#18181B]"
+                        : "border-[#4B5563]"
                     }`}
                   >
                     {active && (
-                      <span className="w-2.5 h-2.5 rounded-full bg-black" />
+                      <span className="w-2 h-2 rounded-full bg-[#18181B]" />
                     )}
                   </span>
                 )}
                 <div className="flex flex-col text-left">
-                  <span className="text-[14px] text-black font-normal leading-tight">
+                  <span className="leading-tight">
                     {title}
                   </span>
                   {subtitle && (
-                    <span className="text-[12px] text-gray-500 leading-tight mt-0.5">
+                    <span className="text-[clamp(0.625rem,2.2vw,0.75rem)] text-[#555555] leading-tight mt-0.5 font-normal">
                       {subtitle}
                     </span>
                   )}
@@ -285,7 +289,7 @@ export default function ModalForm({
     if (field.type === "textarea") {
       return (
         <div key={field.id}>
-          <label className="font-heading text-[clamp(0.9375rem,4.2vw,1.25rem)] leading-[160%] tracking-tight text-[#1F2A37] block mb-2.5">
+          <label className="font-nohemi block text-[clamp(0.875rem,3.2vw,1.0625rem)] font-normal text-[#111827] mb-2">
             {field.label}
           </label>
           <textarea
@@ -294,7 +298,7 @@ export default function ModalForm({
             placeholder={field.placeholder ?? ""}
             required={field.required}
             rows={4}
-            className="w-full bg-[#F2F2F2] border border-black/20 rounded-2xl px-5 py-4 text-[clamp(0.875rem,4.2vw,1rem)] text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-[#3749E9] focus:ring-1 focus:ring-[#3749E9] transition-all resize-none"
+            className="font-satoshi w-full px-4 sm:px-5 py-2.5 sm:py-3.5 rounded-2xl border border-[#D1D5DB] focus:outline-none focus:border-[#18181B] focus:ring-1 focus:ring-[#18181B] text-[clamp(0.75rem,2.8vw,0.875rem)] text-[#111827] bg-[#F1F1F3] placeholder-[#8E8E93] transition-all duration-200 resize-none"
           />
         </div>
       );
@@ -302,7 +306,7 @@ export default function ModalForm({
 
     return (
       <div key={field.id}>
-        <label className="font-heading text-[clamp(0.9375rem,4.2vw,1.25rem)] leading-[160%] tracking-tight text-[#1F2A37] block mb-2.5">
+        <label className="font-nohemi block text-[clamp(0.875rem,3.2vw,1.0625rem)] font-normal text-[#111827] mb-2">
           {field.label}
         </label>
         <input
@@ -311,7 +315,7 @@ export default function ModalForm({
           onChange={(e) => handleFieldChange(field.id, e.target.value)}
           placeholder={field.placeholder ?? ""}
           required={field.required}
-          className="w-full h-[clamp(2.75rem,4.2vw,3.25rem)] bg-[#F2F2F2] border border-black/20 rounded-[48px] px-5 text-[clamp(0.875rem,4.2vw,1rem)] text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-[#3749E9] focus:ring-1 focus:ring-[#3749E9] transition-all"
+          className="font-satoshi w-full px-4 sm:px-5 py-2.5 sm:py-3.5 rounded-full border border-[#D1D5DB] focus:outline-none focus:border-[#18181B] focus:ring-1 focus:ring-[#18181B] text-[clamp(0.75rem,2.8vw,0.875rem)] text-[#111827] bg-[#F1F1F3] placeholder-[#8E8E93] transition-all duration-200"
         />
       </div>
     );
@@ -438,126 +442,121 @@ export default function ModalForm({
 
   if (submitted) {
     return (
-      <div className={`bg-[#F6F6F6] px-[clamp(1.25rem,4vw,1.75rem)] py-[clamp(2.5rem,7vw,3.75rem)] lg:p-[clamp(1.25rem,4.2vw,2.25rem)] shadow-2xl text-gray-900 flex flex-col items-center justify-center rounded-t-[clamp(16px,4.2vw,24px)] lg:rounded-t-none ${className}`}>
-        <div className="text-center space-y-4">
-          <h2 className="font-heading text-[clamp(1.75rem,4.2vw,2.25rem)] text-[#2A2523]">
-            {successMessage}
-          </h2>
+      <div className={`text-center py-8 sm:py-14 space-y-3 sm:space-y-4 ${className}`}>
+        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-100 text-green-700 flex items-center justify-center mx-auto">
+          <svg
+            className="w-5 h-5 sm:w-6 sm:h-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="2.5"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h2 className="font-nohemi text-[clamp(1.25rem,4.5vw,1.875rem)] font-normal text-[#111827] leading-tight">
+          {successMessage}
+        </h2>
+        <p className="font-satoshi text-[#555555] text-[clamp(0.75rem,2.8vw,0.875rem)]">
+          We received your information and will personalize your quote shortly.
+        </p>
+        <div className="pt-3 sm:pt-4">
+          <button
+            type="button"
+            onClick={onClose}
+            className="font-satoshi py-3 px-8 rounded-full bg-[#242120] hover:bg-black text-white text-[clamp(0.8125rem,3vw,0.9375rem)] font-medium transition-all cursor-pointer shadow-md active:scale-[0.99]"
+          >
+            Done
+          </button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className={`bg-[#F6F6F6] px-[clamp(1.25rem,4vw,1.75rem)] py-[clamp(2.5rem,7vw,3.75rem)] lg:p-[clamp(1.2rem,4.2vw,2.25rem)] text-gray-900 flex flex-col justify-between min-h-0 rounded-t-[clamp(16px,4.2vw,24px)] lg:rounded-t-none ${className}`}>
+    <div className={`flex flex-col justify-between flex-1 w-full ${className}`}>
       <div>
-        {step?.formTitle && (
-          <div className="pr-8">
-            <h2 className="font-heading text-[clamp(1.8rem,4.2vw,2.25rem)] text-[#2A2523]">
-              {step.formTitle}
-            </h2>
-            {step.description && (
-              <p className="text-[clamp(0.75rem,4.2vw,0.875rem)] text-[#2A2523]">
-                {step.description}
-              </p>
-            )}
-          </div>
-        )}
+        <div className="mb-3 sm:mb-4">
+          <h2 className="font-nohemi text-[clamp(1.25rem,4.5vw,1.875rem)] font-normal text-[#111827] leading-[1.15] tracking-tight pr-8">
+            {step?.formTitle || "Get an instant quote"}
+          </h2>
+          {step?.description && (
+            <p className="font-satoshi text-[#555555] text-[clamp(0.6875rem,2.5vw,0.8125rem)] leading-relaxed mt-1">
+              {step.description}
+            </p>
+          )}
+        </div>
+
         {totalSteps > 1 && (
-          <div className={step?.formTitle ? "mt-6" : ""}>
-            <span className="text-[clamp(0.9375rem,4.2vw,1.125rem)] text-[#3145DD] font-medium block">
-              {step?.title || "Store Info"}
-            </span>
-            <div
-              className="grid gap-2 mt-4"
-              style={{ gridTemplateColumns: `repeat(${totalSteps}, 1fr)` }}
-            >
+          <div className="mb-4 sm:mb-6 select-none">
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="font-satoshi text-[clamp(0.8125rem,3vw,0.96875rem)] font-medium text-[#3145DD]">
+                {step?.title || "Store Info"}
+              </span>
+            </div>
+            <div className="flex items-center gap-2.5 sm:gap-4">
               {Array.from({ length: totalSteps }).map((_, i) => {
-                const isCompleted = i < currentStep;
-                const isCurrent = i === currentStep;
-                const isClickable = i <= maxStepReached && !isCurrent;
+                const isCompletedOrCurrent = i <= currentStep;
+                const isClickable = i <= maxStepReached && i !== currentStep;
 
                 return (
-                  <button
+                  <div
                     key={i}
-                    type="button"
-                    disabled={!isClickable}
                     onClick={() => {
-                      if (isClickable) {
-                        setCurrentStep(i);
-                      }
+                      if (isClickable) setCurrentStep(i);
                     }}
-                    title={
-                      steps[i]?.title
-                        ? `Step ${i + 1}: ${steps[i].title}`
-                        : `Step ${i + 1}`
-                    }
-                    aria-label={`Step ${i + 1}${
-                      steps[i]?.title ? `: ${steps[i].title}` : ""
-                    }`}
-                    aria-current={isCurrent ? "step" : undefined}
-                    className={`group py-2 -my-2 flex items-center w-full transition-all ${
+                    className={`h-[2px] flex-1 transition-colors duration-300 ${
                       isClickable ? "cursor-pointer" : "cursor-default"
-                    }`}
-                  >
-                    <span
-                      className={`h-1 w-full rounded-full transition-all duration-200 ${
-                        isCurrent || isCompleted
-                          ? "bg-[#0F1D07]"
-                          : "bg-[#E5E7EB]"
-                      } ${isClickable ? "group-hover:bg-[#3145DD]" : ""}`}
-                    />
-                  </button>
+                    } ${isCompletedOrCurrent ? "bg-[#18181B]" : "bg-[#D8D8DC]"}`}
+                  />
                 );
               })}
             </div>
           </div>
         )}
+      </div>
 
-        <div className="mt-6 space-y-5">
+      <div className="flex flex-col justify-between flex-1">
+        <div className="space-y-4 sm:space-y-6">
           {step?.showEstimate &&
             data?.pricingTiers &&
             data.pricingTiers.length > 0 &&
             renderBudgetTiers(data.pricingTiers)}
+
+          {fields.length > 0 && (
+            <div
+              className={
+                step?.layout === "two-column"
+                  ? "grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4"
+                  : "space-y-4 sm:space-y-6"
+              }
+            >
+              {fields.map((field) => renderField(field))}
+            </div>
+          )}
         </div>
 
-        {fields.length > 0 && (
-          <div
-            className={`mt-5 ${
-              step?.layout === "two-column"
-                ? "grid grid-cols-2 gap-4"
-                : "space-y-5"
-            }`}
+        <div className="mt-5 sm:mt-10 md:mt-16">
+          {error && <p className="text-red-500 text-xs sm:text-sm mb-2.5">{error}</p>}
+          <button
+            type="button"
+            disabled={isSubmitting}
+            onClick={handleNext}
+            className="font-satoshi w-full bg-[#242120] hover:bg-black text-white font-medium py-2.5 sm:py-3.5 md:py-4 px-5 sm:px-6 rounded-full transition-all duration-200 flex justify-center items-center gap-2 text-[clamp(0.8125rem,3vw,0.96875rem)] cursor-pointer shadow-md active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            {fields.map((field) => renderField(field))}
-          </div>
-        )}
-      </div>
-
-      <div className="mt-32 sm:mt-36 lg:mt-6 pb-6 lg:pb-0">
-        {error && <p className="text-red-500 text-sm mb-3">{error}</p>}
-        <Button
-          text={isSubmitting ? "Submitting..." : buttonText}
-          variant="action"
-          className="w-full text-[clamp(0.9375rem,1.2vw,1.15rem)] !bg-[#1F1E1B] hover:!bg-black !border-[#1F1E1B]"
-          showArrow={!isSubmitting}
-          onClick={handleNext}
-          arrowType="right"
-          size="lg"
-          noHover
-        />
-        {step?.footerText ? (
-          <p className="text-[clamp(0.75rem,4.2vw,0.8125rem)] mt-2 text-center text-gray-500">
-            {step.footerText}
-          </p>
-        ) : (
-          <p
-            className="text-[clamp(0.75rem,4.2vw,0.8125rem)] mt-2 text-center invisible select-none"
-            aria-hidden="true"
-          >
-            &nbsp;
-          </p>
-        )}
+            <span>{isSubmitting ? "Submitting..." : buttonText}</span>
+            {!isSubmitting && <span className="text-[clamp(0.875rem,3.5vw,1.0625rem)]">→</span>}
+          </button>
+          {step?.footerText ? (
+            <p className="font-satoshi text-[clamp(0.625rem,2.2vw,0.75rem)] mt-2 text-center text-[#555555]">
+              {step.footerText}
+            </p>
+          ) : (
+            <p className="text-[11px] mt-2 text-center invisible select-none" aria-hidden="true">
+              &nbsp;
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );
