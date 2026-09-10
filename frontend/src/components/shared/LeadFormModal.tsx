@@ -45,13 +45,13 @@ export default function LeadFormModal({
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-[580px] max-h-[92vh] overflow-y-auto rounded-[28px] bg-white shadow-2xl my-auto"
+        className="relative w-full max-w-[620px] max-h-[92vh] overflow-y-auto rounded-none bg-[#F6F6F6] shadow-2xl my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-5 right-5 sm:top-6 sm:right-6 z-10 flex h-8 w-8 items-center justify-center rounded-full text-gray-500 hover:text-black hover:bg-black/5 transition-colors cursor-pointer"
+          className="absolute top-5 right-5 sm:top-6 sm:right-6 z-20 flex h-8 w-8 items-center justify-center rounded-full text-gray-500 hover:text-black hover:bg-black/5 transition-colors cursor-pointer"
           aria-label="Close modal"
         >
           <svg

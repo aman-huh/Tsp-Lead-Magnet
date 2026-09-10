@@ -2,12 +2,33 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { OurWorkSection, Brand } from "@/types";
 import { getStrapiMediaUrl } from "@/lib/fetcher";
 
 interface OurWorkProps {
   data?: OurWorkSection;
+}
+
+function SliderArrowIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      width="25"
+      height="9"
+      viewBox="0 0 25 9"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-hidden="true"
+    >
+      <path
+        d="M4.53846 8L1 4.5L4.53846 1M1 4.5H24"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
 }
 
 export default function OurWork({ data }: OurWorkProps) {
@@ -55,10 +76,10 @@ export default function OurWork({ data }: OurWorkProps) {
 
   return (
     <section className="bg-[#F5F5F5]">
-      <div className="px-[clamp(1.25rem,4.2vw,5.6875rem)] pt-[clamp(4.5rem,7vw,9rem)]">
+      <div className="px-[clamp(1.25rem,4.2vw,6.2rem)] pt-[clamp(4.5rem,7vw,9rem)]">
         <div className="w-full flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-[clamp(1.5rem,4.2vw,2.5rem)]">
           <div className="w-full lg:w-[78%] flex flex-col gap-y-[clamp(0.75rem,4.2vw,1.25rem)]">
-            <h1 className="font-delight! text-[clamp(2.125rem,4.2vw,5rem)] leading-tight 2xl:leading-[1.12] tracking-[-0.01em]">
+            <h1 className="font-heading! text-[clamp(2.125rem,4.2vw,5.2rem)] font-normal leading-tight 2xl:leading-[1.12] tracking-[-0.01em]">
               {header?.mobileTitle ? (
                 <>
                   <span className="block lg:hidden">{header.mobileTitle}</span>
@@ -69,7 +90,7 @@ export default function OurWork({ data }: OurWorkProps) {
               )}
             </h1>
             {(description || header?.mobileDescription) && (
-              <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-medium leading-[1.5] tracking-normal max-w-3xl">
+              <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-semibold leading-[1.5] tracking-normal w-[90%]">
                 {header?.mobileDescription ? (
                   <>
                     <span className="block lg:hidden">{header.mobileDescription}</span>
@@ -91,7 +112,7 @@ export default function OurWork({ data }: OurWorkProps) {
                   aria-label="Previous project"
                   className="w-[clamp(3rem,4.2vw,3.5rem)] h-[clamp(3rem,4.2vw,3.5rem)] rounded-lg bg-[#0F1D07] text-white flex items-center justify-center transition-all duration-200 hover:bg-black cursor-pointer shadow-sm active:scale-95"
                 >
-                  <ArrowLeft className="w-[clamp(1.25rem,4.2vw,1.5rem)] h-[clamp(1.25rem,4.2vw,1.5rem)] text-white" strokeWidth={2.2} />
+                  <SliderArrowIcon className="w-[clamp(1.35rem,2vw,1.65rem)] h-auto text-white" />
                 </button>
                 <button
                   type="button"
@@ -99,7 +120,7 @@ export default function OurWork({ data }: OurWorkProps) {
                   aria-label="Next project"
                   className="w-[clamp(3rem,4.2vw,3.5rem)] h-[clamp(3rem,4.2vw,3.5rem)] rounded-lg bg-[#0F1D07] text-white flex items-center justify-center transition-all duration-200 hover:bg-black cursor-pointer shadow-sm active:scale-95"
                 >
-                  <ArrowRight className="w-[clamp(1.25rem,4.2vw,1.5rem)] h-[clamp(1.25rem,4.2vw,1.5rem)] text-white" strokeWidth={2.2} />
+                  <SliderArrowIcon className="w-[clamp(1.35rem,2vw,1.65rem)] h-auto text-white rotate-180" />
                 </button>
               </div>
             </div>
@@ -114,7 +135,7 @@ export default function OurWork({ data }: OurWorkProps) {
               className="flex items-center gap-2 font-satoshi text-[clamp(0.875rem,4.2vw,1rem)] font-medium text-[#0F1D07] hover:opacity-75 transition-opacity cursor-pointer"
               aria-label="Previous project"
             >
-              <ArrowLeft className="w-4 h-4" strokeWidth={2} />
+              <SliderArrowIcon className="w-5 h-auto text-[#0F1D07]" />
               <span>Back</span>
             </button>
 
@@ -141,7 +162,7 @@ export default function OurWork({ data }: OurWorkProps) {
               aria-label="Next project"
             >
               <span>Next</span>
-              <ArrowRight className="w-4 h-4" strokeWidth={2} />
+              <SliderArrowIcon className="w-5 h-auto text-[#0F1D07] rotate-180" />
             </button>
           </div>
         )}

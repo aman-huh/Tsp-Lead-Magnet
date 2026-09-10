@@ -195,7 +195,7 @@ export default function OurProcess({ data }: OurProcessProps) {
   const rows = chunkCardsIntoRows(cards);
 
   return (
-    <section className="bg-[#0F1D07] pt-[clamp(5rem,7.5vw,10rem)] pb-[clamp(5.5rem,8.5vw,11.5rem)] px-[clamp(1.25rem,4.2vw,5.6875rem)] text-white">
+    <section className="bg-[#0F1D07] pt-[clamp(5rem,7.5vw,10rem)] pb-[clamp(5.5rem,8.5vw,11.5rem)] px-[clamp(1.25rem,4.2vw,6.2rem)] text-white">
       <div className="max-w-[1920px] mx-auto w-full">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 sm:gap-8 lg:gap-12">
           <div className="flex flex-col gap-3 sm:gap-5 lg:gap-8">

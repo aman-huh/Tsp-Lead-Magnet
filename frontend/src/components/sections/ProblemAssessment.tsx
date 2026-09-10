@@ -14,7 +14,7 @@ export default function ProblemAssessment({ data }: ProblemAssessmentProps) {
     "Select what applies. Most brands recognise three or four — and rarely the one they contacted us about.";
 
   return (
-    <section className="mt-[clamp(3.5rem,4.2vw,8.5rem)] pb-[clamp(4rem,6vw,8rem)] px-[clamp(1.25rem,4.2vw,5.6875rem)] max-w-[1920px] mx-auto">
+    <section className="mt-[clamp(3.5rem,4.2vw,8.5rem)] pb-[clamp(4rem,6vw,8rem)] px-[clamp(1.25rem,4.2vw,6.2rem)] max-w-[1920px] mx-auto">
       <div className="w-full flex flex-col gap-y-[clamp(0.75rem,4.2vw,1.25rem)] mb-[clamp(1.75rem,4.2vw,3.25rem)]">
         <h1 className="font-delight! text-[clamp(2.125rem,4.2vw,5rem)] font-medium leading-[1.12] tracking-[-0.01em]">
           {header?.mobileTitle ? (

@@ -18,10 +18,10 @@ export default function BrandFit({ data }: BrandFitProps) {
   const unsuitableCard = data?.unsuitableCard;
 
   return (
-    <section className="min-h-0 xl:min-h-screen flex flex-col justify-center pt-[clamp(4.5rem,7vw,9rem)] pb-[clamp(5rem,8vw,10rem)] px-[clamp(1.25rem,4.2vw,5.59375rem)] max-w-[1920px] mx-auto w-full">
+    <section className="min-h-0 xl:min-h-screen flex flex-col justify-center pt-[clamp(4.5rem,7vw,9rem)] pb-[clamp(5rem,8vw,10rem)] px-[clamp(1.25rem,4.2vw,6.2rem)] max-w-[1920px] mx-auto w-full">
       <div className="w-full flex flex-col xl:flex-row items-stretch justify-between gap-[clamp(2.5rem,5vw,4.5rem)]">
         <div className="w-full xl:w-[38%] 2xl:w-[42%] flex flex-col justify-center self-stretch">
-          <h2 className="font-delight! text-[clamp(1.875rem,4.2vw,4.375rem)] font-medium leading-[1.1] tracking-[-0.02em] text-[#0F1D07]">
+          <h2 className="font-delight! text-[clamp(1.875rem,4.2vw,4.02rem)] font-medium leading-[1.2] tracking-[-0.02em] text-[#0F1D07]">
             {header?.mobileTitle ? (
               <>
                 <span className="block lg:hidden">{header.mobileTitle}</span>
@@ -32,7 +32,7 @@ export default function BrandFit({ data }: BrandFitProps) {
             )}
           </h2>
           {(description || header?.mobileDescription) && (
-            <p className="font-satoshi font-medium text-[clamp(0.8125rem,4.2vw,1.125rem)] leading-[1.5] text-[#0F1D07] mt-[clamp(1.25rem,3vw,2rem)] max-w-2xl xl:max-w-none">
+            <p className="font-satoshi font-medium text-[clamp(0.8125rem,4.2vw,1.13rem)] leading-[1.7] text-[#0F1D07] mt-[clamp(1.25rem,3vw,2rem)] max-w-2xl xl:w-[95%]">
               {header?.mobileDescription ? (
                 <>
                   <span className="block lg:hidden">{header.mobileDescription}</span>
@@ -70,7 +70,7 @@ function BrandCardItem({
 
   return (
     <div
-      className={`w-full sm:basis-1/2 flex-1 self-stretch rounded-xl p-[clamp(1.5rem,4vw,2.25rem)] border border-[#C8C8C8] flex flex-col gap-[clamp(1.75rem,4vw,2.5rem)] ${
+      className={`w-full sm:basis-1/2 flex-1 self-stretch rounded-xl p-[clamp(1.25rem,2.5vw,1.75rem)] border border-[#C8C8C8] flex flex-col gap-6 ${
         isSuitable ? "bg-[#EFF0FC]" : "bg-white"
       }`}
     >
@@ -80,7 +80,7 @@ function BrandCardItem({
         </h3>
       </div>
 
-      <ul className="flex flex-1 flex-col justify-between gap-[clamp(1.25rem,2.5vw,1.75rem)]">
+      <ul className="flex flex-1 flex-col justify-between gap-4">
         {validItems.map((item) => (
           <li
             key={item.id}
@@ -89,12 +89,12 @@ function BrandCardItem({
             <Image
               src="/tick.svg"
               alt=""
-              width={22}
-              height={17}
+              width={20}
+              height={16}
               aria-hidden="true"
-              className="w-5 h-auto shrink-0 mt-0.5"
+              className="w-[18px] sm:w-[20px] h-auto shrink-0 mt-1"
             />
-            <span className="font-satoshi font-normal text-[clamp(0.9375rem,1.2vw,1.0625rem)] leading-[1.55] text-[#000000] flex-1">
+            <span className="font-satoshi font-normal text-[clamp(0.9375rem,1.2vw,1.0625rem)] leading-[1.4] text-[#000000] flex-1">
               {item.text}
             </span>
           </li>

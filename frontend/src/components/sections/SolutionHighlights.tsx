@@ -36,7 +36,7 @@ export default function SolutionHighlights({ data }: SolutionHighlightsProps) {
     "The trading calendar has taught shoppers here to wait. When a storefront doesn't make the case for a product at full price, the promotion has to — and margin pays for it. We redesign Shopify stores so the buying argument sits on the page, not in the discount code.";
 
   return (
-    <section className=" mb-[clamp(4.5rem,7vw,9rem)] px-[clamp(1.25rem,4.2vw,5.6875rem)] max-w-[1920px] mx-auto">
+    <section className=" mb-[clamp(4.5rem,7vw,9rem)] px-[clamp(1.25rem,4.2vw,6.2rem)] max-w-[1920px] mx-auto">
       <div className="table w-fit max-w-full mb-[clamp(1.75rem,4.2vw,3.25rem)]">
         <h2 className="font-delight! text-[clamp(2.125rem,4.2vw,5rem)] font-medium leading-[1.12] tracking-[-0.01em] w-fit">
           {header?.mobileTitle ? (
@@ -79,9 +79,9 @@ function SolutionHighlightCard({ feature }: { feature?: Feature }) {
 
   return (
     <div
-      className={`w-full min-h-[clamp(21.5rem,32vw,30rem)] rounded-[clamp(20px,4.2vw,30px)] p-6 sm:p-8 lg:p-[clamp(1.75rem,3vw,2.5rem)] flex flex-col justify-center gap-8 overflow-hidden ${variant.container}`}
+      className={`w-full min-h-[clamp(24rem,33vw,32rem)] rounded-[clamp(20px,4.2vw,30px)] p-6 sm:p-8 lg:p-[clamp(1.75rem,3vw,2.5rem)] flex flex-col justify-between gap-6 sm:gap-8 overflow-hidden ${variant.container}`}
     >
-      <div className="w-full h-[clamp(7.5rem,28vw,11rem)] relative flex items-center justify-start shrink-0">
+      <div className="w-full flex-1 min-h-0 relative flex items-center justify-start">
         {illustrationUrl && (
           <Image
             src={illustrationUrl}
@@ -97,14 +97,14 @@ function SolutionHighlightCard({ feature }: { feature?: Feature }) {
         )}
       </div>
 
-      <div className="flex flex-col gap-y-2.5">
+      <div className="w-full shrink-0 flex flex-col gap-y-2.5 sm:gap-y-3">
         <h3
           className={`font-heading font-normal text-[20px] sm:text-[22px] lg:text-[clamp(1.125rem,2vw,1.75rem)] leading-snug tracking-normal ${variant.title}`}
         >
           {feature?.title}
         </h3>
         <p
-          className={`font-satoshi font-normal text-[14px] sm:text-[15px] lg:text-[clamp(0.75rem,1vw,0.875rem)] leading-[1.5] tracking-normal ${variant.desc}`}
+          className={`font-satoshi font-medium text-[15px] sm:text-[16px] lg:text-[clamp(0.875rem,1.1vw,1rem)] leading-[1.5] tracking-normal ${variant.desc}`}
         >
           {feature?.description}
         </p>

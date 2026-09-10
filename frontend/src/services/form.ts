@@ -123,8 +123,9 @@ export const DEFAULT_INSTANT_QUOTE_FORM: LeadForm = {
       id: 3,
       title: "Your Estimate",
       formTitle: "Your Instant Quote Is Ready!",
-      description: "Based on your inputs, here's your estimated range.",
+      description: "Based on your inputs, here's your estimated range:",
       showEstimate: true,
+      layout: "two-column",
       fields: [
         {
           id: 6,
@@ -135,7 +136,7 @@ export const DEFAULT_INSTANT_QUOTE_FORM: LeadForm = {
         },
         {
           id: 7,
-          label: "Email (optional)",
+          label: "Email (Optional)",
           placeholder: "Enter Email",
           type: "email",
         },

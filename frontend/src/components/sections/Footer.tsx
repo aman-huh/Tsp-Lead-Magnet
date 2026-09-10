@@ -274,7 +274,7 @@ export default function Footer({ data }: FooterProps) {
               })}
             </div>
 
-            <div className="hidden lg:flex items-center gap-8 mt-auto pt-14 text-[13px] font-satoshi text-white/90">
+            <div className="hidden lg:flex items-center gap-8 mt-auto pt-14 text-[13px] font-satoshi text-white/90 font-bold">
               <Link
                 href="/privacy-policies"
                 className="hover:underline underline-offset-4 transition-all"
@@ -304,7 +304,7 @@ export default function Footer({ data }: FooterProps) {
                         <Link
                           key={item.id ?? idx}
                           href={item.URL || "/"}
-                          className="font-satoshi text-[11.5px] sm:text-[12.5px] lg:text-[13px] font-normal text-white/80 hover:text-[#95E7D3] transition-colors w-fit"
+                          className="font-satoshi text-[11.5px] sm:text-[12.5px] lg:text-[13px] font-bold text-white/80 hover:text-[#95E7D3] transition-colors w-fit"
                         >
                           {item.text}
                         </Link>
@@ -316,7 +316,7 @@ export default function Footer({ data }: FooterProps) {
                         href={item.URL || "#"}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-satoshi text-[11.5px] sm:text-[12.5px] lg:text-[13px] font-normal text-white/80 hover:text-[#95E7D3] transition-colors w-fit"
+                        className="font-satoshi text-[11.5px] sm:text-[12.5px] lg:text-[13px] font-bold text-white/80 hover:text-[#95E7D3] transition-colors w-fit"
                       >
                         {item.text}
                       </a>

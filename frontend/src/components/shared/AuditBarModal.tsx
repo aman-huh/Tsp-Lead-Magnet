@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import AuditBar from "@/components/shared/AuditBar";
 import LeadFormModal from "@/components/shared/LeadFormModal";
+import CallbackModal from "@/components/shared/CallbackModal";
 import { AuditBarData, LeadForm as LeadFormType } from "@/types";
 import {
   DEFAULT_CALLBACK_FORM,
@@ -72,11 +73,10 @@ export default function AuditBarModal({
         data={quoteForm}
         source="instant_quote_modal"
       />
-      <LeadFormModal
+      <CallbackModal
         isOpen={callbackModalOpen}
         onClose={() => setCallbackModalOpen(false)}
         data={callbackForm}
-        source="callback_modal"
       />
     </>
   );
