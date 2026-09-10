@@ -84,15 +84,15 @@ function BrandCardItem({
         {validItems.map((item) => (
           <li
             key={item.id}
-            className="flex items-start gap-3 sm:gap-3.5"
+            className="flex items-center gap-3 sm:gap-3.5"
           >
             <Image
               src="/tick.svg"
               alt=""
-              width={20}
-              height={16}
+              width={24}
+              height={19}
               aria-hidden="true"
-              className="w-[18px] sm:w-[20px] h-auto shrink-0 mt-1"
+              className="w-[21px] sm:w-[24px] h-auto shrink-0"
             />
             <span className="font-satoshi font-normal text-[clamp(0.9375rem,1.2vw,1.0625rem)] leading-[1.4] text-[#000000] flex-1">
               {item.text}
