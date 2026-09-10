@@ -206,9 +206,12 @@ export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
                   shape="pill"
                   variant={isPrimary ? "solid" : "outline"}
                   size="lg"
+                  arrowType="right"
                   text={action.text}
                   url={action.url}
-                  className="w-full sm:w-auto justify-center"
+                  className={`w-full sm:w-auto justify-center ${
+                    !isPrimary ? "bg-white! hover:bg-white!" : ""
+                  }`}
                 />
               );
             })}

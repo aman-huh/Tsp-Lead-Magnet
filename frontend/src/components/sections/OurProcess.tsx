@@ -20,7 +20,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
   const hasHoverList = card.hoverList && card.hoverList.length > 0;
 
   return (
-    <div className="bg-[#1B2F10] hover:bg-[#254419] rounded-xl p-[clamp(1rem,2vw,2.25rem)] flex flex-col justify-between min-h-[clamp(16.25rem,20vw,20rem)] lg:h-105.25 h-full w-full relative group overflow-hidden transition-all duration-300">
+    <div className="bg-[#1B2F10] hover:bg-[#254419] rounded-[12px] p-[clamp(1rem,2vw,2.25rem)] flex flex-col justify-between aspect-[331/421] h-full w-full relative group overflow-hidden transition-all duration-300">
       <div className="flex flex-col justify-between flex-1 h-full w-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] opacity-100 translate-y-0 group-hover:opacity-0 group-hover:-translate-y-3">
         <div>
           <div className="w-[clamp(1.5rem,2vw,2.25rem)] h-[clamp(1.5rem,2vw,2.25rem)] relative mb-4 sm:mb-6 flex items-center">
@@ -58,7 +58,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
       </div>
 
       {hasHoverList && (
-        <div className="absolute inset-0 z-20 bg-[#243D1A] p-[clamp(0.75rem,2vw,2.25rem)] flex flex-col justify-start opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:duration-500 ease-out pointer-events-none group-hover:pointer-events-auto rounded-xl overflow-y-auto no-scrollbar">
+        <div className="absolute inset-0 z-20 bg-[#243D1A] p-[clamp(0.75rem,2vw,2.25rem)] flex flex-col justify-start opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:duration-500 ease-out pointer-events-none group-hover:pointer-events-auto rounded-[12px] overflow-y-auto no-scrollbar">
           <ul className="divide-y divide-white/15 w-full">
             {card.hoverList?.map((item, idx) => (
               <li
@@ -99,7 +99,7 @@ function MediaCardItem({ card }: { card: ProcessCard }) {
 
   if (isVideo && card.media?.url) {
     return (
-      <div className="bg-black rounded-xl overflow-hidden relative w-full aspect-[16/9] lg:aspect-auto lg:h-105.25 flex items-center justify-center">
+      <div className="bg-black rounded-[12px] overflow-hidden relative w-full h-full aspect-[755/421] flex items-center justify-center">
         <video
           src={getStrapiMediaUrl(card.media.url)}
           autoPlay
@@ -114,20 +114,20 @@ function MediaCardItem({ card }: { card: ProcessCard }) {
 
   if (card.media?.url) {
     return (
-      <div className="bg-white rounded-xl overflow-hidden relative w-full aspect-[16/9] lg:aspect-auto lg:h-105.25 flex items-center justify-center p-3 sm:p-4">
+      <div className="bg-white rounded-[12px] overflow-hidden relative w-full h-full aspect-[755/421] flex items-center justify-center p-3 sm:p-4">
         <Image
           src={getStrapiMediaUrl(card.media.url)}
           alt={card.media.alternativeText || "Strategic design process"}
           width={card.media.width || 1679}
           height={card.media.height || 937}
-          className="w-full h-full object-contain rounded-xl"
+          className="w-full h-full object-contain rounded-[12px]"
         />
       </div>
     );
   }
 
   return (
-    <div className="bg-[#1B2F10] rounded-xl w-full aspect-[16/9] lg:aspect-auto lg:h-105.25" />
+    <div className="bg-[#1B2F10] rounded-[12px] w-full h-full aspect-[755/421]" />
   );
 }
 
