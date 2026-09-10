@@ -314,7 +314,7 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
           <>
             <h2 className="font-heading text-[clamp(1.8rem,4.2vw,2.25rem)] text-[#2A2523]">{step.formTitle}</h2>
             {step.description && (
-              <p className="text-[clamp(0.75rem,4.2vw,0.875rem)] font-medium text-[#2A2523]">{step.description}</p>
+              <p className="text-[clamp(0.75rem,4.2vw,0.875rem)] text-[#2A2523]">{step.description}</p>
             )}
           </>
         )}

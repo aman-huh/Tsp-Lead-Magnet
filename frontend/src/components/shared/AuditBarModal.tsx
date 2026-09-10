@@ -4,6 +4,11 @@ import React, { useState, useEffect } from "react";
 import AuditBar from "@/components/shared/AuditBar";
 import LeadFormModal from "@/components/shared/LeadFormModal";
 import { AuditBarData, LeadForm as LeadFormType } from "@/types";
+import {
+  DEFAULT_CALLBACK_FORM,
+  DEFAULT_INSTANT_QUOTE_FORM,
+  getFormBySlug,
+} from "@/services/form";
 
 interface AuditBarModalProps {
   data?: AuditBarData;
@@ -14,15 +19,43 @@ export default function AuditBarModal({
   data,
   fallbackForm,
 }: AuditBarModalProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [quoteModalOpen, setQuoteModalOpen] = useState(false);
+  const [callbackModalOpen, setCallbackModalOpen] = useState(false);
+
+  const [quoteForm, setQuoteForm] = useState<LeadFormType>(
+    fallbackForm || DEFAULT_INSTANT_QUOTE_FORM
+  );
+  const [callbackForm, setCallbackForm] =
+    useState<LeadFormType>(DEFAULT_CALLBACK_FORM);
 
   useEffect(() => {
-    const handleOpen = () => setIsModalOpen(true);
-    window.addEventListener("open-lead-modal", handleOpen);
-    return () => window.removeEventListener("open-lead-modal", handleOpen);
+    getFormBySlug("instant-quote")
+      .then((form) => {
+        if (form) setQuoteForm(form);
+      })
+      .catch(() => {});
+
+    getFormBySlug("callback")
+      .then((form) => {
+        if (form) setCallbackForm(form);
+      })
+      .catch(() => {});
   }, []);
 
-  const modalFormData = data?.leadForm || fallbackForm;
+  useEffect(() => {
+    const handleOpenQuote = () => setQuoteModalOpen(true);
+    const handleOpenCallback = () => setCallbackModalOpen(true);
+
+    window.addEventListener("open-lead-modal", handleOpenQuote);
+    window.addEventListener("open-quote-modal", handleOpenQuote);
+    window.addEventListener("open-callback-modal", handleOpenCallback);
+
+    return () => {
+      window.removeEventListener("open-lead-modal", handleOpenQuote);
+      window.removeEventListener("open-quote-modal", handleOpenQuote);
+      window.removeEventListener("open-callback-modal", handleOpenCallback);
+    };
+  }, []);
 
   return (
     <>
@@ -30,12 +63,20 @@ export default function AuditBarModal({
         auditText={data?.auditText}
         primaryButtonText={data?.primaryButtonText}
         secondaryButtonText={data?.secondaryButtonText}
-        onPrimaryClick={() => setIsModalOpen(true)}
+        onPrimaryClick={() => setQuoteModalOpen(true)}
+        onSecondaryClick={() => setCallbackModalOpen(true)}
       />
       <LeadFormModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        data={modalFormData}
+        isOpen={quoteModalOpen}
+        onClose={() => setQuoteModalOpen(false)}
+        data={quoteForm}
+        source="instant_quote_modal"
+      />
+      <LeadFormModal
+        isOpen={callbackModalOpen}
+        onClose={() => setCallbackModalOpen(false)}
+        data={callbackForm}
+        source="callback_modal"
       />
     </>
   );

@@ -111,6 +111,7 @@ export interface FooterContact {
   location?: string | null;
   phone?: string | null;
   email?: string | null;
+  address?: string | null;
 }
 
 export interface FooterSection {
@@ -121,6 +122,7 @@ export interface FooterSection {
   quickLinks?: FooterLink[];
   contacts?: FooterContact[];
   marquee?: string | null;
+  address?: string | null;
 }
 
 export type LandingPageSection =

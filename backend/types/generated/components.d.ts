@@ -73,6 +73,7 @@ export interface BlocksContact extends Struct.ComponentSchema {
     displayName: 'Contact';
   };
   attributes: {
+    address: Schema.Attribute.String;
     email: Schema.Attribute.Email;
     location: Schema.Attribute.String;
     phone: Schema.Attribute.String;
@@ -287,6 +288,7 @@ export interface SectionsFooter extends Struct.ComponentSchema {
     displayName: 'Footer';
   };
   attributes: {
+    address: Schema.Attribute.Text;
     contacts: Schema.Attribute.Component<'blocks.contact', true>;
     intro: Schema.Attribute.Component<'blocks.footer-intro', false>;
     marquee: Schema.Attribute.Text;

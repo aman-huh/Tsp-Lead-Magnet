@@ -1,19 +1,21 @@
 "use client";
 
 import React, { useEffect } from "react";
-import LeadForm from "@/components/blocks/LeadForm";
+import ModalForm from "@/components/blocks/ModalForm";
 import { LeadForm as LeadFormType } from "@/types";
 
 interface LeadFormModalProps {
   isOpen: boolean;
   onClose: () => void;
   data?: LeadFormType;
+  source?: string;
 }
 
 export default function LeadFormModal({
   isOpen,
   onClose,
   data,
+  source = "modal",
 }: LeadFormModalProps) {
   useEffect(() => {
     if (!isOpen) return;
@@ -43,13 +45,13 @@ export default function LeadFormModal({
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-[540px] max-h-[90vh] overflow-y-auto rounded-[24px] bg-[#F6F6F6] shadow-2xl my-auto"
+        className="relative w-full max-w-[580px] max-h-[92vh] overflow-y-auto rounded-[28px] bg-white shadow-2xl my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/5 text-gray-600 hover:bg-black/10 hover:text-black transition-colors"
+          className="absolute top-5 right-5 sm:top-6 sm:right-6 z-10 flex h-8 w-8 items-center justify-center rounded-full text-gray-500 hover:text-black hover:bg-black/5 transition-colors cursor-pointer"
           aria-label="Close modal"
         >
           <svg
@@ -57,7 +59,7 @@ export default function LeadFormModal({
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="1.75"
           >
             <path
               strokeLinecap="round"
@@ -67,7 +69,7 @@ export default function LeadFormModal({
           </svg>
         </button>
 
-        <LeadForm data={data} className="w-full !rounded-[24px]" />
+        <ModalForm data={data} onClose={onClose} source={source} />
       </div>
     </div>
   );

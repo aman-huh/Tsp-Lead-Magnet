@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FooterSection, FooterLink, FooterContact } from "@/types";
@@ -130,35 +130,38 @@ export default function Footer({ data }: FooterProps) {
     {
       id: 4,
       platform: "linkedin",
-      URL: "https://in.linkedin.com/company/thumbstacktechnologies",
+      URL: "https://www.linkedin.com/company/thumbstackstudios/",
     },
   ];
 
   const defaultQuickLinks: FooterLink[] = [
-    { id: 1, text: "Our Work", URL: "/our-work" },
-    { id: 2, text: "Service", URL: "/service" },
-    { id: 3, text: "Capabilities", URL: "/capabilities" },
-    { id: 4, text: "News & Insights", URL: "/news-and-insights" },
+    { id: 1, text: "Capabilities", URL: "#capabilities" },
+    { id: 2, text: "Our Work", URL: "#work" },
+    { id: 3, text: "News & Insights", URL: "#news" },
+    { id: 4, text: "About us", URL: "#about" },
   ];
 
   const defaultContacts: FooterContact[] = [
     {
       id: 1,
-      location: "Mumbai, India",
+      location: "Mumbai (Worli)",
       phone: "+91 99670 06777",
+      address: "Building G and D-1, Zoo Media Pvt. Ltd, Worli, Mumbai, Maharashtra 400013",
       email: "hey@thumbstack.co",
     },
     {
       id: 2,
-      location: "Amsterdam, Netherlands",
-      phone: "+31 6 4237 3471",
-      email: "eu@thumbstack.co",
+      location: "Budapest",
+      phone: "+91 8374938493",
+      address: "Building G and D-1, Zoo Media Pvt. Ltd, Worli, Mumbai, Maharashtra 400013",
+      email: "thumbstack@gmail.com",
     },
     {
       id: 3,
-      location: "Brisbane, Australia",
-      phone: "+61 475 467 221",
-      email: "au@thumbstack.co",
+      location: "Dubai",
+      phone: "+91 8374938493",
+      address: "Building G and D-1, Zoo Media Pvt. Ltd, Worli, Mumbai, Maharashtra 400013",
+      email: "thumbstack@gmail.com",
     },
   ];
 
@@ -180,64 +183,79 @@ export default function Footer({ data }: FooterProps) {
   const marqueeText = (data?.marquee || "We design what's next").trim();
 
   const renderMarqueeUnit = (key: number) => (
-    <React.Fragment key={key}>
-      <span className="font-satoshi font-medium tracking-tight text-white text-[44px] sm:text-[76px] 2xl:text-[96px] 3xl:text-[108px] leading-none whitespace-nowrap shrink-0">
+    <div
+      key={key}
+      className="flex shrink-0 items-center gap-8 sm:gap-12 pr-8 sm:pr-12"
+    >
+      <span className="font-delight text-[clamp(44px,4.2vw,100px)] font-medium text-white whitespace-nowrap">
         {marqueeText}
       </span>
-      <div className="group relative overflow-hidden w-16 h-16 sm:w-28 sm:h-28 2xl:w-32 2xl:h-32 3xl:w-36 3xl:h-36 rounded-full bg-[#95E7D3] flex items-center justify-center shrink-0 cursor-pointer">
-        <svg
-          viewBox="0 0 225 225"
-          fill="none"
-          className="absolute inset-0 w-full h-full text-[#3145DD] transform transition-transform duration-500 ease-in-out group-hover:translate-x-[150%] group-hover:translate-y-[-150%]"
-        >
-          <path
-            d="M158 73.5C158 69.9101 155.09 67 151.5 67L93 67C89.4102 67 86.5 69.9101 86.5 73.5C86.5 77.0898 89.4102 80 93 80H145V132C145 135.59 147.91 138.5 151.5 138.5C155.09 138.5 158 135.59 158 132L158 73.5ZM73.5 151.5L78.0962 156.096L156.096 78.0962L151.5 73.5L146.904 68.9038L68.9038 146.904L73.5 151.5Z"
-            fill="currentColor"
-          />
-        </svg>
-        <svg
-          viewBox="0 0 225 225"
-          fill="none"
-          className="absolute inset-0 w-full h-full text-[#3145DD] transform translate-x-[-150%] translate-y-[150%] transition-transform duration-500 ease-in-out group-hover:translate-x-0 group-hover:translate-y-0"
-          aria-hidden="true"
-        >
-          <path
-            d="M158 73.5C158 69.9101 155.09 67 151.5 67L93 67C89.4102 67 86.5 69.9101 86.5 73.5C86.5 77.0898 89.4102 80 93 80H145V132C145 135.59 147.91 138.5 151.5 138.5C155.09 138.5 158 135.59 158 132L158 73.5ZM73.5 151.5L78.0962 156.096L156.096 78.0962L151.5 73.5L146.904 68.9038L68.9038 146.904L73.5 151.5Z"
-            fill="currentColor"
-          />
-        </svg>
+      <div className="group relative flex h-[78px] w-[78px] sm:h-[114px] sm:w-[114px] lg:h-[122px] lg:w-[122px] shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-[#7DE7D0]">
+        <div className="relative h-[32px] w-[32px] sm:h-[46px] sm:w-[46px] lg:h-[48px] lg:w-[48px]">
+          <svg
+            viewBox="0 0 54 54"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="arrow-slide-out"
+          >
+            <path
+              d="M1.17157 47.1716C-0.390524 48.7337 -0.390524 51.2663 1.17157 52.8284C2.73367 54.3905 5.26633 54.3905 6.82843 52.8284L4 50L1.17157 47.1716ZM54 4C54 1.79086 52.2091 -1.32315e-06 50 -2.33467e-06L14 8.6849e-07C11.7909 -4.80209e-07 10 1.79086 10 4C10 6.20914 11.7909 8 14 8L46 8L46 40C46 42.2091 47.7909 44 50 44C52.2091 44 54 42.2091 54 40L54 4ZM4 50L6.82843 52.8284L52.8284 6.82843L50 4L47.1716 1.17157L1.17157 47.1716L4 50Z"
+              fill="#3145DD"
+            />
+          </svg>
+          <svg
+            viewBox="0 0 54 54"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="arrow-slide-in"
+          >
+            <path
+              d="M1.17157 47.1716C-0.390524 48.7337 -0.390524 51.2663 1.17157 52.8284C2.73367 54.3905 5.26633 54.3905 6.82843 52.8284L4 50L1.17157 47.1716ZM54 4C54 1.79086 52.2091 -1.32315e-06 50 -2.33467e-06L14 8.6849e-07C11.7909 -4.80209e-07 10 1.79086 10 4C10 6.20914 11.7909 8 14 8L46 8L46 40C46 42.2091 47.7909 44 50 44C52.2091 44 54 42.2091 54 40L54 4ZM4 50L6.82843 52.8284L52.8284 6.82843L50 4L47.1716 1.17157L1.17157 47.1716L4 50Z"
+              fill="#3145DD"
+            />
+          </svg>
+        </div>
       </div>
-    </React.Fragment>
+    </div>
   );
 
   return (
-    <footer className="relative w-full h-screen min-h-screen bg-[#3145DD] text-white select-none flex flex-col justify-between overflow-hidden font-satoshi">
-      <div className="w-full px-6 sm:px-14 2xl:px-24 3xl:px-28 pt-8 sm:pt-14 2xl:pt-18 3xl:pt-20 max-w-[1920px] mx-auto flex-1 flex flex-col justify-between">
-        <div className="flex flex-col lg:hidden justify-between flex-1 pb-6">
-          <div>
-            <div className="flex items-center gap-3.5">
-              <h2 className="font-heading text-[44px] font-medium leading-none tracking-tight text-white">
+    <footer
+      id="contact"
+      data-theme="dark"
+      className="relative w-full min-h-screen pt-16 pb-24 sm:pt-20 sm:pb-28 md:py-24 bg-[#3145DD] overflow-hidden select-none flex flex-col justify-between"
+    >
+      <div className="mx-auto w-full max-w-[1880px] px-6 lg:px-[60px] xl:px-[80px] flex-1 flex flex-col justify-between">
+        <div className="flex flex-col lg:flex-row lg:justify-between gap-24 sm:gap-28 lg:gap-10 xl:gap-16">
+          <div className="flex flex-col w-full lg:max-w-[480px] xl:max-w-[540px]">
+            <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap">
+              <h2 className="font-delight text-[clamp(44px,4.2vw,80px)] font-medium leading-none text-white tracking-tight">
                 {hasLogoPlaceholder ? headingParts[0]?.trim() : headingRaw}
               </h2>
               <Image
                 src="/footercircle.avif"
                 alt="Logo"
-                width={56}
-                height={56}
-                className="w-11 h-11 object-contain shrink-0 animate-spin-smooth"
+                width={64}
+                height={64}
+                className="h-[48px] w-[48px] sm:h-[64px] sm:w-[64px] animate-spin-pause shrink-0 object-contain"
               />
+              {hasLogoPlaceholder && headingParts[1]?.trim() && (
+                <h2 className="font-delight text-[clamp(44px,4.2vw,80px)] font-medium leading-none text-white tracking-tight">
+                  {headingParts[1].trim()}
+                </h2>
+              )}
             </div>
 
-            <div className="space-y-1.5 mt-7 max-w-sm">
-              <p className="font-satoshi text-[13.5px] text-white font-medium leading-snug">
-                {description}
-              </p>
-              <p className="font-satoshi text-[12.5px] text-white/75 leading-relaxed">
-                {subDescription}
-              </p>
+            <div className="mt-4 space-y-2 text-white font-satoshi text-[10.5px] sm:text-[12px] leading-[1.65] max-w-[550px]">
+              {description && (
+                <p className="font-medium text-white/95">{description}</p>
+              )}
+              {subDescription && (
+                <p className="font-medium text-white/95">{subDescription}</p>
+              )}
             </div>
 
-            <div className="flex items-center gap-5 mt-12">
+            <div className="mt-8 sm:mt-8 flex items-center gap-3 sm:gap-4">
               {socialLinks.map((item, idx) => {
                 const icon = getSocialIcon(item.platform);
                 if (!icon) return null;
@@ -247,8 +265,8 @@ export default function Footer({ data }: FooterProps) {
                     href={item.URL || "#"}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="text-white hover:opacity-80 transition-opacity flex items-center justify-center"
                     aria-label={item.platform || "Social Link"}
-                    className="flex items-center justify-center text-white hover:text-[#95E7D3] transition-colors cursor-pointer shrink-0"
                   >
                     {icon}
                   </a>
@@ -256,12 +274,29 @@ export default function Footer({ data }: FooterProps) {
               })}
             </div>
 
-            <div className="grid grid-cols-2 gap-x-8 gap-y-4 mt-16">
-              <div>
-                <h3 className="font-satoshi text-[16px] font-medium text-white tracking-normal">
+            <div className="hidden lg:flex items-center gap-8 mt-auto pt-14 text-[13px] font-satoshi text-white/90">
+              <Link
+                href="/privacy-policies"
+                className="hover:underline underline-offset-4 transition-all"
+              >
+                Privacy Policies
+              </Link>
+              <Link
+                href="/terms-and-conditions"
+                className="hover:underline underline-offset-4 transition-all"
+              >
+                Terms and Conditions
+              </Link>
+            </div>
+          </div>
+
+          <div className="flex flex-col w-full lg:max-w-[620px] xl:max-w-[700px]">
+            <div className="grid grid-cols-2 gap-x-6 sm:gap-x-10 gap-y-8">
+              <div className="order-1 lg:order-2 lg:pl-6 xl:pl-10">
+                <h2 className="font-satoshi text-[13px] sm:text-[14px] lg:text-[15px] font-normal text-white tracking-normal mb-3 sm:mb-4 lg:mb-5">
                   Quick Links
-                </h3>
-                <div className="flex flex-col gap-4 mt-6 font-satoshi text-[14px] text-white/80">
+                </h2>
+                <div className="flex flex-col space-y-2.5 sm:space-y-3 lg:space-y-3.5">
                   {quickLinks.map((item, idx) => {
                     const isRoute = item.URL?.startsWith("/");
                     if (isRoute) {
@@ -269,7 +304,7 @@ export default function Footer({ data }: FooterProps) {
                         <Link
                           key={item.id ?? idx}
                           href={item.URL || "/"}
-                          className="hover:text-[#95E7D3] transition-colors block w-fit"
+                          className="font-satoshi text-[11.5px] sm:text-[12.5px] lg:text-[13px] font-normal text-white/80 hover:text-[#95E7D3] transition-colors w-fit"
                         >
                           {item.text}
                         </Link>
@@ -281,7 +316,7 @@ export default function Footer({ data }: FooterProps) {
                         href={item.URL || "#"}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-[#95E7D3] transition-colors block w-fit"
+                        className="font-satoshi text-[11.5px] sm:text-[12.5px] lg:text-[13px] font-normal text-white/80 hover:text-[#95E7D3] transition-colors w-fit"
                       >
                         {item.text}
                       </a>
@@ -290,209 +325,102 @@ export default function Footer({ data }: FooterProps) {
                 </div>
               </div>
 
-              <div>
-                <h3 className="font-satoshi text-[16px] font-medium text-white tracking-normal">
-                  Contact
-                </h3>
-                <div className="space-y-4 mt-6">
-                  {contacts.map((contact, idx) => (
-                    <div key={contact.id ?? idx} className="space-y-1">
-                      {contact.location && (
-                        <p className="font-satoshi text-[13px] font-medium text-white/90">
-                          {contact.location}
-                        </p>
-                      )}
-                      {contact.phone && (
-                        <a
-                          href={`tel:${contact.phone}`}
-                          className="font-satoshi text-[13px] text-white underline underline-offset-4 decoration-white/70 block transition-colors w-fit"
-                        >
-                          {contact.phone}
-                        </a>
-                      )}
-                    </div>
-                  ))}
+              <div className="order-2 lg:order-1">
+                <h2 className="font-satoshi text-[13px] sm:text-[14px] lg:text-[15px] font-normal text-white tracking-normal mb-3 sm:mb-4 lg:mb-5">
+                  Contacts
+                </h2>
+                <div className="flex flex-col space-y-3.5 sm:space-y-4 lg:space-y-5">
+                  {contacts.map((contact, idx) => {
+                    const address =
+                      contact.address ||
+                      (contact.location?.toLowerCase().includes("mumbai")
+                        ? "Building G and D-1, Zoo Media Pvt. Ltd, Worli, Mumbai, Maharashtra 400013"
+                        : null);
+
+                    return (
+                      <div key={contact.id ?? idx}>
+                        {contact.location && (
+                          <p className="font-satoshi text-[11.5px] sm:text-[12.5px] lg:text-[13px] font-normal text-white">
+                            {contact.location}
+                          </p>
+                        )}
+                        {contact.phone && (
+                          <a
+                            href={`tel:${contact.phone}`}
+                            className="block mt-0.5 font-satoshi text-[11.5px] sm:text-[12.5px] lg:text-[13px] font-normal text-[#95E7D3] underline underline-offset-4 hover:opacity-90 transition-opacity w-fit"
+                          >
+                            {contact.phone}
+                          </a>
+                        )}
+                        {address && (
+                          <p className="hidden lg:block mt-2.5 max-w-[280px] font-satoshi text-[11px] sm:text-[12px] lg:text-[12.5px] font-normal leading-[1.4] text-white/80">
+                            {address}
+                          </p>
+                        )}
+                        {contact.email && (
+                          <a
+                            href={`mailto:${contact.email}`}
+                            className="hidden lg:block mt-2 font-satoshi text-[11.5px] sm:text-[12px] lg:text-[12.5px] font-normal text-white/90 hover:underline w-fit"
+                          >
+                            {contact.email}
+                          </a>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
 
-            <div className="mt-12 w-full">
-              <div className="w-full bg-white rounded-full py-3.5 px-6 flex items-center justify-between text-[#0F1D07] shadow-sm">
-                <span className="font-satoshi text-[13px] text-[#4A5568]">Sign up to our newsletter</span>
-                <span className="text-[#3145DD] text-[16px] font-semibold">↗</span>
-              </div>
+            <div className="mt-14 sm:mt-12 w-full lg:hidden">
+              <a
+                href="#news"
+                className="group flex w-full items-center justify-between rounded-full bg-white px-6 sm:px-7 py-3.5 sm:py-4 text-[#1A1A1A] shadow-md transition-all hover:bg-white/95 active:scale-[0.99]"
+              >
+                <span className="font-satoshi text-[13.5px] sm:text-[14.5px] font-medium text-[#1A1A1A] tracking-tight">
+                  Sign up to our newsletter
+                </span>
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 15 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#3145DD] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                >
+                  <path
+                    d="M2 13L13 2M13 2H4M13 2V11"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </a>
             </div>
 
-            <div className="flex items-center gap-6 mt-5 font-satoshi text-[12px] text-white/70">
+            <div className="flex lg:hidden items-center gap-6 mt-6 text-[12px] font-satoshi text-white/90">
               <Link
                 href="/privacy-policies"
-                className="hover:text-white transition-colors"
+                className="hover:underline underline-offset-4 transition-all"
               >
                 Privacy Policies
               </Link>
               <Link
                 href="/terms-and-conditions"
-                className="hover:text-white transition-colors"
+                className="hover:underline underline-offset-4 transition-all"
               >
                 Terms and Conditions
               </Link>
-            </div>
-          </div>
-        </div>
-
-        <div className="hidden lg:grid grid-cols-12 gap-8 lg:gap-10 xl:gap-14">
-          <div className="lg:col-span-7 xl:col-span-7 flex flex-col">
-            <h2 className="font-satoshi text-[38px] sm:text-[50px] 2xl:text-[62px] 3xl:text-[70px] font-medium leading-none tracking-tight text-white flex items-center flex-wrap gap-3 sm:gap-4">
-              {hasLogoPlaceholder ? (
-                <>
-                  <span>{headingParts[0]?.trim()}</span>
-                  <Image
-                    src="/footercircle.avif"
-                    alt="Logo"
-                    width={60}
-                    height={60}
-                    className="w-9 h-9 sm:w-12 sm:h-12 2xl:w-15 2xl:h-15 object-contain shrink-0 animate-spin-smooth"
-                  />
-                  {headingParts[1]?.trim() && (
-                    <span>{headingParts[1].trim()}</span>
-                  )}
-                </>
-              ) : (
-                <>
-                  <span>{headingRaw}</span>
-                  <Image
-                    src="/footercircle.avif"
-                    alt="Logo"
-                    width={60}
-                    height={60}
-                    className="w-9 h-9 sm:w-12 sm:h-12 2xl:w-15 2xl:h-15 object-contain shrink-0 animate-spin-smooth"
-                  />
-                </>
-              )}
-            </h2>
-
-            <p className="font-satoshi text-[14px] sm:text-[15px] 2xl:text-[16px] text-white font-medium mt-3.5 sm:mt-4 leading-snug">
-              {description}
-            </p>
-
-            <p className="font-satoshi text-[13px] sm:text-[13.5px] 2xl:text-[14.5px] text-white/70 mt-1.5 sm:mt-2 max-w-md leading-relaxed">
-              {subDescription}
-            </p>
-
-            <div className="flex items-center gap-4 sm:gap-5 mt-4 sm:mt-5">
-              {socialLinks.map((item, idx) => {
-                const icon = getSocialIcon(item.platform);
-                if (!icon) return null;
-                return (
-                  <a
-                    key={item.id ?? idx}
-                    href={item.URL || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={item.platform || "Social Link"}
-                    className="flex items-center justify-center text-white hover:text-[#95E7D3] transition-colors cursor-pointer shrink-0"
-                  >
-                    {icon}
-                  </a>
-                );
-              })}
-            </div>
-
-            <div className="flex items-center gap-6 sm:gap-8 mt-auto pt-8 sm:pt-10 font-satoshi text-[12px] sm:text-[13px] 2xl:text-[14px] text-white/80">
-              <Link
-                href="/privacy-policies"
-                className="hover:text-white transition-colors"
-              >
-                Privacy Policies
-              </Link>
-              <Link
-                href="/terms-and-conditions"
-                className="hover:text-white transition-colors"
-              >
-                Terms and Conditions
-              </Link>
-            </div>
-          </div>
-
-          <div className="lg:col-span-3 xl:col-span-3">
-            <h3 className="font-satoshi text-[14px] sm:text-[15px] 2xl:text-[16px] font-semibold text-white tracking-wide">
-              Contact
-            </h3>
-            <div className="space-y-5 sm:space-y-6 mt-8 sm:mt-10">
-              {contacts.map((contact, idx) => (
-                <div key={contact.id ?? idx} className="space-y-0.5">
-                  {contact.location && (
-                    <p className="font-satoshi text-[13px] sm:text-[14px] font-medium text-white">
-                      {contact.location}
-                    </p>
-                  )}
-                  {contact.phone && (
-                    <a
-                      href={`tel:${contact.phone}`}
-                      className="font-satoshi text-[12px] sm:text-[13px] text-white/80 hover:text-white block transition-colors w-fit"
-                    >
-                      {contact.phone}
-                    </a>
-                  )}
-                  {contact.email && (
-                    <a
-                      href={`mailto:${contact.email}`}
-                      className="font-satoshi text-[12px] sm:text-[13px] text-white/90 hover:text-white underline underline-offset-3 decoration-white/40 hover:decoration-white block transition-colors w-fit"
-                    >
-                      {contact.email}
-                    </a>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="lg:col-span-2 xl:col-span-2">
-            <h3 className="font-satoshi text-[14px] sm:text-[15px] 2xl:text-[16px] font-semibold text-white tracking-wide">
-              Quick Links
-            </h3>
-            <div className="flex flex-col gap-6 sm:gap-7 mt-8 sm:mt-10 font-satoshi text-[13px] sm:text-[14px] 2xl:text-[15px] text-white/90">
-              {quickLinks.map((item, idx) => {
-                const isRoute = item.URL?.startsWith("/");
-                if (isRoute) {
-                  return (
-                    <Link
-                      key={item.id ?? idx}
-                      href={item.URL || "/"}
-                      className="hover:text-[#95E7D3] transition-colors inline-block w-fit"
-                    >
-                      {item.text}
-                    </Link>
-                  );
-                }
-                return (
-                  <a
-                    key={item.id ?? idx}
-                    href={item.URL || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-[#95E7D3] transition-colors inline-block w-fit"
-                  >
-                    {item.text}
-                  </a>
-                );
-              })}
             </div>
           </div>
         </div>
       </div>
 
-      <div className="w-full overflow-hidden select-none pb-6 sm:pb-8 2xl:pb-10">
-        <div className="flex animate-marquee-continuous w-max">
-          <div className="flex items-center gap-8 sm:gap-10 2xl:gap-12 shrink-0 pr-8 sm:pr-10 2xl:pr-12">
-            {[0, 1, 2].map((i) => renderMarqueeUnit(i))}
-          </div>
-          <div
-            className="flex items-center gap-8 sm:gap-10 2xl:gap-12 shrink-0 pr-8 sm:pr-10 2xl:pr-12"
-            aria-hidden="true"
-          >
-            {[3, 4, 5].map((i) => renderMarqueeUnit(i))}
-          </div>
+      <div className="mt-14 sm:mt-20 overflow-hidden">
+        <div className="flex w-max animate-marquee">
+          {[0, 1, 2, 3].map((i) => renderMarqueeUnit(i))}
+          {[4, 5, 6, 7].map((i) => renderMarqueeUnit(i))}
         </div>
       </div>
     </footer>

@@ -53,10 +53,6 @@ h6 {
   will-change: transform;
 }
 
-.animate-marquee:hover {
-  animation-play-state: paused;
-}
-
 .animate-marquee-continuous {
   animation: marquee 35s linear infinite;
   will-change: transform;
@@ -76,16 +72,43 @@ h6 {
   }
 }
 
-.animate-spin-smooth {
+.animate-spin-smooth,
+.animate-spin-pause {
   animation: spin-left-right-pause 8s infinite;
   transform-origin: center;
   will-change: transform;
 }
 
+.arrow-slide-out {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .arrow-slide-out {
+  transform: translate(150%, -150%);
+}
+
+.arrow-slide-in {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: translate(-150%, 150%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .arrow-slide-in {
+  transform: translate(0, 0);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,
   .animate-marquee-continuous,
-  .animate-spin-smooth {
+  .animate-spin-smooth,
+  .animate-spin-pause {
     animation: none;
   }
 }

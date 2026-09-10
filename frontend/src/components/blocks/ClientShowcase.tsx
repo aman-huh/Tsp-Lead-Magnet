@@ -26,7 +26,7 @@ export default function ClientShowcase({
   return (
     <div className={`space-y-4 sm:space-y-5 mb-5 ${className}`}>
       {heading && (
-        <p className="font-satoshi text-white font-normal text-[clamp(0.5rem,3.2vw,1.375rem)] leading-snug tracking-[-0.01em] text-center lg:text-left">
+        <p className="font-satoshi text-white font-[300] text-[clamp(0.5rem,3.2vw,1.375rem)] leading-snug tracking-[-0.01em] text-center lg:text-left">
           {heading}
         </p>
       )}

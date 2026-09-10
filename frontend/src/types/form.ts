@@ -50,3 +50,11 @@ export interface LeadForm {
   pricingTiers?: BudgetRange[];
   successMessage?: string;
 }
+
+export interface FormEntity {
+  id: number;
+  documentId?: string;
+  title: string;
+  slug: string;
+  form?: LeadForm;
+}
