@@ -90,7 +90,7 @@ export default function OurWork({ data }: OurWorkProps) {
               )}
             </h1>
             {(description || header?.mobileDescription) && (
-              <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-semibold leading-[1.5] tracking-normal w-[90%]">
+              <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.2rem)] font-medium leading-[1.5] tracking-normal w-[80%]">
                 {header?.mobileDescription ? (
                   <>
                     <span className="block lg:hidden">{header.mobileDescription}</span>
