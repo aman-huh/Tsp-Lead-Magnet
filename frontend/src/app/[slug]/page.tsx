@@ -2,10 +2,11 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/sections/Navbar";
 import Footer from "@/components/sections/Footer";
-import AuditBar from "@/components/shared/AuditBar";
+import AuditBarModal from "@/components/shared/AuditBarModal";
 import SectionRenderer from "@/components/shared/SectionRenderer";
 import { getAllPages, getPageBySlug } from "@/services/page";
 import { getBrands } from "@/services/brand";
+import { HeroSection } from "@/types";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -53,6 +54,10 @@ export default async function DynamicPage({ params }: PageProps) {
     (section) => section.__component === "sections.footer"
   );
 
+  const heroSection = sections.find(
+    (section): section is HeroSection => section.__component === "sections.hero"
+  );
+
   return (
     <>
       <Navbar />
@@ -60,7 +65,10 @@ export default async function DynamicPage({ params }: PageProps) {
         <SectionRenderer sections={sections} brands={brands} />
         {!hasFooter && <Footer />}
       </main>
-      <AuditBar />
+      <AuditBarModal
+        data={page.auditBar}
+        fallbackForm={heroSection?.leadForm}
+      />
     </>
   );
 }
