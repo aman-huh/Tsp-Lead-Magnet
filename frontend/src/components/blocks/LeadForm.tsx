@@ -71,7 +71,6 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
   };
 
   const handleNext = async () => {
-    // Validate required fields in the current step
     const currentFields = step?.fields ?? [];
     for (const f of currentFields) {
       if (f.required) {
@@ -158,9 +157,9 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
                     ? handleMultiSelectToggle(field.id, option.value)
                     : handleFieldChange(field.id, option.value)
                 }
-                className={`px-[clamp(1rem,4.2vw,1.5rem)] py-[clamp(0.5rem,4.2vw,0.65rem)] rounded-full border text-[clamp(0.875rem,4.2vw,1.125rem)] font-medium transition-all cursor-pointer flex items-center justify-center ${active
+                className={`px-[clamp(1rem,4.2vw,1.5rem)] py-[clamp(0.5rem,4.2vw,0.65rem)] rounded-full border text-[clamp(0.875rem,4.2vw,1.125rem)] transition-all cursor-pointer flex items-center justify-center ${active
                   ? "border-[#005540]/80 bg-[#95E7D3]/30 text-[#005540]"
-                  : "border-gray-200 text-gray-600 hover:border-gray-300"
+                  : "border-[#CAC4D0] text-[#3C3C3C] hover:border-gray-400"
                   }`}
               >
                 {option.label}
@@ -300,7 +299,7 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
 
   if (submitted) {
     return (
-      <div className={`bg-white p-[clamp(1.25rem,4.2vw,2.25rem)] shadow-2xl text-gray-900 flex flex-col items-center justify-center ${className}`}>
+      <div className={`bg-[#F6F6F6] px-[clamp(1.25rem,4vw,1.75rem)] py-[clamp(2.5rem,7vw,3.75rem)] lg:p-[clamp(1.25rem,4.2vw,2.25rem)] shadow-2xl text-gray-900 flex flex-col items-center justify-center ${className}`}>
         <div className="text-center space-y-4">
           <h2 className="font-heading text-[clamp(1.75rem,4.2vw,2.25rem)] text-[#2A2523]">{successMessage}</h2>
         </div>
@@ -309,13 +308,13 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
   }
 
   return (
-    <div className={`bg-[#F6F6F6] lg:bg-white p-[clamp(1.2rem,4.2vw,2.25rem)] text-gray-900 flex flex-col justify-between min-h-0 rounded-t-[clamp(16px,4.2vw,24px)] lg:rounded-t-none ${className}`}>
+    <div className={`bg-[#F6F6F6] px-[clamp(1.25rem,4vw,1.75rem)] py-[clamp(2.5rem,7vw,3.75rem)] lg:p-[clamp(1.2rem,4.2vw,2.25rem)] text-gray-900 flex flex-col justify-between min-h-0 rounded-t-[clamp(16px,4.2vw,24px)] lg:rounded-t-none ${className}`}>
       <div>
         {step?.formTitle && (
           <>
             <h2 className="font-heading text-[clamp(1.8rem,4.2vw,2.25rem)] text-[#2A2523]">{step.formTitle}</h2>
             {step.description && (
-              <p className="text-[clamp(0.75rem,4.2vw,0.875rem)] text-[#2A2523]">{step.description}</p>
+              <p className="text-[clamp(0.75rem,4.2vw,0.875rem)] font-medium text-[#2A2523]">{step.description}</p>
             )}
           </>
         )}
@@ -379,7 +378,7 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
         <Button
           text={isSubmitting ? "Submitting..." : buttonText}
           variant="action"
-          className="w-full"
+          className="w-full text-[clamp(0.9375rem,1.2vw,1.15rem)]"
           showArrow={!isSubmitting}
           onClick={handleNext}
           arrowType="right"

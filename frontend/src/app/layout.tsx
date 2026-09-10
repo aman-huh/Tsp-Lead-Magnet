@@ -27,7 +27,7 @@ const delight = localFont({
 const satoshi = localFont({
   src: "../../public/fonts/satoshi/Satoshi-Variable.woff2",
   variable: "--font-satoshi",
-  weight: "300 900",
+  weight: "100 900",
 });
 
 export const metadata: Metadata = {

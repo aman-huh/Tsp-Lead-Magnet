@@ -205,7 +205,7 @@ export default function OurProcess({ data }: OurProcessProps) {
             <h2 className="font-delight! text-[clamp(1.75rem,3.8vw,3.2rem)] font-medium text-white leading-[1.08] tracking-[-0.02em] max-w-170">
               {title}
             </h2>
-            <p className="text-white text-[clamp(0.8125rem,4.2vw,1.125rem)] font-satoshi font-normal leading-[1.5] max-w-[95%] lg:max-w-[90%]">
+            <p className="text-white text-[clamp(0.8125rem,4.2vw,1.125rem)] font-satoshi font-medium leading-[1.5] max-w-[95%] lg:max-w-[90%]">
               {description}
             </p>
           </div>

@@ -73,7 +73,8 @@ export default function Hero({ data }: HeroProps) {
         <div className="flex flex-col lg:flex-row gap-0 lg:gap-[clamp(2rem,4.2vw,3rem)] flex-1 items-stretch">
           <div className="w-full lg:w-[55%] flex flex-col justify-between px-[clamp(1.25rem,4.2vw,2rem)] lg:px-0 pt-[clamp(6rem,14vw,7.5rem)] lg:pt-0 pb-[clamp(1.5rem,4vw,2rem)] lg:pb-0 h-auto">
             <div className="flex flex-col gap-y-[clamp(1.5rem,3.2vw,1.5rem)] mb-[clamp(4.5rem,6vw,5rem)] lg:mb-0 my-0">
-              <h1 className="font-heading! text-[clamp(3.12rem,4.2vw,5rem)] text-white leading-[1.25] lg:leading-[1.14] tracking-[-0.02em]">
+              <div>
+                <h1 className="font-heading! text-[clamp(2.5rem,4.2vw,5rem)] text-white leading-normal tracking-[-0.02em]">
                 {header?.mobileTitle ? (
                   <>
                     <span className="block lg:hidden">{renderTitle(header.mobileTitle)}</span>
@@ -84,7 +85,7 @@ export default function Hero({ data }: HeroProps) {
                 )}
               </h1>
               {(description || header?.mobileDescription) && (
-                <p className="w-full lg:w-[85%] font-satoshi text-[14px] sm:text-[15px] lg:text-[clamp(0.9375rem,4.2vw,1.25rem)] font-normal text-white/90 sm:text-white leading-[1.6] tracking-normal">
+                <p className="w-full lg:w-[85%] font-satoshi text-[clamp(14px,2.8vw,1.25rem)] font-normal text-white/90 sm:text-white leading-relaxed tracking-normal">
                   {header?.mobileDescription ? (
                     <>
                       <span className="block lg:hidden">{header.mobileDescription}</span>
@@ -95,6 +96,8 @@ export default function Hero({ data }: HeroProps) {
                   )}
                 </p>
               )}
+              </div>
+              
               <div className="w-full lg:w-auto">
                 <Button
                   theme="dark"

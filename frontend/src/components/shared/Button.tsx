@@ -12,6 +12,7 @@ export interface ButtonProps {
   size?: "sm" | "md" | "lg";
   showArrow?: boolean;
   arrowType?: "diagonal" | "right";
+  arrowClassName?: string;
   noHover?: boolean;
   className?: string;
   containerClassName?: string;
@@ -21,9 +22,9 @@ export interface ButtonProps {
 
 function DiagonalArrow({ className = "", size = "md" }: { className?: string; size?: "sm" | "md" | "lg" }) {
   const sizeClasses = {
-    sm: "w-3.5 h-3.5",
-    md: "w-4 h-4",
-    lg: "w-4 h-4 sm:w-[1.125rem] sm:h-[1.125rem]",
+    sm: "w-[0.8em] h-[0.8em]",
+    md: "w-[0.85em] h-[0.85em]",
+    lg: "w-[0.9em] h-[0.9em]",
   };
   return (
     <svg
@@ -53,17 +54,23 @@ function DiagonalArrow({ className = "", size = "md" }: { className?: string; si
 
 function RightArrow({ className = "", size = "md" }: { className?: string; size?: "sm" | "md" | "lg" }) {
   const sizeClasses = {
-    sm: "text-xs",
-    md: "text-sm",
-    lg: "text-base sm:text-[17px]",
+    sm: "w-[0.7em] h-auto",
+    md: "w-[0.75em] h-auto",
+    lg: "w-[1em] h-auto",
   };
   return (
-    <span
-      className={`transition-transform duration-300 group-hover:translate-x-1 shrink-0 ${sizeClasses[size]} ${className}`}
+    <svg
+      viewBox="0 0 20 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={`${sizeClasses[size]} transition-transform duration-300 group-hover:translate-x-1 shrink-0 ${className}`}
       aria-hidden="true"
     >
-      →
-    </span>
+      <path
+        d="M10.5121 1.24802L11.7841 2.13299e-05L19.7041 7.89602L11.7841 15.792L10.5121 14.52L16.2241 8.78402H5.88468e-05V7.00802L16.2241 6.98402L10.5121 1.24802Z"
+        fill="currentColor"
+      />
+    </svg>
   );
 }
 
@@ -78,6 +85,7 @@ export default function Button({
   size = "md",
   showArrow = true,
   arrowType = "diagonal",
+  arrowClassName = "",
   noHover = false,
   className = "",
   containerClassName = "",
@@ -105,7 +113,7 @@ export default function Button({
   const pillPaddings = {
     sm: "px-[clamp(0.75rem,1.5vw,1rem)] py-[clamp(0.25rem,0.7vw,0.4rem)]",
     md: "px-[clamp(1rem,1.8vw,1.25rem)] py-[clamp(0.375rem,0.9vw,0.55rem)]",
-    lg: "px-[clamp(1.25rem,2vw,1.5rem)] py-[clamp(0.5rem,1.2vw,0.7rem)]",
+    lg: "px-[clamp(1.25rem,2vw,1.65rem)] py-[clamp(0.5rem,1.2vw,0.8rem)]",
   };
 
   const roundedPaddings = {
@@ -118,8 +126,8 @@ export default function Button({
 
   const sizeTextSizes = {
     sm: "text-[clamp(0.75rem,0.8vw,0.8125rem)]",
-    md: "text-[clamp(0.8125rem,1vw,0.875rem)]",
-    lg: "text-[clamp(0.9375rem,1.2vw,1.0625rem)]",
+    md: "text-[clamp(0.8125rem,1vw,0.95rem)]",
+    lg: "text-[clamp(0.9375rem,1.2vw,1.3rem)]",
   };
 
   const sizeGaps = {
@@ -139,7 +147,7 @@ export default function Button({
   } else if (theme === "light") {
     if (normalizedVariant === "outline") {
       surfaceVariantClass =
-        "bg-white hover:bg-neutral-50 text-[#0F1D07] border border-[#C8C8C8] shadow-xs font-medium";
+        "bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#0F1D07] border border-[#C8C8C8] shadow-xs font-medium";
     } else {
       surfaceVariantClass =
         "bg-[#0F1D07] hover:bg-black text-white border border-[#0F1D07] shadow-xs font-medium";
@@ -150,7 +158,7 @@ export default function Button({
         "bg-[#0F1D07]/60 hover:bg-[#0F1D07] text-white border border-white/30 hover:border-white shadow-xs font-medium";
     } else {
       surfaceVariantClass =
-        "bg-white hover:bg-neutral-50 text-[#0F1D07] border border-white shadow-xs font-medium";
+        "bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#0F1D07] border border-[#F2F2F2] shadow-xs font-medium";
     }
   }
 
@@ -167,9 +175,9 @@ export default function Button({
   const arrow =
     showArrow &&
     (arrowType === "diagonal" ? (
-      <DiagonalArrow size={size} />
+      <DiagonalArrow size={size} className={arrowClassName} />
     ) : (
-      <RightArrow size={size} />
+      <RightArrow size={size} className={arrowClassName} />
     ));
 
   const content = (

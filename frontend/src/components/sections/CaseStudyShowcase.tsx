@@ -276,7 +276,7 @@ export default function CaseStudyShowcase({ data }: CaseStudyShowcaseProps) {
             title
           )}
         </h2>
-        <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-normal leading-[1.5] tracking-normal w-full lg:w-[60%]">
+        <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-medium leading-[1.5] tracking-normal w-full lg:w-[60%]">
           {header?.mobileDescription ? (
             <>
               <span className="block lg:hidden">{header.mobileDescription}</span>

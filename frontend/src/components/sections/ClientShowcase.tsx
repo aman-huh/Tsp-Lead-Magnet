@@ -190,7 +190,7 @@ export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
           </h2>
 
           {description && (
-            <p className="font-satoshi font-normal sm:font-semibold text-[clamp(0.8125rem,4.2vw,1.125rem)] text-[#0F1D07]/90 leading-[1.5] max-w-xl 2xl:max-w-2xl sm:mx-auto mt-[clamp(1.5rem,5vw,1.75rem)] sm:mt-[clamp(1.5rem,1.828vw,2rem)]">
+            <p className="font-satoshi font-medium text-[clamp(0.8125rem,4.2vw,1.125rem)] text-[#0F1D07]/90 leading-[1.5] max-w-xl 2xl:max-w-2xl sm:mx-auto mt-[clamp(1.5rem,5vw,1.75rem)] sm:mt-[clamp(1.5rem,1.828vw,2rem)]">
               {description}
             </p>
           )}

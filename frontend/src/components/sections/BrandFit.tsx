@@ -32,7 +32,7 @@ export default function BrandFit({ data }: BrandFitProps) {
             )}
           </h2>
           {(description || header?.mobileDescription) && (
-            <p className="font-satoshi font-normal text-[clamp(0.8125rem,4.2vw,1.125rem)] leading-[1.5] text-[#0F1D07] mt-[clamp(1.25rem,3vw,2rem)] max-w-2xl xl:max-w-none">
+            <p className="font-satoshi font-medium text-[clamp(0.8125rem,4.2vw,1.125rem)] leading-[1.5] text-[#0F1D07] mt-[clamp(1.25rem,3vw,2rem)] max-w-2xl xl:max-w-none">
               {header?.mobileDescription ? (
                 <>
                   <span className="block lg:hidden">{header.mobileDescription}</span>

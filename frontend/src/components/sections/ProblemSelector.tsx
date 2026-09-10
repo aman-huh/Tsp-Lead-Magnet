@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Button from "@/components/shared/Button";
 import { ButtonComponent, ProblemCard as ProblemCardType } from "@/types";
 
 interface ProblemSelectorProps {
@@ -46,7 +47,7 @@ export default function ProblemSelector({
             <div
               key={card.id || card.identifier}
               onClick={() => toggleCard(card.identifier)}
-              className={`w-full min-h-[clamp(9rem,4.2vw,13.375rem)] rounded-[clamp(12px,4.2vw,16px)] p-[clamp(1.5rem,4.2vw,2rem)] flex flex-col justify-between gap-3 relative transition-colors duration-200 cursor-pointer ${
+              className={`w-full min-h-[clamp(9rem,4.2vw,10rem)] sm:min-h-[clamp(12rem,4.2vw,15.375rem)] rounded-[clamp(8px,4.2vw,10px)] p-[clamp(1rem,4.2vw,1.3rem)] flex flex-col justify-between gap-3 relative transition-colors duration-200 cursor-pointer ${
                 isSelected
                   ? "bg-[#CACDEB]"
                   : "bg-[#3145DD]/8 hover:bg-[#CACDEB]"
@@ -59,7 +60,7 @@ export default function ProblemSelector({
                   e.stopPropagation();
                   toggleCard(card.identifier);
                 }}
-                className={`absolute top-4 right-[11.5px] w-[clamp(2rem,4.2vw,2.25rem)] h-[clamp(2rem,4.2vw,2.25rem)] rounded-lg shadow-xs flex items-center justify-center transition-all duration-150 overflow-hidden ${
+                className={`absolute top-4 right-[11.5px] w-[clamp(1.5rem,4.2vw,2rem)] h-[clamp(1.5rem,4.2vw,2rem)] rounded-lg shadow-xs flex items-center justify-center transition-all duration-150 overflow-hidden ${
                   isSelected
                     ? "bg-[#3145DD] text-white"
                     : "bg-white text-[#111827]"
@@ -67,7 +68,7 @@ export default function ProblemSelector({
               >
                 <div className="relative w-[21.33px] h-[21.33px] flex items-center justify-center">
                   <svg
-                    className={`absolute inset-0 m-auto w-[21.33px] h-[21.33px] transition-all duration-150 ease-out ${
+                    className={`absolute inset-0 m-auto w-[20.33px] h-[20.33px] transition-all duration-150 ease-out ${
                       isSelected
                         ? "opacity-0 rotate-45 scale-50"
                         : "opacity-100 rotate-0 scale-100"
@@ -104,12 +105,12 @@ export default function ProblemSelector({
                 </div>
               </button>
 
-              <div className="w-full pr-9">
-                <h3 className="font-delight! text-[clamp(1.25rem,4.2vw,1.5rem)] font-medium leading-snug tracking-normal text-[#0F1D07] mb-2">
+              <div className="w-full pr-11">
+                <h3 className="font-delight! text-[clamp(1.1rem,4.2vw,1.1rem)] md:text-[clamp(1rem,4.2vw,1.3rem)] font-medium leading-snug tracking-normal text-[#0F1D07] mb-2">
                   {card.title}
                 </h3>
 
-                <p className="text-[clamp(1rem,4.2vw,1.125rem)] leading-[1.6] text-[#0F1D07]">
+                <p className="text-[clamp(0.8rem,4.2vw,0.9rem)] sm:text-[clamp(0.9rem,4.2vw,0.9rem)] leading-[1.6] text-[#0F1D07] w-[85%] sm:w-[80%]">
                   {card.description}
                 </p>
               </div>
@@ -124,25 +125,17 @@ export default function ProblemSelector({
             {formattedSummary}
           </p>
 
-          <button
-            type="button"
-            className="w-full sm:w-[clamp(18rem,4.2vw,27.5rem)] h-[clamp(3.125rem,4.2vw,4rem)] text-[clamp(1rem,4.2vw,1.25rem)] rounded-full bg-[#3145DD] hover:bg-[#2838BD] text-white flex items-center justify-center gap-3 shrink-0 font-medium cursor-pointer transition-colors duration-200"
-          >
-            <span>{submitButton?.text || "Submit"}</span>
-            <svg
-              className="w-5 h-5 sm:w-6 sm:h-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              />
-            </svg>
-          </button>
+          <Button
+            text={submitButton?.text || "Submit"}
+            url={submitButton?.url || "#lead-form"}
+            variant="action"
+            shape="pill"
+            size="lg"
+            arrowType="right"
+            noHover
+            containerClassName="w-full sm:w-[clamp(18rem,4.2vw,27.5rem)] shrink-0"
+            className="w-full h-[clamp(3.125rem,4.2vw,4rem)] text-[clamp(1rem,4.2vw,1.25rem)] justify-center"
+          />
         </div>
       )}
     </div>
