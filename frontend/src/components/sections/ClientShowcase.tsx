@@ -190,7 +190,7 @@ export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
           </h2>
 
           {description && (
-            <p className="font-satoshi font-medium text-[clamp(0.8125rem,4.2vw,1.125rem)] text-[#0F1D07]/90 leading-[1.5] max-w-xl 2xl:max-w-2xl sm:mx-auto mt-[clamp(1.5rem,5vw,1.75rem)] sm:mt-[clamp(1.5rem,1.828vw,2rem)]">
+            <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-semibold text-[#0F1D07]/90 leading-[1.5] max-w-xl 2xl:max-w-2xl sm:mx-auto mt-[clamp(1.5rem,5vw,1.75rem)] sm:mt-[clamp(1.5rem,1.828vw,2rem)]">
               {description}
             </p>
           )}
@@ -229,11 +229,11 @@ export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
             >
               {[...services, ...services, ...services, ...services].map((service, idx) => (
                 <span key={`${copyIndex}-${idx}`} className="inline-flex items-center">
-                  <span className="text-white font-satoshi sm:font-heading text-[clamp(0.875rem,3.6vw,1rem)] sm:text-[clamp(1.25rem,1.45vw,1.5rem)] leading-4.5 tracking-normal uppercase sm:lowercase">
+                  <span className="text-white font-satoshi sm:font-heading text-[clamp(0.8125rem,3.2vw,0.9375rem)] sm:text-[clamp(1.0625rem,1.25vw,1.25rem)] leading-4.5 tracking-normal uppercase sm:lowercase">
                     {service}
                   </span>
                   <span
-                    className="w-[clamp(0.5rem,2vw,0.625rem)] h-[clamp(0.5rem,2vw,0.625rem)] sm:w-[clamp(0.75rem,0.75vw,0.75rem)] sm:h-[clamp(0.75rem,0.75vw,0.75rem)] rounded-full bg-white mx-[clamp(1.25rem,5vw,1.75rem)] sm:mx-[clamp(2.25rem,2.5vw,2.5rem)] shrink-0 inline-block"
+                    className="w-[clamp(0.4375rem,1.8vw,0.5625rem)] h-[clamp(0.4375rem,1.8vw,0.5625rem)] sm:w-[clamp(0.625rem,0.625vw,0.6875rem)] sm:h-[clamp(0.625rem,0.625vw,0.6875rem)] rounded-full bg-white mx-[clamp(1.25rem,5vw,1.75rem)] sm:mx-[clamp(2rem,2.2vw,2.25rem)] shrink-0 inline-block"
                     aria-hidden="true"
                   />
                 </span>

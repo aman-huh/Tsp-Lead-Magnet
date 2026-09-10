@@ -89,7 +89,7 @@ export default function FAQ({ data }: FAQProps) {
             )}
           </h2>
           {(description || heading?.mobileDescription) && (
-            <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-medium leading-[1.5] text-[#4A5568] mt-3 sm:mt-4 max-w-2xl">
+            <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-medium leading-[1.5] text-black mt-3 sm:mt-4 max-w-2xl">
               {heading?.mobileDescription ? (
                 <>
                   <span className="block lg:hidden">{heading.mobileDescription}</span>
@@ -146,7 +146,7 @@ export default function FAQ({ data }: FAQProps) {
                     }`}
                   >
                     <div className="overflow-hidden px-6 sm:px-0">
-                      <p className="font-satoshi text-[15px] sm:text-[16px] 2xl:text-[17px] 3xl:text-[18px] text-[#4A5568] leading-relaxed max-w-4xl">
+                      <p className="font-satoshi text-[15px] sm:text-[16px] 2xl:text-[17px] 3xl:text-[18px] text-black leading-relaxed max-w-4xl">
                         {answerText}
                       </p>
                     </div>

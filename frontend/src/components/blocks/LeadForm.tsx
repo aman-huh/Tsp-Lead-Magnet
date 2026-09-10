@@ -116,6 +116,16 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
         });
       });
 
+      const selectedTierId = getSelectedBudgetId(data?.pricingTiers ?? []);
+      if (selectedTierId && data?.pricingTiers) {
+        const matched = data.pricingTiers.find(
+          (t) => String(t.id) === String(selectedTierId)
+        );
+        if (matched?.label) {
+          formData["Selected Plan"] = matched.label;
+        }
+      }
+
       const allFields = steps.flatMap((s) => s.fields ?? []);
       const shopifyField = allFields.find((f) => f.type === "radio" || f.type === "select");
       const urlField = allFields.find((f) => f.type === "url");
@@ -216,7 +226,15 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
 
   const getSelectedBudgetId = (tiers: BudgetRange[]): string => {
     const budget = formValues["__budget"];
-    if (typeof budget === "string") return budget;
+    if (typeof budget === "string" && budget) return budget;
+
+    const recommended =
+      tiers.find((t) => t.label?.toLowerCase() === "balanced") ||
+      tiers.find((t) => t.label?.toLowerCase().includes("balanced")) ||
+      tiers.find((t) => t.recommended) ||
+      tiers.find((t) => t.id === 2);
+    if (recommended) return String(recommended.id);
+    if (tiers.length > 0) return String(tiers[0].id);
     return "";
   };
 
