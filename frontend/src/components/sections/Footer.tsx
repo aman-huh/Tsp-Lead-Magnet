@@ -5,6 +5,7 @@ import { FooterSection, FooterLink, FooterContact } from "@/types";
 
 interface FooterProps {
   data?: FooterSection;
+  ref?: React.Ref<HTMLElement>;
 }
 
 const socialSvgMap: Record<string, React.ReactNode> = {
@@ -99,10 +100,7 @@ function getSocialIcon(platform?: string | null) {
   return socialSvgMap[p] ?? null;
 }
 
-const Footer = forwardRef<HTMLElement, FooterProps>(function Footer(
-  { data },
-  ref
-) {
+export default function Footer({ data }: FooterProps) {
   const headingRaw = data?.intro?.heading || "Say hi! {{Logo}}";
   const hasLogoPlaceholder = headingRaw.includes("{{Logo}}");
   const headingParts = hasLogoPlaceholder ? headingRaw.split("{{Logo}}") : [];
@@ -213,19 +211,8 @@ const Footer = forwardRef<HTMLElement, FooterProps>(function Footer(
   );
 
   return (
-    <footer
-      ref={ref}
-      style={{
-        transform: "translateY(100%)",
-        visibility: "hidden",
-        willChange: "transform",
-      }}
-      className="fixed bottom-0 left-0 w-full h-[100dvh] lg:h-140 sm:h-150 2xl:h-165 3xl:h-180 bg-[#3145DD] text-white z-40 shadow-[0_-20px_50px_rgba(0,0,0,0.25)] select-none flex flex-col justify-between overflow-hidden font-satoshi"
-    >
-      <div
-        style={{ overscrollBehavior: "contain", WebkitOverflowScrolling: "touch" }}
-        className="w-full px-6 sm:px-14 2xl:px-24 3xl:px-28 pt-8 sm:pt-14 2xl:pt-18 3xl:pt-20 max-w-[1920px] mx-auto flex-1 flex flex-col justify-between overflow-y-auto lg:overflow-visible overscroll-contain"
-      >
+    <footer className="relative w-full h-screen min-h-screen bg-[#3145DD] text-white select-none flex flex-col justify-between overflow-hidden font-satoshi">
+      <div className="w-full px-6 sm:px-14 2xl:px-24 3xl:px-28 pt-8 sm:pt-14 2xl:pt-18 3xl:pt-20 max-w-[1920px] mx-auto flex-1 flex flex-col justify-between">
         <div className="flex flex-col lg:hidden justify-between flex-1 pb-6">
           <div>
             <div className="flex items-center gap-3.5">
@@ -510,6 +497,4 @@ const Footer = forwardRef<HTMLElement, FooterProps>(function Footer(
       </div>
     </footer>
   );
-});
-
-export default Footer;
+}

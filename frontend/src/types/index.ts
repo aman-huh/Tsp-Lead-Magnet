@@ -4,3 +4,4 @@ export * from "./form";
 export * from "./sections";
 export * from "./landing";
 export * from "./brand";
+export * from "./page";

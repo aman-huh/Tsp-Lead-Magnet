@@ -4,15 +4,29 @@ import Navbar from "@/components/sections/Navbar";
 import Footer from "@/components/sections/Footer";
 import AuditBar from "@/components/shared/AuditBar";
 import SectionRenderer from "@/components/shared/SectionRenderer";
-import { getHomePage } from "@/services/page";
+import { getAllPages, getPageBySlug } from "@/services/page";
 import { getBrands } from "@/services/brand";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const page = await getHomePage();
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
+
+export async function generateStaticParams() {
+  const pages = await getAllPages();
+  return pages
+    .filter((page) => Boolean(page.slug) && page.slug !== "home")
+    .map((page) => ({ slug: page.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const page = await getPageBySlug(slug);
 
   if (!page) {
     return {
-      title: "Thumbstack",
+      title: "Page Not Found | Thumbstack",
     };
   }
 
@@ -22,9 +36,11 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function Home() {
+export default async function DynamicPage({ params }: PageProps) {
+  const { slug } = await params;
+
   const [page, brands] = await Promise.all([
-    getHomePage(),
+    getPageBySlug(slug),
     getBrands().catch(() => []),
   ]);
 

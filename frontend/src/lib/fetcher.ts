@@ -1,4 +1,11 @@
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+const STRAPI_URL =
+  process.env.NEXT_PUBLIC_STRAPI_URL ||
+  process.env.STRAPI_URL ||
+  "http://localhost:1337";
+
+const STRAPI_TOKEN =
+  process.env.STRAPI_API_TOKEN ||
+  process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
 interface FetcherOptions extends RequestInit {
   params?: Record<string, string>;
@@ -23,6 +30,7 @@ export async function fetcher<T>(
     ...fetchOptions,
     headers: {
       "Content-Type": "application/json",
+      ...(STRAPI_TOKEN ? { Authorization: `Bearer ${STRAPI_TOKEN}` } : {}),
       ...fetchOptions.headers,
     },
   });
