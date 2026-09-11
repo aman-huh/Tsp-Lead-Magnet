@@ -22,14 +22,20 @@ export default function Navbar({ className = "" }: NavbarProps) {
 
   useEffect(() => {
     if (isMenuOpen) {
+      if (lenis) lenis.stop();
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
     } else {
+      if (lenis) lenis.start();
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     }
     return () => {
+      if (lenis) lenis.start();
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen, lenis]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -123,13 +129,13 @@ export default function Navbar({ className = "" }: NavbarProps) {
 
   const effectiveLogoDark = isMenuOpen || logoIsDark;
   const effectiveButtonDark = isMenuOpen || buttonIsDark;
-  const showButtonBg = isMenuOpen || isScrolled;
+  const showButtonBg = !isMenuOpen && isScrolled;
 
   return (
     <>
       <header
         ref={headerRef}
-        className={`fixed top-0 left-0 w-full h-[clamp(3.75rem,4.2vw,5.5rem)] flex items-center justify-between px-[clamp(1.25rem,4.2vw,6.25rem)] transition-all duration-500 z-[110] ${className}`}
+        className={`fixed top-0 left-0 w-full h-[clamp(3.75rem,4.2vw,5.5rem)] flex items-center justify-between px-5 sm:px-8 md:px-12 lg:px-16 xl:px-[clamp(3.5rem,5.2vw,6.25rem)] transition-all duration-500 z-[10001] ${className}`}
         style={{ background: "transparent", backdropFilter: "none" }}
       >
         <div ref={logoRef} className="flex items-center">
@@ -169,7 +175,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
         <button
           ref={buttonRef}
           type="button"
-          className="group relative flex items-center justify-center rounded-full transition-all duration-300 w-[clamp(2.5rem,4.2vw,3.5rem)] h-[clamp(2.5rem,4.2vw,3.5rem)] shrink-0 cursor-pointer"
+          className="group relative flex items-center justify-center rounded-full transition-all duration-300 w-[44px] h-[44px] sm:w-[48px] sm:h-[48px] md:w-[54px] md:h-[54px] lg:w-[56px] lg:h-[56px] shrink-0 cursor-pointer"
           aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
           onClick={() => setIsMenuOpen((prev) => !prev)}
           style={{
@@ -186,9 +192,15 @@ export default function Navbar({ className = "" }: NavbarProps) {
             viewBox="0 0 30 30"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="w-[clamp(1.125rem,4.2vw,1.875rem)] h-[clamp(1.125rem,4.2vw,1.875rem)] transition-colors duration-400 ease-[cubic-bezier(0.76,0,0.24,1)]"
+            className="w-[20px] h-[20px] sm:w-[22px] sm:h-[22px] md:w-[24px] md:h-[24px] transition-colors duration-400 ease-[cubic-bezier(0.76,0,0.24,1)]"
             style={{
-              color: effectiveButtonDark ? "#FFFFFF" : "#3145DD",
+              color: isMenuOpen
+                ? "#FFFFFF"
+                : showButtonBg
+                ? "#3145DD"
+                : effectiveButtonDark
+                ? "#FFFFFF"
+                : "#3145DD",
             }}
           >
             <g clipPath="url(#clip0_9011_1876)">
@@ -256,203 +268,325 @@ export default function Navbar({ className = "" }: NavbarProps) {
         data-lenis-prevent="true"
         data-lenis-prevent-wheel="true"
         data-lenis-prevent-touch="true"
-        className={`fixed inset-0 z-[100] bg-[#13230D] text-white overflow-y-auto overscroll-contain touch-pan-y transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${
+        className={`fixed top-0 left-0 w-full z-[9999] transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] h-[100dvh] md:h-full md:right-0 md:left-auto md:w-full md:grid md:grid-cols-[1.4fr_1fr] custom-menu-overlay overflow-hidden ${
           isMenuOpen
-            ? "translate-x-0 pointer-events-auto"
-            : "translate-x-full pointer-events-none"
+            ? "translate-y-0 pointer-events-auto"
+            : "-translate-y-full pointer-events-none"
         }`}
+        style={{
+          background: "rgba(15, 29, 7, 0.97)",
+          borderBottom: "1px solid rgba(82, 80, 80, 0.32)",
+          backdropFilter: "blur(50.55px)",
+          WebkitBackdropFilter: "blur(50.55px)",
+        }}
         aria-hidden={!isMenuOpen}
       >
-        <div className="min-h-full flex flex-col justify-between pt-[72px] sm:pt-[88px] pb-6 px-6 sm:px-10 lg:px-[60px] xl:px-[80px]">
-          <div className="w-full max-w-[1500px] mx-auto flex-1 pt-6 sm:pt-10 lg:pt-12 pb-8 grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-16 items-start">
-            <nav className="lg:col-span-7 flex flex-col gap-3.5 sm:gap-5 lg:gap-7 lg:pl-[138px]">
-              <a
-                href="#capabilities"
+        <div className="w-full h-full md:contents custom-menu-wrapper">
+          <div className="bg-transparent h-full md:h-full w-full flex flex-col relative overflow-y-auto scrollbar-hide px-6 sm:px-16 pt-[72px] pb-6 md:pt-[120px] md:pb-[100px] custom-menu-left">
+            <nav className="flex flex-col gap-5 sm:gap-7 md:gap-9 pl-4 sm:pl-6 md:pl-12 lg:pl-20 xl:pl-24 custom-menu-nav">
+              <Link
+                className="block w-fit font-delight text-white hover:text-[#95E7D3] transition-colors duration-200 text-[clamp(24px,5.5vw,62px)] font-normal leading-[1.18]"
+                style={{ fontFamily: "var(--font-delight)" }}
+                href="/our-work"
                 onClick={() => setIsMenuOpen(false)}
-                className="group relative block overflow-hidden font-nohemi text-[26px] sm:text-[36px] lg:text-[60px] font-normal tracking-[-0.02em] leading-[1.2] text-white w-fit cursor-pointer select-none"
               >
-                <span className="block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] lg:group-hover:-translate-y-full">
-                  Capabilities
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-0 block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] translate-y-full lg:group-hover:translate-y-0 text-[#38E29D]"
-                >
-                  Capabilities
-                </span>
-              </a>
-              <a
-                href="#work"
+                Our Work
+              </Link>
+              <Link
+                className="block w-fit font-delight text-white hover:text-[#95E7D3] transition-colors duration-200 text-[clamp(24px,5.5vw,62px)] font-normal leading-[1.18]"
+                style={{ fontFamily: "var(--font-delight)" }}
+                href="/service"
                 onClick={() => setIsMenuOpen(false)}
-                className="group relative block overflow-hidden font-nohemi text-[26px] sm:text-[36px] lg:text-[60px] font-normal tracking-[-0.02em] leading-[1.2] text-white w-fit cursor-pointer select-none"
               >
-                <span className="block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] lg:group-hover:-translate-y-full">
-                  Our Work
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-0 block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] translate-y-full lg:group-hover:translate-y-0 text-[#38E29D]"
-                >
-                  Our Work
-                </span>
-              </a>
-              <a
-                href="#news"
+                Services
+              </Link>
+              <Link
+                className="block w-fit font-delight text-white hover:text-[#95E7D3] transition-colors duration-200 text-[clamp(24px,5.5vw,62px)] font-normal leading-[1.18]"
+                style={{ fontFamily: "var(--font-delight)" }}
+                href="/capabilities"
                 onClick={() => setIsMenuOpen(false)}
-                className="group relative block overflow-hidden font-nohemi text-[26px] sm:text-[36px] lg:text-[60px] font-normal tracking-[-0.02em] leading-[1.2] text-white w-fit cursor-pointer select-none"
               >
-                <span className="block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] lg:group-hover:-translate-y-full">
-                  News &amp; Insights
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-0 block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] translate-y-full lg:group-hover:translate-y-0 text-[#38E29D]"
-                >
-                  News &amp; Insights
-                </span>
-              </a>
-              <a
-                href="#about"
+                Capabilities
+              </Link>
+              <Link
+                className="block w-fit font-delight text-white hover:text-[#95E7D3] transition-colors duration-200 text-[clamp(24px,5.5vw,62px)] font-normal leading-[1.18]"
+                style={{ fontFamily: "var(--font-delight)" }}
+                href="/news-and-insights"
                 onClick={() => setIsMenuOpen(false)}
-                className="group relative block overflow-hidden font-nohemi text-[26px] sm:text-[36px] lg:text-[60px] font-normal tracking-[-0.02em] leading-[1.2] text-white w-fit cursor-pointer select-none"
               >
-                <span className="block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] lg:group-hover:-translate-y-full">
-                  About us
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-0 block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] translate-y-full lg:group-hover:translate-y-0 text-[#38E29D]"
-                >
-                  About us
-                </span>
-              </a>
+                News &amp; Insights
+              </Link>
             </nav>
 
-            <div className="w-full border-t border-white/10 my-7 sm:my-8 lg:hidden" />
+            {/* Mobile Contact Info */}
+            <div
+              className="md:hidden mt-8 pt-6 border-t border-white/10 flex flex-col gap-5 pl-4 sm:pl-6 pb-20 font-satoshi"
+              style={{ fontFamily: "var(--font-satoshi)" }}
+            >
+              <h3 className="text-white text-[16px] font-bold">Contact</h3>
+              <div className="flex flex-col gap-1">
+                <p className="text-white text-[14px] font-medium">Mumbai, India</p>
+                <a
+                  href="tel:+919967006777"
+                  className="text-white text-[14px] underline underline-offset-4 decoration-white/30 hover:text-[#95E7D3] transition-colors"
+                >
+                  +91 99670 06777
+                </a>
+                <a
+                  href="mailto:hey@thumbstack.co"
+                  className="text-white/80 text-[14px] underline underline-offset-4 decoration-white/30 hover:text-white transition-colors"
+                >
+                  hey@thumbstack.co
+                </a>
+              </div>
+              <div className="flex flex-col gap-1">
+                <p className="text-white text-[14px] font-medium">
+                  Amsterdam, Netherlands
+                </p>
+                <a
+                  href="tel:+31642373471"
+                  className="text-white text-[14px] underline underline-offset-4 decoration-white/30 hover:text-[#95E7D3] transition-colors"
+                >
+                  +31 6 4237 3471
+                </a>
+                <a
+                  href="mailto:eu@thumbstack.co"
+                  className="text-white/80 text-[14px] underline underline-offset-4 decoration-white/30 hover:text-white transition-colors"
+                >
+                  eu@thumbstack.co
+                </a>
+              </div>
+              <div className="flex flex-col gap-1">
+                <p className="text-white text-[14px] font-medium">
+                  Brisbane, Australia
+                </p>
+                <a
+                  href="tel:+61475467221"
+                  className="text-white text-[14px] underline underline-offset-4 decoration-white/30 hover:text-[#95E7D3] transition-colors"
+                >
+                  +61 475 467 221
+                </a>
+                <a
+                  href="mailto:au@thumbstack.co"
+                  className="text-white/80 text-[14px] underline underline-offset-4 decoration-white/30 hover:text-white transition-colors"
+                >
+                  au@thumbstack.co
+                </a>
+              </div>
+            </div>
 
-            <div className="lg:col-span-5 flex flex-col justify-start lg:pt-3">
-              <h3 className="font-satoshi font-bold text-[16px] sm:text-[18px] text-white mb-5 sm:mb-6 tracking-wide">
-                Contacts
-              </h3>
-              <div className="space-y-4 sm:space-y-6">
-                <div className="space-y-1">
-                  <p className="font-satoshi font-medium text-[14px] sm:text-[15px] text-white">
-                    Mumbai (Worli)
-                  </p>
+            {/* Social Icons */}
+            <div className="absolute bottom-4 right-4 md:fixed md:bottom-[40px] md:left-1/2 md:-translate-x-1/2 md:right-auto ml-0 md:ml-[4px] z-[10000] flex gap-6 text-white/70 justify-center">
+              <svg
+                width="140"
+                height="27"
+                viewBox="0 0 140 27"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-[100px] h-auto md:w-[140px] hover:opacity-80 transition-opacity cursor-pointer"
+              >
+                <g style={{ mixBlendMode: "luminosity" }}>
                   <a
-                    href="tel:+91 99670 06777"
-                    className="block font-satoshi text-[14px] sm:text-[15px] text-white underline underline-offset-4 decoration-white/40 hover:decoration-[#38E29D] hover:text-[#38E29D] transition-colors"
+                    href="https://www.instagram.com/thumbstack_tech/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    +91 99670 06777
+                    <g clipPath="url(#clip0_4628_4117)">
+                      <path
+                        d="M6.6672 13.5C6.6672 11.6591 8.15912 10.1664 10 10.1664C11.8409 10.1664 13.3336 11.6591 13.3336 13.5C13.3336 15.3409 11.8409 16.8336 10 16.8336C8.15912 16.8336 6.6672 15.3409 6.6672 13.5ZM4.86512 13.5C4.86512 16.336 7.164 18.6349 10 18.6349C12.836 18.6349 15.1349 16.336 15.1349 13.5C15.1349 10.664 12.836 8.36512 10 8.36512C7.164 8.36512 4.86512 10.664 4.86512 13.5ZM14.1382 8.16152C14.1381 8.39886 14.2084 8.63089 14.3401 8.82829C14.4719 9.02568 14.6593 9.17956 14.8785 9.27047C15.0977 9.36138 15.339 9.38524 15.5718 9.33904C15.8046 9.29283 16.0185 9.17862 16.1863 9.01087C16.3542 8.84311 16.4686 8.62934 16.515 8.39658C16.5614 8.16382 16.5377 7.92253 16.447 7.70322C16.3563 7.48392 16.2025 7.29644 16.0052 7.1645C15.808 7.03257 15.576 6.9621 15.3386 6.962H15.3382C15.02 6.96215 14.715 7.08856 14.49 7.31347C14.265 7.53837 14.1384 7.84339 14.1382 8.16152ZM5.96 21.6398C4.98504 21.5954 4.45512 21.433 4.10296 21.2958C3.63608 21.114 3.30296 20.8975 2.95272 20.5478C2.60248 20.198 2.38568 19.8652 2.20472 19.3983C2.06744 19.0463 1.90504 18.5162 1.86072 17.5413C1.81224 16.4872 1.80256 16.1706 1.80256 13.5001C1.80256 10.8296 1.81304 10.5138 1.86072 9.45888C1.90512 8.48392 2.06872 7.95488 2.20472 7.60184C2.38648 7.13496 2.60296 6.80184 2.95272 6.4516C3.30248 6.10136 3.63528 5.88456 4.10296 5.7036C4.45496 5.56632 4.98504 5.40392 5.96 5.3596C7.01408 5.31112 7.33072 5.30144 10 5.30144C12.6693 5.30144 12.9862 5.31192 14.0412 5.3596C15.0162 5.404 15.5452 5.5676 15.8982 5.7036C16.3651 5.88456 16.6982 6.10184 17.0485 6.4516C17.3987 6.80136 17.6147 7.13496 17.7965 7.60184C17.9338 7.95384 18.0962 8.48392 18.1405 9.45888C18.189 10.5138 18.1986 10.8296 18.1986 13.5001C18.1986 16.1706 18.189 16.4863 18.1405 17.5413C18.0961 18.5162 17.9329 19.0462 17.7965 19.3983C17.6147 19.8652 17.3982 20.1983 17.0485 20.5478C16.6987 20.8972 16.3651 21.114 15.8982 21.2958C15.5462 21.433 15.0162 21.5954 14.0412 21.6398C12.9871 21.6882 12.6705 21.6979 10 21.6979C7.32952 21.6979 7.01376 21.6882 5.96 21.6398ZM5.8772 3.56056C4.81264 3.60904 4.0852 3.77784 3.44992 4.02504C2.792 4.28032 2.23504 4.6228 1.67848 5.17848C1.12192 5.73416 0.78032 6.292 0.52504 6.94992C0.27784 7.5856 0.10904 8.31264 0.06056 9.3772C0.01128 10.4434 0 10.7843 0 13.5C0 16.2157 0.01128 16.5566 0.06056 17.6228C0.10904 18.6874 0.27784 19.4144 0.52504 20.0501C0.78032 20.7076 1.122 21.2661 1.67848 21.8215C2.23496 22.377 2.792 22.719 3.44992 22.975C4.0864 23.2222 4.81264 23.391 5.8772 23.4394C6.944 23.4879 7.28432 23.5 10 23.5C12.7157 23.5 13.0566 23.4887 14.1228 23.4394C15.1874 23.391 15.9144 23.2222 16.5501 22.975C17.2076 22.719 17.765 22.3772 18.3215 21.8215C18.8781 21.2658 19.219 20.7076 19.475 20.0501C19.7222 19.4144 19.8918 18.6874 19.9394 17.6228C19.9879 16.5558 19.9992 16.2157 19.9992 13.5C19.9992 10.7843 19.9879 10.4434 19.9394 9.3772C19.891 8.31256 19.7222 7.5852 19.475 6.94992C19.219 6.2924 18.8772 5.73504 18.3215 5.17848C17.7658 4.62192 17.2076 4.28032 16.5509 4.02504C15.9144 3.77784 15.1874 3.60824 14.1236 3.56056C13.0574 3.51208 12.7165 3.5 10.0008 3.5C7.28512 3.5 6.944 3.51128 5.8772 3.56056Z"
+                        fill="#FEF7FF"
+                      />
+                    </g>
                   </a>
                   <a
+                    href="https://www.youtube.com/@TheHumanAIPodcast"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <g clipPath="url(#clip1_4628_4117)">
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M63.4733 7.26915C63.1831 6.1808 62.3245 5.32233 61.2322 5.02808C59.2572 4.5 51.3327 4.5 51.3327 4.5C51.3327 4.5 43.4123 4.5 41.4332 5.02808C40.345 5.31827 39.4864 6.17684 39.1921 7.26915C38.6641 9.2442 38.6641 13.3676 38.6641 13.3676C38.6641 13.3676 38.6641 17.4911 39.1921 19.4662C39.4823 20.5545 40.3409 21.413 41.4332 21.7072C43.4123 22.2353 51.3327 22.2353 51.3327 22.2353C51.3327 22.2353 59.2572 22.2353 61.2322 21.7072C62.3206 21.4171 63.179 20.5585 63.4733 19.4662C64.0014 17.4911 64.0014 13.3677 64.0014 13.3677C64.0014 13.3677 64.0014 9.2442 63.4733 7.26915Z"
+                        fill="#FEF7FF"
+                      />
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M48.8047 17.1684L55.3869 13.3673L48.8047 9.56641V17.1684Z"
+                        fill="#151518"
+                      />
+                    </g>
+                  </a>
+                  <a
+                    href="https://www.facebook.com/ThumbstackTechnologies/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <g clipPath="url(#clip2_4628_4117)">
+                      <path
+                        d="M92 23.5C97.5228 23.5 102 19.0228 102 13.5C102 7.97715 97.5228 3.5 92 3.5C86.4772 3.5 82 7.97715 82 13.5C82 19.0228 86.4772 23.5 92 23.5Z"
+                        fill="#FEF7FF"
+                      />
+                      <path
+                        d="M95.2511 6.57031H93.0359C91.7213 6.57031 90.2591 7.12322 90.2591 9.02878C90.2655 9.69276 90.2591 10.3286 90.2591 11.0443H88.7383V13.4644H90.3062V20.4313H93.1872V13.4184H95.0888L95.2609 11.0375H93.1376C93.1376 11.0375 93.1423 9.97839 93.1376 9.67082C93.1376 8.91778 93.9211 8.96091 93.9683 8.96091C94.3411 8.96091 95.0661 8.96199 95.2522 8.96091V6.57031H95.2511Z"
+                        fill="#0F1D07"
+                      />
+                    </g>
+                  </a>
+                  <a
+                    href="https://in.linkedin.com/company/thumbstacktechnologies"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <g clipPath="url(#clip3_4628_4117)">
+                      <path
+                        d="M120 4.9307C120 4.13992 120.662 3.49805 121.478 3.49805H138.522C139.338 3.49805 140 4.13992 140 4.9307V22.0656C140 22.8566 139.338 23.498 138.522 23.498H121.478C120.662 23.498 120 22.8567 120 22.0659V4.93047V4.9307Z"
+                        fill="#FEF7FF"
+                      />
+                      <path
+                        d="M126.075 20.2371V11.233H123.083V20.2371H126.076H126.075ZM124.58 10.0039C125.623 10.0039 126.273 9.3125 126.273 8.44844C126.253 7.56469 125.623 6.89258 124.6 6.89258C123.575 6.89258 122.906 7.56469 122.906 8.44836C122.906 9.31242 123.556 10.0038 124.56 10.0038H124.579L124.58 10.0039ZM127.732 20.2371H130.725V15.2094C130.725 14.9406 130.744 14.6712 130.823 14.4792C131.039 13.9413 131.532 13.3845 132.359 13.3845C133.441 13.3845 133.875 14.2102 133.875 15.4207V20.2371H136.867V15.0745C136.867 12.3089 135.391 11.022 133.422 11.022C131.808 11.022 131.099 11.9242 130.705 12.5387H130.725V11.2334H127.732C127.771 12.078 127.732 20.2374 127.732 20.2374L127.732 20.2371Z"
+                        fill="#0F1D07"
+                      />
+                    </g>
+                  </a>
+                </g>
+                <defs>
+                  <clipPath id="clip0_4628_4117">
+                    <rect
+                      width="20"
+                      height="20"
+                      fill="white"
+                      transform="translate(0 3.5)"
+                    />
+                  </clipPath>
+                  <clipPath id="clip1_4628_4117">
+                    <rect
+                      width="26"
+                      height="26"
+                      fill="white"
+                      transform="translate(38 0.5)"
+                    />
+                  </clipPath>
+                  <clipPath id="clip2_4628_4117">
+                    <rect
+                      width="20"
+                      height="20"
+                      fill="white"
+                      transform="translate(82 3.5)"
+                    />
+                  </clipPath>
+                  <clipPath id="clip3_4628_4117">
+                    <rect
+                      width="20"
+                      height="20.0803"
+                      fill="white"
+                      transform="translate(120 3.45898)"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+          </div>
+
+          {/* Desktop Right Column */}
+          <div className="bg-transparent pt-[118px] h-full w-full hidden md:flex flex-col items-start justify-start px-12 md:pl-24 lg:px-24 lg:pl-40 xl:pl-48 overflow-y-auto custom-menu-right">
+            <div
+              className="flex flex-col w-full lg:min-w-[280px] max-w-sm font-satoshi"
+              style={{ fontFamily: "var(--font-satoshi)" }}
+            >
+              <h3 className="text-white text-[18px] font-bold mb-5">Contact</h3>
+              <div className="flex flex-col gap-6 xl:gap-7">
+                <div className="flex flex-col gap-1.5">
+                  <div>
+                    <p className="text-white text-[15px] font-medium tracking-wide">
+                      Mumbai, India
+                    </p>
+                    <a
+                      href="tel:+919967006777"
+                      className="text-white text-[15px] font-normal underline underline-offset-[5px] decoration-white/40 hover:decoration-white hover:text-[#95E7D3] transition-colors block mt-1"
+                    >
+                      +91 99670 06777
+                    </a>
+                  </div>
+                  <a
                     href="mailto:hey@thumbstack.co"
-                    className="block font-satoshi text-[13.5px] sm:text-[14px] text-[#CBD2C9] underline underline-offset-4 decoration-white/30 hover:text-white transition-colors"
+                    className="text-white/70 text-[14px] font-normal underline underline-offset-[4px] decoration-white/30 hover:text-white hover:decoration-white transition-colors block"
                   >
                     hey@thumbstack.co
                   </a>
                 </div>
-                <div className="space-y-1">
-                  <p className="font-satoshi font-medium text-[14px] sm:text-[15px] text-white">
-                    Budapest
-                  </p>
+
+                <div className="flex flex-col gap-1.5">
+                  <div>
+                    <p className="text-white text-[15px] font-medium tracking-wide">
+                      Amsterdam, Netherlands
+                    </p>
+                    <a
+                      href="tel:+31642373471"
+                      className="text-white text-[15px] font-normal underline underline-offset-[5px] decoration-white/40 hover:decoration-white hover:text-[#95E7D3] transition-colors block mt-1"
+                    >
+                      +31 6 4237 3471
+                    </a>
+                  </div>
                   <a
-                    href="tel:+91 8374938493"
-                    className="block font-satoshi text-[14px] sm:text-[15px] text-white underline underline-offset-4 decoration-white/40 hover:decoration-[#38E29D] hover:text-[#38E29D] transition-colors"
+                    href="mailto:eu@thumbstack.co"
+                    className="text-white/70 text-[14px] font-normal underline underline-offset-[4px] decoration-white/30 hover:text-white hover:decoration-white transition-colors block"
                   >
-                    +91 8374938493
-                  </a>
-                  <a
-                    href="mailto:thumbstack@gmail.com"
-                    className="block font-satoshi text-[13.5px] sm:text-[14px] text-[#CBD2C9] underline underline-offset-4 decoration-white/30 hover:text-white transition-colors"
-                  >
-                    thumbstack@gmail.com
-                  </a>
-                </div>
-                <div className="space-y-1">
-                  <p className="font-satoshi font-medium text-[14px] sm:text-[15px] text-white">
-                    Dubai
-                  </p>
-                  <a
-                    href="tel:+91 8374938493"
-                    className="block font-satoshi text-[14px] sm:text-[15px] text-white underline underline-offset-4 decoration-white/40 hover:decoration-[#38E29D] hover:text-[#38E29D] transition-colors"
-                  >
-                    +91 8374938493
-                  </a>
-                  <a
-                    href="mailto:thumbstack@gmail.com"
-                    className="block font-satoshi text-[13.5px] sm:text-[14px] text-[#CBD2C9] underline underline-offset-4 decoration-white/30 hover:text-white transition-colors"
-                  >
-                    thumbstack@gmail.com
+                    eu@thumbstack.co
                   </a>
                 </div>
-              </div>
-              <div className="hidden lg:block mt-8 sm:mt-10">
-                <a
-                  href="#quote"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="inline-flex items-center gap-2 rounded-full bg-[#3145DD] hover:bg-[#2537c7] text-white px-7 py-3.5 font-satoshi text-[15px] font-medium transition-all shadow-md active:scale-95 w-fit"
-                >
-                  <span>Talk to us</span>
-                  <span className="text-[17px] leading-none">→</span>
-                </a>
+
+                <div className="flex flex-col gap-1.5">
+                  <div>
+                    <p className="text-white text-[15px] font-medium tracking-wide">
+                      Brisbane, Australia
+                    </p>
+                    <a
+                      href="tel:+61475467221"
+                      className="text-white text-[15px] font-normal underline underline-offset-[5px] decoration-white/40 hover:decoration-white hover:text-[#95E7D3] transition-colors block mt-1"
+                    >
+                      +61 475 467 221
+                    </a>
+                  </div>
+                  <a
+                    href="mailto:au@thumbstack.co"
+                    className="text-white/70 text-[14px] font-normal underline underline-offset-[4px] decoration-white/30 hover:text-white hover:decoration-white transition-colors block"
+                  >
+                    au@thumbstack.co
+                  </a>
+                </div>
+
+                <div className="relative group shrink-0 w-[150px] h-[45px] mt-2">
+                  <div
+                    className="absolute inset-0 bg-[#95E7D3] rounded-[16px] opacity-0 scale-95 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
+                    style={{ transform: "translate(3px, 3px)" }}
+                  />
+                  <a
+                    className="absolute inset-0 bg-[#3145DD] text-white rounded-[16px] text-[14px] font-bold flex items-center justify-center gap-2 border border-[#3145DD] transition-transform duration-300 translate-x-0 translate-y-0 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 font-satoshi cursor-pointer"
+                    style={{ fontFamily: "var(--font-satoshi)" }}
+                    href="/#footer"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <span>Talk to us</span>
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="transition-transform duration-300 group-hover:translate-x-1"
+                    >
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className="shrink-0 pt-6 pb-2 flex items-center justify-end lg:justify-center gap-5 sm:gap-6">
-            <a
-              href="https://www.instagram.com/thumbstack_tech/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:opacity-80 transition-opacity p-1"
-              aria-label="Instagram"
-            >
-              <img
-                alt="Instagram"
-                className="h-4.5 w-4.5 sm:h-5 sm:w-5 object-contain filter brightness-100"
-                src="/images/insta_logo.svg"
-              />
-            </a>
-            <a
-              href="https://www.youtube.com/@TheHumanAIPodcast"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:opacity-80 transition-opacity p-1"
-              aria-label="YouTube"
-            >
-              <img
-                alt="YouTube"
-                className="h-4.5 w-4.5 sm:h-5 sm:w-5 object-contain filter brightness-100"
-                src="/images/youtube_logo.svg"
-              />
-            </a>
-            <a
-              href="https://www.facebook.com/ThumbstackTechnologies/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:opacity-80 transition-opacity p-1"
-              aria-label="Facebook"
-            >
-              <img
-                alt="Facebook"
-                className="h-4.5 w-4.5 sm:h-5 sm:w-5 object-contain filter brightness-100"
-                src="/images/facebook.svg"
-              />
-            </a>
-            <a
-              href="https://www.linkedin.com/company/thumbstackstudios/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:opacity-80 transition-opacity p-1"
-              aria-label="LinkedIn"
-            >
-              <img
-                alt="LinkedIn"
-                className="h-4.5 w-4.5 sm:h-5 sm:w-5 object-contain filter brightness-100"
-                src="/images/linkedin-icon.svg"
-              />
-            </a>
           </div>
         </div>
       </div>

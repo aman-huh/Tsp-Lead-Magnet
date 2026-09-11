@@ -32,10 +32,21 @@ export default function ProblemSelector({
   };
 
   const selectedCount = selectedIdentifiers.size;
-  const formattedSummary = summaryText.replace(
-    "{{selectedCount}}",
-    selectedCount.toString()
-  );
+
+  const getDisplayerText = (count: number, template: string) => {
+    if (count === 0) {
+      return "Select what applies to diagnose where your store is losing margin.";
+    }
+    if (count === 1) {
+      return "1 challenge identified. Even a single friction point quietly leaks conversion margin.";
+    }
+    if (count <= 3) {
+      return `${count} challenges identified. Typical of stores that have outgrown their original theme.`;
+    }
+    return template.replace("{{selectedCount}}", count.toString());
+  };
+
+  const formattedSummary = getDisplayerText(selectedCount, summaryText);
 
   return (
     <div className="space-y-[clamp(1.5rem,4.2vw,3.25rem)]">
@@ -119,25 +130,23 @@ export default function ProblemSelector({
         })}
       </div>
 
-      {selectedCount > 0 && (
-        <div className="w-full bg-transparent sm:bg-[#F8F8F8] sm:rounded-[clamp(12px,4.2vw,16px)] p-0 sm:p-[clamp(1rem,4.2vw,1.5rem)] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-6 sm:gap-2.5">
-          <p className="font-satoshi text-[clamp(1.0625rem,4.2vw,1.25rem)] leading-snug font-bold text-[#111827]">
-            {formattedSummary}
-          </p>
+      <div className="w-full bg-transparent sm:bg-[#F8F8F8] sm:rounded-[clamp(12px,4.2vw,16px)] p-0 sm:p-[clamp(1rem,4.2vw,1.5rem)] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-6 sm:gap-2.5 md:gap-5">
+        <p className="font-satoshi text-[clamp(1.0625rem,4.2vw,1.25rem)] leading-snug font-bold text-[#111827]">
+          {formattedSummary}
+        </p>
 
-          <Button
-            text={submitButton?.text || "Submit"}
-            url={submitButton?.url || "#lead-form"}
-            variant="action"
-            shape="pill"
-            size="lg"
-            arrowType="right"
-            noHover
-            containerClassName="w-full sm:w-[clamp(18rem,4.2vw,27.5rem)] shrink-0"
-            className="w-full h-[clamp(3.125rem,4.2vw,4rem)] text-[clamp(1rem,4.2vw,1.25rem)] justify-center"
-          />
-        </div>
-      )}
+        <Button
+          text={submitButton?.text || "Submit"}
+          url={submitButton?.url || "#lead-form"}
+          variant="action"
+          shape="pill"
+          size="lg"
+          arrowType="right"
+          noHover
+          containerClassName="w-full sm:w-[clamp(18rem,20.2vw,34.5rem)] shrink-0"
+          className="w-full h-[clamp(3.125rem,4.2vw,4rem)] text-[clamp(1rem,4.2vw,1.25rem)] justify-center"
+        />
+      </div>
     </div>
   );
 }

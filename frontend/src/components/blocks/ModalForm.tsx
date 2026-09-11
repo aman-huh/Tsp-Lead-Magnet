@@ -383,7 +383,7 @@ export default function ModalForm({
             Based on your selections:{" "}
             {selections.map((s, i) => (
               <span key={i}>
-                <span className="text-[#3145DD] underline">{s}</span>
+                <span className="text-[#3145DD] underline text-sm">{s}</span>
                 {i < selections.length - 1 && ", "}
               </span>
             ))}

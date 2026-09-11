@@ -185,9 +185,9 @@ export default function Footer({ data }: FooterProps) {
   const renderMarqueeUnit = (key: number) => (
     <div
       key={key}
-      className="flex shrink-0 items-center gap-8 sm:gap-12 pr-8 sm:pr-12"
+      className="flex shrink-0 items-center gap-8 sm:gap-12 pr-8 sm:pr-12 py-2 sm:py-3"
     >
-      <span className="font-delight text-[clamp(44px,4.2vw,100px)] font-medium text-white whitespace-nowrap">
+      <span className="font-delight text-[clamp(44px,4.2vw,100px)] font-medium leading-none text-white whitespace-nowrap">
         {marqueeText}
       </span>
       <div className="group relative flex h-[78px] w-[78px] sm:h-[114px] sm:w-[114px] lg:h-[122px] lg:w-[122px] shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-[#7DE7D0]">
@@ -223,7 +223,7 @@ export default function Footer({ data }: FooterProps) {
     <footer
       id="contact"
       data-theme="dark"
-      className="relative w-full min-h-screen pt-16 pb-24 sm:pt-20 sm:pb-28 md:py-24 bg-[#3145DD] overflow-hidden select-none flex flex-col justify-between"
+      className="relative w-full min-h-screen pt-16 pb-10 sm:pt-20 sm:pb-12 md:pt-24 md:pb-14 bg-[#3145DD] overflow-hidden select-none flex flex-col justify-between"
     >
       <div className="mx-auto w-full max-w-[1880px] px-6 lg:px-[60px] xl:px-[80px] flex-1 flex flex-col justify-between">
         <div className="flex flex-col lg:flex-row lg:justify-between gap-24 sm:gap-28 lg:gap-10 xl:gap-16">
@@ -417,8 +417,8 @@ export default function Footer({ data }: FooterProps) {
         </div>
       </div>
 
-      <div className="mt-14 sm:mt-20 overflow-hidden">
-        <div className="flex w-max animate-marquee">
+      <div className="mt-10 sm:mt-14 overflow-hidden py-2 sm:py-3">
+        <div className="flex w-max animate-marquee items-center">
           {[0, 1, 2, 3].map((i) => renderMarqueeUnit(i))}
           {[4, 5, 6, 7].map((i) => renderMarqueeUnit(i))}
         </div>

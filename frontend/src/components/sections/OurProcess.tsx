@@ -52,8 +52,8 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
       ref={cardRef}
       onClick={handleCardClick}
       className={`bg-[#1B2F10] ${
-        isTapped ? "bg-[#243D1A]" : "hover:bg-[#254419]"
-      } rounded-[12px] p-[clamp(0.875rem,2vw,2.25rem)] flex flex-col justify-between aspect-[331/421] min-h-[260px] sm:min-h-[280px] lg:min-h-0 h-full w-full relative group overflow-hidden transition-all duration-300 ${
+        hasHoverList ? "" : "hover:bg-[#254419]"
+      } rounded-[12px] p-[clamp(0.75rem,2vw,2.25rem)] flex flex-col justify-between aspect-[331/421] sm:aspect-[4/3] lg:aspect-[331/421] max-h-[420px] sm:max-h-[280px] md:max-h-[300px] lg:max-h-[420px] min-h-[190px] h-full w-full relative group overflow-hidden transition-all duration-300 ${
         hasHoverList ? "cursor-pointer" : ""
       }`}
     >
@@ -65,7 +65,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
         }`}
       >
         <div>
-          <div className="w-[clamp(1.5rem,2vw,2.25rem)] h-[clamp(1.5rem,2vw,2.25rem)] relative mb-3 sm:mb-6 flex items-center">
+          <div className="w-[clamp(1.5rem,2vw,2.25rem)] h-[clamp(1.5rem,2vw,2.25rem)] relative mb-2.5 sm:mb-4 lg:mb-6 flex items-center">
             {card.icon?.url ? (
               <Image
                 src={getStrapiMediaUrl(card.icon.url)}
@@ -79,7 +79,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
             )}
           </div>
 
-          <h3 className="text-white font-medium text-[clamp(1rem,1.8vw,1.75rem)] tracking-[-0.01em] mb-2 sm:mb-3 font-delight! leading-[1.15] sm:leading-tight">
+          <h3 className="text-white font-medium text-[clamp(0.9375rem,1.8vw,1.75rem)] tracking-[-0.01em] mb-1.5 sm:mb-2.5 lg:mb-3 font-delight! leading-[1.15] sm:leading-tight">
             {card.title}
           </h3>
 
@@ -88,7 +88,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
           </p>
         </div>
 
-        <div className="pt-3 sm:pt-6 mt-auto">
+        <div className="pt-2 sm:pt-4 lg:pt-6 mt-auto">
           <Link
             href={ctaUrl}
             onClick={(e) => {
@@ -107,37 +107,37 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
 
       {hasHoverList && (
         <div
-          className={`absolute inset-0 z-20 bg-[#243D1A] p-[clamp(0.75rem,2vw,2.25rem)] flex flex-col justify-start transition-opacity duration-300 ease-out rounded-[12px] overflow-y-auto no-scrollbar ${
+          className={`absolute inset-0 z-20 bg-[#1B2F10] p-[clamp(1rem,1.8vw,1.75rem)] flex flex-col justify-start transition-opacity duration-300 ease-out rounded-[12px] overflow-y-auto no-scrollbar ${
             isTapped
               ? "opacity-100 pointer-events-auto"
               : "opacity-0 pointer-events-none lg:group-hover:opacity-100 lg:group-hover:pointer-events-auto lg:group-hover:duration-500"
           }`}
         >
-          <ul className="divide-y divide-white/15 w-full">
+          <ul className="divide-y divide-white/10 w-full">
             {card.hoverList?.map((item, idx) => (
               <li
                 key={item.id}
                 style={{
-                  ["--enter-delay" as string]: `${idx * 45}ms`,
+                  ["--enter-delay" as string]: `${idx * 40}ms`,
                 }}
-                className={`flex items-start gap-2 sm:gap-3 2xl:gap-3.5 py-1.5 sm:py-2.5 2xl:py-3.5 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+                className={`flex items-start gap-2.5 sm:gap-3 py-2 sm:py-2.5 lg:py-[clamp(0.45rem,0.7vw,0.65rem)] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
                   isTapped
                     ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-4 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 delay-0 lg:group-hover:[transition-delay:var(--enter-delay)]"
+                    : "opacity-0 translate-y-3 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 delay-0 lg:group-hover:[transition-delay:var(--enter-delay)]"
                 }`}
               >
                 <svg
-                  viewBox="0 0 10 18"
+                  viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="1.6"
+                  strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="w-1.5 h-3 sm:w-2.25 sm:h-4 2xl:w-2.5 2xl:h-4.5 text-white/80 shrink-0 mt-0.5 sm:mt-1"
+                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white/70 shrink-0 mt-0.5"
                 >
-                  <path d="M1.5 1.5L8.5 9L1.5 16.5" />
+                  <path d="M9 5l7 7-7 7" />
                 </svg>
-                <span className="text-white font-satoshi text-[clamp(0.6875rem,1vw,0.96875rem)] leading-[1.25] sm:leading-snug">
+                <span className="text-white font-satoshi text-[clamp(0.8125rem,0.95vw,0.9375rem)] leading-[1.3] font-normal">
                   {item.Text || item.text}
                 </span>
               </li>
@@ -157,7 +157,7 @@ function MediaCardItem({ card }: { card: ProcessCard }) {
 
   if (isVideo && card.media?.url) {
     return (
-      <div className="bg-black rounded-[12px] overflow-hidden relative w-full h-full aspect-[755/421] flex items-center justify-center">
+      <div className="bg-black rounded-[12px] overflow-hidden relative w-full h-full aspect-[755/421] max-h-[420px] flex items-center justify-center">
         <video
           src={getStrapiMediaUrl(card.media.url)}
           autoPlay
@@ -172,7 +172,7 @@ function MediaCardItem({ card }: { card: ProcessCard }) {
 
   if (card.media?.url) {
     return (
-      <div className="bg-white rounded-[12px] overflow-hidden relative w-full h-full aspect-[755/421] flex items-center justify-center p-3 sm:p-4">
+      <div className="bg-white rounded-[12px] overflow-hidden relative w-full h-full aspect-[755/421] max-h-[420px] flex items-center justify-center p-3 sm:p-4">
         <Image
           src={getStrapiMediaUrl(card.media.url)}
           alt={card.media.alternativeText || "Strategic design process"}
@@ -185,7 +185,7 @@ function MediaCardItem({ card }: { card: ProcessCard }) {
   }
 
   return (
-    <div className="bg-[#1B2F10] rounded-[12px] w-full h-full aspect-[755/421]" />
+    <div className="bg-[#1B2F10] rounded-[12px] w-full h-full aspect-[755/421] max-h-[420px]" />
   );
 }
 
@@ -253,17 +253,17 @@ export default function OurProcess({ data }: OurProcessProps) {
   const rows = chunkCardsIntoRows(cards);
 
   return (
-    <section className="bg-[#0F1D07] pt-[clamp(5rem,7.5vw,10rem)] pb-[clamp(5.5rem,8.5vw,11.5rem)] px-[clamp(1.25rem,4.2vw,6.2rem)] text-white">
+    <section className="bg-[#0F1D07] py-[clamp(3.5rem,6vw,8rem)] px-[clamp(1rem,4.2vw,11.2rem)] sm:px-[clamp(1.5rem,6vw,11.2rem)] lg:px-[clamp(2.5rem,11.5vw,11.2rem)] text-white">
       <div className="max-w-[1920px] mx-auto w-full">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 sm:gap-8 lg:gap-12">
-          <div className="flex flex-col gap-3 sm:gap-5 lg:gap-8">
-            <p className="text-white/60 text-[clamp(0.8125rem,4.2vw,0.9375rem)] font-satoshi font-normal tracking-wide">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 sm:gap-8 lg:gap-12 px-0 lg:px-[clamp(1rem,2vw,2rem)]">
+          <div className="flex flex-col gap-3 sm:gap-5 lg:gap-6">
+            <p className="text-white text-[clamp(0.8125rem,4.2vw,0.9375rem)] font-satoshi font-normal tracking-wide">
               {eyebrow}
             </p>
-            <h2 className="font-delight! text-[clamp(1.75rem,3.8vw,3.2rem)] font-medium text-white leading-[1.08] tracking-[-0.02em] max-w-170">
+            <h2 className="font-delight! text-[clamp(1.75rem,3.8vw,2.8rem)] font-medium text-white leading-tight sm:leading-normal tracking-[-0.02em] max-w-[95%] lg:max-w-[70%]">
               {title}
             </h2>
-            <p className="text-white text-[clamp(0.8125rem,4.2vw,1.125rem)] font-satoshi font-medium leading-[1.5] max-w-[95%] lg:max-w-[90%]">
+            <p className="text-white text-[clamp(0.8rem,4.2vw,0.95rem)] font-satoshi leading-[1.5] max-w-[95%] lg:max-w-[75%]">
               {description}
             </p>
           </div>
@@ -281,22 +281,25 @@ export default function OurProcess({ data }: OurProcessProps) {
           </div>
         </div>
 
-        <div className="flex flex-col gap-[clamp(1rem,2vw,2rem)] mt-[clamp(2.5rem,4.2vw,5rem)]">
+        <div className="flex flex-col gap-[clamp(0.75rem,2vw,2rem)] mt-[clamp(2rem,4vw,4.5rem)]">
           {rows.map((row, rowIndex) => {
             const template = getRowGridTemplate(row);
 
             return (
               <div
                 key={rowIndex}
-                className={`grid grid-cols-2 ${template} gap-[clamp(1rem,2vw,2rem)] items-stretch`}
+                className={`grid grid-cols-2 ${template} gap-[clamp(0.625rem,2vw,2rem)] items-stretch`}
               >
                 {row.map((card) => {
                   const isWide = card.size === "wide" || card.variant === "media";
                   const spanClass = isWide ? "col-span-2 lg:col-span-1" : "col-span-1 lg:col-span-1";
                   const orderClass = isWide ? "order-first lg:order-none" : "";
+                  const maxHClass = isWide
+                    ? "max-h-[420px]"
+                    : "max-h-[420px] sm:max-h-[280px] md:max-h-[300px] lg:max-h-[420px]";
 
                   return (
-                    <div key={card.id} className={`${spanClass} ${orderClass} h-full`}>
+                    <div key={card.id} className={`${spanClass} ${orderClass} h-full ${maxHClass}`}>
                       {card.variant === "media" ? (
                         <MediaCardItem card={card} />
                       ) : (

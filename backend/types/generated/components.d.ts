@@ -266,6 +266,7 @@ export interface SectionsClientShowcase extends Struct.ComponentSchema {
     actions: Schema.Attribute.Component<'shared.button', true>;
     badge: Schema.Attribute.String;
     description: Schema.Attribute.Text;
+    mobileTitle: Schema.Attribute.Text;
     services: Schema.Attribute.Component<'shared.list-item', true>;
     title: Schema.Attribute.Text;
   };
@@ -288,7 +289,6 @@ export interface SectionsFooter extends Struct.ComponentSchema {
     displayName: 'Footer';
   };
   attributes: {
-    address: Schema.Attribute.Text;
     contacts: Schema.Attribute.Component<'blocks.contact', true>;
     intro: Schema.Attribute.Component<'blocks.footer-intro', false>;
     marquee: Schema.Attribute.Text;

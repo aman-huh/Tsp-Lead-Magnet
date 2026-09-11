@@ -77,7 +77,7 @@ export default function FAQ({ data }: FAQProps) {
   return (
     <section className="w-full bg-white pt-[clamp(4.5rem,7vw,9.5rem)] pb-[clamp(5rem,8vw,11rem)] px-0 sm:px-12 2xl:px-20 3xl:px-[89.5px]">
       <div className="max-w-[1920px] mx-auto w-full">
-        <div className="mb-8 sm:mb-14 2xl:mb-16 px-6 sm:px-0">
+        <div className="mb-6 sm:mb-12 2xl:mb-14 px-6 sm:px-0">
           <h2 className="font-heading font-medium text-[36px] sm:text-[52px] 2xl:text-[62px] 3xl:text-[70px] leading-[1.1] tracking-[-0.02em] text-[#0F1D07]">
             {heading?.mobileTitle ? (
               <>
@@ -124,7 +124,7 @@ export default function FAQ({ data }: FAQProps) {
                   className="w-full py-5 sm:py-6 2xl:py-7 px-6 sm:px-0 flex items-center justify-between gap-6 text-left cursor-pointer group select-none"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-heading font-normal text-[17px] sm:text-[24px] 2xl:text-[28px] 3xl:text-[32px] leading-[1.4] tracking-[0.01em] text-[#0F1D07] group-hover:text-black transition-colors">
+                  <span className="font-heading font-medium text-[17px] sm:text-[24px] 2xl:text-[28px] 3xl:text-[32px] leading-[1.4] tracking-[0.01em] text-[#0F1D07] group-hover:text-black transition-colors">
                     {item.question}
                   </span>
                   <span

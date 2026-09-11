@@ -85,7 +85,7 @@ function DynamicBrandLogo({ brands }: { brands?: Brand[] }) {
 
   return (
     <span
-      className="relative inline-flex items-center justify-center align-middle mx-[clamp(0.25rem,1vw,0.5rem)] sm:mx-[clamp(0.5rem,0.7vw,0.75rem)] w-[clamp(2.75rem,11vw,4rem)] h-[clamp(2.75rem,11vw,4rem)] sm:w-[clamp(3rem,4.1vw,4.5rem)] sm:h-[clamp(3rem,4.1vw,4.5rem)] aspect-square rounded-lg border border-[#E2E4E8] shadow-xs p-[clamp(0.375rem,1.5vw,0.5rem)] sm:p-[clamp(0.375rem,0.7vw,0.5rem)] overflow-hidden -translate-y-[clamp(0.125rem,0.8vw,0.25rem)] sm:-translate-y-[clamp(0.125rem,0.35vw,0.25rem)] shrink-0 select-none transition-[background-color] motion-reduce:transition-none"
+      className="relative inline-flex items-center justify-center align-middle mx-[clamp(0.55rem,1.8vw,0.85rem)] sm:mx-[clamp(0.75rem,1.2vw,1.15rem)] w-[clamp(2.625rem,10.5vw,3.5rem)] h-[clamp(2.625rem,10.5vw,3.5rem)] sm:w-[clamp(3.125rem,3.8vw,4.75rem)] sm:h-[clamp(3.125rem,3.8vw,4.75rem)] aspect-square rounded-[8px] sm:rounded-[10px] border border-black/[0.08] overflow-hidden shrink-0 select-none -translate-y-[0.1em] sm:-translate-y-[0.12em] transition-[background-color] motion-reduce:transition-none"
       style={{
         backgroundColor: targetBgColor,
         transitionDuration: `${CROSSFADE_MS}ms`,
@@ -94,7 +94,7 @@ function DynamicBrandLogo({ brands }: { brands?: Brand[] }) {
     >
       {brandA?.logo?.url && (
         <span
-          className="absolute inset-[clamp(0.375rem,1.5vw,0.5rem)] sm:inset-[clamp(0.375rem,0.7vw,0.5rem)] flex items-center justify-center transition-opacity motion-reduce:transition-none pointer-events-none"
+          className="absolute inset-[clamp(0.5rem,1.6vw,0.75rem)] sm:inset-[clamp(0.6rem,1.1vw,0.9rem)] flex items-center justify-center transition-opacity motion-reduce:transition-none pointer-events-none"
           style={{
             opacity: opacityA,
             transitionDuration: `${CROSSFADE_MS}ms`,
@@ -106,14 +106,14 @@ function DynamicBrandLogo({ brands }: { brands?: Brand[] }) {
             alt={brandA.logo.alternativeText || brandA.name || "Brand logo"}
             fill
             sizes="(max-width: 640px) 64px, 80px"
-            className="object-contain p-0.5"
+            className="object-contain"
             unoptimized
           />
         </span>
       )}
       {brandB?.logo?.url && (
         <span
-          className="absolute inset-[clamp(0.375rem,1.5vw,0.5rem)] sm:inset-[clamp(0.375rem,0.7vw,0.5rem)] flex items-center justify-center transition-opacity motion-reduce:transition-none pointer-events-none"
+          className="absolute inset-[clamp(0.5rem,1.6vw,0.75rem)] sm:inset-[clamp(0.6rem,1.1vw,0.9rem)] flex items-center justify-center transition-opacity motion-reduce:transition-none pointer-events-none"
           style={{
             opacity: opacityB,
             transitionDuration: `${CROSSFADE_MS}ms`,
@@ -125,7 +125,7 @@ function DynamicBrandLogo({ brands }: { brands?: Brand[] }) {
             alt={brandB.logo.alternativeText || brandB.name || "Brand logo"}
             fill
             sizes="(max-width: 640px) 64px, 80px"
-            className="object-contain p-0.5"
+            className="object-contain"
             unoptimized
           />
         </span>
@@ -136,7 +136,7 @@ function DynamicBrandLogo({ brands }: { brands?: Brand[] }) {
 
 export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
   const badge = data?.badge || "5+ Years of Shopify Excellence";
-  const title = data?.title || "Where brands like {logo} transformed their Shopify experience.";
+  const title = data?.title || "Where brands like {logo} transformed their Shopify.";
   const description =
     data?.description ||
     "We redesign Shopify stores with refined UX, stunning visuals, and performance-focused decisions.";
@@ -156,41 +156,87 @@ export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
 
   const services = (rawServices.length > 0 ? rawServices : DEFAULT_SERVICES) as string[];
 
-  const renderTitle = () => {
-    if (
-      title.includes("{{brandLogo}}") ||
-      title.includes("{logo}") ||
-      title.includes("[logo]")
-    ) {
-      const parts = title.split(/\{\{brandLogo\}\}|\{logo\}|\[logo\]/);
-      return (
-        <>
-          {parts[0]}
-          <DynamicBrandLogo key={brands?.length ?? 0} brands={brands} />
-          {parts[1]}
-        </>
-      );
+  const parsedTitle = useMemo(() => {
+    const logoPlaceholderRegex = /\{\{brandLogo\}\}|\{logo\}|\[logo\]/i;
+    if (!logoPlaceholderRegex.test(title)) {
+      return null;
     }
 
-    return title;
+    const [rawPrefix, rawSuffix] = title.split(logoPlaceholderRegex);
+
+    // Split prefix into "Where brands" and "like"
+    const prefixMatch = rawPrefix.match(/^(.*?)\b(like)\s*$/i);
+    const line1Prefix = prefixMatch ? prefixMatch[1].trim() : rawPrefix.trim();
+    const likeText = prefixMatch ? prefixMatch[2] : "";
+
+    // Split suffix into first word ("transformed") and rest ("their Shopify.")
+    const suffixMatch = rawSuffix.match(/^\s*(\S+)\s*([\s\S]*)$/);
+    const firstSuffixWord = suffixMatch ? suffixMatch[1].trim() : rawSuffix.trim();
+    const restSuffixText = suffixMatch ? suffixMatch[2].trim() : "";
+
+    return {
+      line1Prefix,
+      likeText,
+      firstSuffixWord,
+      restSuffixText,
+      rawPrefix: rawPrefix.trim(),
+      rawSuffix: rawSuffix.trim(),
+    };
+  }, [title]);
+
+  const renderTitle = () => {
+    if (!parsedTitle) {
+      return title;
+    }
+
+    return (
+      <>
+        {/* Mobile layout (< sm): exactly 3 lines */}
+        <span className="block sm:hidden">
+          <span className="block leading-[1.14]">{parsedTitle.line1Prefix}</span>
+          <span className="block whitespace-nowrap leading-[1.14] my-0.5">
+            {parsedTitle.likeText && <span>{parsedTitle.likeText}</span>}
+            <DynamicBrandLogo key={`mob-${brands?.length ?? 0}`} brands={brands} />
+            {parsedTitle.firstSuffixWord && <span>{parsedTitle.firstSuffixWord}</span>}
+          </span>
+          {parsedTitle.restSuffixText && (
+            <span className="block leading-[1.14]">{parsedTitle.restSuffixText}</span>
+          )}
+        </span>
+
+        {/* Middle and desktop layout (sm+): exactly 2 lines with 'transformed' on line 1 */}
+        <span className="hidden sm:inline">
+          <span className="sm:inline-block sm:whitespace-nowrap leading-[1.14]">
+            {parsedTitle.line1Prefix}
+            {parsedTitle.likeText ? ` ${parsedTitle.likeText}` : ""}
+            <DynamicBrandLogo key={`desk-${brands?.length ?? 0}`} brands={brands} />
+            {parsedTitle.firstSuffixWord}
+          </span>
+          <br />
+          <span className="sm:inline-block sm:whitespace-nowrap leading-[1.14]">
+            {parsedTitle.restSuffixText}
+          </span>
+        </span>
+      </>
+    );
   };
 
   return (
-    <section className="bg-[#95E7D30D] pt-[clamp(6rem,24vw,7rem)] sm:pt-[clamp(4.5rem,6vw,7.5rem)] flex flex-col justify-between overflow-hidden sm:min-h-screen">
-      <div className="max-w-[1920px] mx-auto sm:my-auto w-full px-[clamp(1.5rem,6vw,2rem)] sm:px-[clamp(3rem,4.2vw,5rem)] text-left sm:text-center flex flex-col items-start sm:items-center">
-        <div className="w-full max-w-4xl 2xl:max-w-6xl 3xl:max-w-7xl">
+    <section className="bg-[#95E7D30D] pt-[clamp(6rem,16vw,9rem)] sm:pt-[clamp(7rem,12vw,10.5rem)] lg:pt-0 flex flex-col justify-between overflow-hidden lg:h-screen lg:min-h-[640px]">
+      <div className="max-w-[1920px] mx-auto lg:my-auto w-full px-[clamp(1.25rem,5vw,2rem)] sm:px-[clamp(2rem,3.5vw,4rem)] text-left sm:text-center flex flex-col items-start sm:items-center">
+        <div className="w-full max-w-5xl lg:max-w-6xl 2xl:max-w-7xl 3xl:max-w-[90rem]">
           {badge && (
             <div className="hidden sm:block sm:mb-[clamp(1.5rem,2.1vw,2rem)] 2xl:mb-[clamp(2rem,2.5vw,2.5rem)] 3xl:mb-12">
               <Badge>{badge}</Badge>
             </div>
           )}
 
-          <h2 className="font-heading text-[clamp(2.375rem,10vw,2.625rem)] sm:text-[clamp(3.5rem,3.889vw,4.25rem)] 3xl:text-[clamp(4.25rem,3.855vw,4.625rem)] text-[#0F1D07] text-left sm:text-center leading-[1.12] sm:leading-[1.14] 2xl:leading-[1.3] tracking-[-0.02em] mx-auto">
+          <h2 className="font-heading text-[clamp(2rem,8.8vw,2.5rem)] sm:text-[clamp(1.875rem,2.9vw,4.25rem)] 2xl:text-[clamp(3.85rem,3.4vw,4.625rem)] text-[#0F1D07] text-left sm:text-center leading-[1.12] sm:leading-[1.14] 2xl:leading-[1.25] tracking-[-0.02em] mx-auto">
             {renderTitle()}
           </h2>
 
           {description && (
-            <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-semibold text-[#0F1D07]/90 leading-[1.5] max-w-xl 2xl:max-w-2xl sm:mx-auto mt-[clamp(1.5rem,5vw,1.75rem)] sm:mt-[clamp(1.5rem,1.828vw,2rem)]">
+            <p className="font-satoshi text-[clamp(0.875rem,3.8vw,1.125rem)] font-semibold text-[#0F1D07]/90 leading-[1.5] max-w-md sm:max-w-xl 2xl:max-w-2xl sm:mx-auto mt-[clamp(1.25rem,4vw,1.75rem)] sm:mt-[clamp(1.5rem,1.828vw,2rem)]">
               {description}
             </p>
           )}
@@ -219,7 +265,7 @@ export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
         </div>
       </div>
 
-      <div className="w-full bg-[#4A71A5] overflow-hidden py-[clamp(0.75rem,3vw,1rem)] sm:py-[clamp(1.125rem,1.25vw,1.25rem)] mt-[clamp(4.5rem,14vw,5rem)] sm:mt-[clamp(6rem,7.333vw,8rem)] select-none">
+      <div className="w-full bg-[#4A71A5] shrink-0 overflow-hidden py-[clamp(0.75rem,3vw,1rem)] sm:py-[clamp(1.125rem,1.25vw,1.25rem)] mt-[clamp(5rem,14vw,8.5rem)] sm:mt-[clamp(6.5rem,11vw,9.5rem)] lg:mt-0 select-none">
         <div className="flex whitespace-nowrap w-max animate-marquee">
           {[0, 1].map((copyIndex) => (
             <div

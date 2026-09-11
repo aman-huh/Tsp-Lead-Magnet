@@ -36,9 +36,9 @@ export default function SolutionHighlights({ data }: SolutionHighlightsProps) {
     "The trading calendar has taught shoppers here to wait. When a storefront doesn't make the case for a product at full price, the promotion has to — and margin pays for it. We redesign Shopify stores so the buying argument sits on the page, not in the discount code.";
 
   return (
-    <section className=" mb-[clamp(4.5rem,7vw,9rem)] px-[clamp(1.25rem,4.2vw,6.2rem)] max-w-[1920px] mx-auto">
-      <div className="table w-fit max-w-full mb-[clamp(1.75rem,4.2vw,3.25rem)]">
-        <h2 className="font-delight! text-[clamp(2.125rem,4.2vw,5rem)] font-medium leading-[1.12] tracking-[-0.01em] w-fit">
+    <section className="mb-[clamp(4.5rem,7vw,9rem)] px-[clamp(1.25rem,4.2vw,6.2rem)] max-w-[1920px] mx-auto">
+      <div className="w-full max-w-full flex flex-col lg:table lg:w-fit mb-[clamp(1.75rem,4.2vw,3.25rem)]">
+        <h2 className="font-delight! text-[clamp(1.75rem,5.5vw,2.75rem)] lg:text-[clamp(2.125rem,4.2vw,5rem)] font-medium leading-tight lg:leading-[1.12] tracking-[-0.01em] w-full lg:w-fit">
           {header?.mobileTitle ? (
             <>
               <span className="block lg:hidden">{header.mobileTitle}</span>
@@ -48,7 +48,7 @@ export default function SolutionHighlights({ data }: SolutionHighlightsProps) {
             title
           )}
         </h2>
-        <p className="table-caption caption-bottom font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-medium leading-[1.5] tracking-normal pt-[clamp(0.75rem,4.2vw,1.25rem)]">
+        <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-medium leading-[1.5] tracking-normal pt-[clamp(0.75rem,4.2vw,1.25rem)] w-full max-w-xl lg:max-w-none lg:w-auto lg:table-caption lg:caption-bottom">
           {header?.mobileDescription ? (
             <>
               <span className="block lg:hidden">{header.mobileDescription}</span>
@@ -79,9 +79,9 @@ function SolutionHighlightCard({ feature }: { feature?: Feature }) {
 
   return (
     <div
-      className={`w-full min-h-[clamp(24rem,33vw,32rem)] rounded-[clamp(20px,4.2vw,30px)] p-6 sm:p-8 lg:p-[clamp(1.75rem,3vw,2.5rem)] flex flex-col justify-between gap-6 sm:gap-8 overflow-hidden ${variant.container}`}
+      className={`w-full min-h-[clamp(21rem,30vw,26rem)] lg:min-h-[clamp(24rem,33vw,32rem)] rounded-[clamp(20px,4.2vw,30px)] p-6 sm:p-8 lg:p-[clamp(1.75rem,3vw,2.5rem)] flex flex-col justify-between gap-6 sm:gap-8 overflow-hidden ${variant.container}`}
     >
-      <div className="w-full flex-1 min-h-0 relative flex items-center justify-start">
+      <div className="w-full h-1/2 max-h-[50%] relative flex items-center justify-start">
         {illustrationUrl && (
           <Image
             src={illustrationUrl}

@@ -43,6 +43,8 @@ export default function OurWork({ data }: OurWorkProps) {
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
+  const [swiped, setSwiped] = useState(false);
+
   const minSwipeDistance = 50;
 
   const handlePrev = () => {
@@ -54,6 +56,7 @@ export default function OurWork({ data }: OurWorkProps) {
   };
 
   const onTouchStart = (e: React.TouchEvent) => {
+    setSwiped(false);
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
   };
@@ -68,43 +71,45 @@ export default function OurWork({ data }: OurWorkProps) {
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
     if (isLeftSwipe) {
+      setSwiped(true);
       handleNext();
     } else if (isRightSwipe) {
+      setSwiped(true);
       handlePrev();
     }
   };
 
   return (
-    <section className="bg-[#F5F5F5]">
-      <div className="px-[clamp(1.25rem,4.2vw,6.2rem)] pt-[clamp(4.5rem,7vw,9rem)]">
-        <div className="w-full flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-[clamp(1.5rem,4.2vw,2.5rem)]">
-          <div className="w-full lg:w-[78%] flex flex-col gap-y-[clamp(0.75rem,4.2vw,1.25rem)]">
-            <h1 className="font-heading! text-[clamp(2.125rem,4.2vw,5.2rem)] font-normal leading-tight 2xl:leading-[1.12] tracking-[-0.01em]">
-              {header?.mobileTitle ? (
-                <>
-                  <span className="block lg:hidden">{header.mobileTitle}</span>
-                  <span className="hidden lg:block">{title}</span>
-                </>
-              ) : (
-                title
-              )}
-            </h1>
-            {(description || header?.mobileDescription) && (
-              <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.2rem)] font-semibold leading-[1.5] tracking-normal w-[77%]">
-                {header?.mobileDescription ? (
+    <section className="bg-[#F5F5F5] w-full">
+      <div className="max-w-[1920px] mx-auto w-full px-[clamp(1.25rem,4.2vw,6.2rem)] pt-[clamp(4.5rem,7vw,9rem)]">
+        <div className="w-full flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-[clamp(1.5rem,4.2vw,2.5rem)]">
+            <div className="w-full sm:w-[72%] lg:w-[78%] flex flex-col gap-y-[clamp(0.75rem,4.2vw,1.25rem)]">
+              <h1 className="font-heading! text-[clamp(2.125rem,4.2vw,5.2rem)] font-normal leading-tight 2xl:leading-[1.12] tracking-[-0.01em]">
+                {header?.mobileTitle ? (
                   <>
-                    <span className="block lg:hidden">{header.mobileDescription}</span>
-                    <span className="hidden lg:block">{description}</span>
+                    <span className="block lg:hidden">{header.mobileTitle}</span>
+                    <span className="hidden lg:block">{title}</span>
                   </>
                 ) : (
-                  description
+                  title
                 )}
-              </p>
-            )}
-          </div>
+              </h1>
+              {(description || header?.mobileDescription) && (
+                <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.2rem)] font-semibold leading-[1.5] tracking-normal w-full sm:max-w-xl lg:w-[77%]">
+                  {header?.mobileDescription ? (
+                    <>
+                      <span className="block lg:hidden">{header.mobileDescription}</span>
+                      <span className="hidden lg:block">{description}</span>
+                    </>
+                  ) : (
+                    description
+                  )}
+                </p>
+              )}
+            </div>
 
           {projects.length > 1 && (
-            <div className="hidden lg:flex items-center gap-4 shrink-0 self-end pb-2">
+            <div className="hidden sm:flex items-center gap-4 shrink-0 self-end pb-2">
               <div className="flex items-center gap-3">
                 <button
                   type="button"
@@ -128,7 +133,7 @@ export default function OurWork({ data }: OurWorkProps) {
         </div>
 
         {projects.length > 1 && (
-          <div className="flex lg:hidden items-center justify-between w-full py-3 mb-6">
+          <div className="flex sm:hidden items-center justify-between w-full py-3 mb-6">
             <button
               type="button"
               onClick={handlePrev}
@@ -169,11 +174,32 @@ export default function OurWork({ data }: OurWorkProps) {
       </div>
 
       <div
-        className="relative w-full h-[clamp(30rem,165vw,40.25rem)] lg:h-[clamp(32rem,35.5vw,42.5rem)] overflow-hidden shadow-sm touch-pan-y"
+        className="relative w-full aspect-[375/580] sm:aspect-[1920/680] overflow-hidden shadow-sm touch-pan-y"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       >
+        {projects.length > 1 && (
+          <div className="absolute inset-0 z-20 flex sm:hidden pointer-events-none">
+            <button
+              type="button"
+              aria-label="Previous project"
+              onClick={() => {
+                if (!swiped) handlePrev();
+              }}
+              className="w-1/2 h-full pointer-events-auto cursor-pointer focus:outline-none"
+            />
+            <button
+              type="button"
+              aria-label="Next project"
+              onClick={() => {
+                if (!swiped) handleNext();
+              }}
+              className="w-1/2 h-full pointer-events-auto cursor-pointer focus:outline-none"
+            />
+          </div>
+        )}
+
         <div
           className="flex w-full h-full transition-transform duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none will-change-transform"
           style={{ transform: `translateX(-${activeIndex * 100}%)` }}
@@ -191,7 +217,7 @@ export default function OurWork({ data }: OurWorkProps) {
                 }}
               >
                 {desktopImg?.url && (
-                  <div className={`relative w-full h-full ${mobileImg?.url ? "hidden lg:block" : "block"}`}>
+                  <div className={`relative w-full h-full ${mobileImg?.url ? "hidden sm:block" : "block"}`}>
                     <Image
                       src={getStrapiMediaUrl(desktopImg.url)}
                       alt={
@@ -209,7 +235,7 @@ export default function OurWork({ data }: OurWorkProps) {
                 )}
 
                 {mobileImg?.url && (
-                  <div className={`relative w-full h-full ${desktopImg?.url ? "block lg:hidden" : "block"}`}>
+                  <div className={`relative w-full h-full ${desktopImg?.url ? "block sm:hidden" : "block"}`}>
                     <Image
                       src={getStrapiMediaUrl(mobileImg.url)}
                       alt={

@@ -11,6 +11,9 @@
     "title": {
       "type": "text"
     },
+    "mobileTitle": {
+      "type": "text"
+    },
     "description": {
       "type": "text"
     },

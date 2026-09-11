@@ -264,50 +264,52 @@ export default function CaseStudyShowcase({ data }: CaseStudyShowcaseProps) {
   );
 
   return (
-    <section className="px-[clamp(1.25rem,4.2vw,6.2rem)] pt-[clamp(4rem,6vw,7.5rem)] pb-[clamp(5rem,8vw,10rem)] bg-[#F5F5F5] max-w-[1920px] mx-auto">
-      <div className="w-full flex flex-col gap-y-[clamp(0.75rem,4.2vw,1.25rem)] mb-[clamp(1.5rem,4.2vw,3.625rem)]">
-        <h2 className="font-delight! text-[clamp(2.125rem,4.2vw,5rem)] font-medium leading-tight 2xl:leading-[1.12] tracking-[-0.01em] w-full lg:w-[78%]">
-          {header?.mobileTitle ? (
-            <>
-              <span className="block lg:hidden">{header.mobileTitle}</span>
-              <span className="hidden lg:block">{title}</span>
-            </>
-          ) : (
-            title
-          )}
-        </h2>
-        <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-medium leading-[1.5] tracking-normal w-full lg:w-[60%]">
-          {header?.mobileDescription ? (
-            <>
-              <span className="block lg:hidden">{header.mobileDescription}</span>
-              <span className="hidden lg:block">{description}</span>
-            </>
-          ) : (
-            description
-          )}
-        </p>
-      </div>
+    <section className="w-full bg-[#F5F5F5]">
+      <div className="max-w-[1920px] mx-auto w-full px-[clamp(1.25rem,4.2vw,6.2rem)] pt-[clamp(4rem,6vw,7.5rem)] pb-[clamp(5rem,8vw,10rem)]">
+        <div className="w-full flex flex-col gap-y-[clamp(0.75rem,4.2vw,1.25rem)] mb-[clamp(1.5rem,4.2vw,3.625rem)]">
+          <h2 className="font-delight! text-[clamp(2.125rem,4.2vw,5rem)] font-medium leading-tight 2xl:leading-[1.12] tracking-[-0.01em] w-full lg:w-[78%]">
+            {header?.mobileTitle ? (
+              <>
+                <span className="block lg:hidden">{header.mobileTitle}</span>
+                <span className="hidden lg:block">{title}</span>
+              </>
+            ) : (
+              title
+            )}
+          </h2>
+          <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-medium leading-[1.5] tracking-normal w-full lg:w-[60%]">
+            {header?.mobileDescription ? (
+              <>
+                <span className="block lg:hidden">{header.mobileDescription}</span>
+                <span className="hidden lg:block">{description}</span>
+              </>
+            ) : (
+              description
+            )}
+          </p>
+        </div>
 
-      <div className="flex items-center gap-[clamp(0.5rem,4.2vw,1rem)] mb-[clamp(1.5rem,4.2vw,3.25rem)] overflow-x-auto no-scrollbar pb-2 sm:pb-0 flex-nowrap w-full">
-        {caseStudies.map((study) => {
-          const isActive = study.id === currentSelectedId;
-          return (
-            <button
-              key={study.id}
-              type="button"
-              onClick={() => setSelectedId(study.id)}
-              className={`h-[clamp(2.5rem,4.2vw,3.6875rem)] px-[clamp(1rem,4.2vw,2rem)] rounded-full border text-[clamp(0.875rem,4.2vw,1.375rem)] font-medium transition-all cursor-pointer flex items-center justify-center shrink-0 whitespace-nowrap ${
-                isActive
-                  ? "border-[#005540]/80 bg-[#95E7D3]/30 text-[#3C3C3C]"
-                  : "border-[#CAC4D0] text-[#3C3C3C]"
-              }`}
-            >
-              {study.clientName}
-            </button>
-          );
-        })}
+        <div className="flex items-center gap-[clamp(0.5rem,4.2vw,1rem)] mb-[clamp(1.5rem,4.2vw,3.25rem)] overflow-x-auto no-scrollbar pb-2 sm:pb-0 flex-nowrap w-full">
+          {caseStudies.map((study) => {
+            const isActive = study.id === currentSelectedId;
+            return (
+              <button
+                key={study.id}
+                type="button"
+                onClick={() => setSelectedId(study.id)}
+                className={`h-[clamp(2.5rem,4.2vw,3.6875rem)] px-[clamp(1rem,4.2vw,2rem)] rounded-full border text-[clamp(0.875rem,4.2vw,1.375rem)] font-medium transition-all cursor-pointer flex items-center justify-center shrink-0 whitespace-nowrap ${
+                  isActive
+                    ? "border-[#005540]/80 bg-[#95E7D3]/30 text-[#3C3C3C]"
+                    : "border-[#CAC4D0] text-[#3C3C3C]"
+                }`}
+              >
+                {study.clientName}
+              </button>
+            );
+          })}
+        </div>
+        <BeforeAfterSlider study={selectedCaseStudy} />
       </div>
-      <BeforeAfterSlider study={selectedCaseStudy} />
     </section>
   );
 }
