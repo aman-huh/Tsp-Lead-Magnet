@@ -53,7 +53,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
       onClick={handleCardClick}
       className={`bg-[#1B2F10] ${
         hasHoverList ? "" : "hover:bg-[#254419]"
-      } rounded-[12px] p-[clamp(0.85rem,1.9vw,2.25rem)] flex flex-col justify-between aspect-[331/421] sm:aspect-[4/3] lg:aspect-[331/421] max-h-[260px] sm:max-h-[280px] md:max-h-[300px] lg:max-h-[420px] min-h-[210px] h-full w-full relative group overflow-hidden transition-all duration-300 ${
+      } rounded-[12px] p-[clamp(0.85rem,1.9vw,2.25rem)] flex flex-col justify-between aspect-[331/421] sm:aspect-[4/3] lg:aspect-[331/421] max-h-[280px] sm:max-h-[290px] md:max-h-[340px] lg:max-h-[420px] min-h-[210px] h-full w-full relative group overflow-hidden transition-all duration-300 ${
         hasHoverList ? "cursor-pointer" : ""
       }`}
     >
