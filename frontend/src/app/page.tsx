@@ -8,20 +8,10 @@ import { getHomePage } from "@/services/page";
 import { getBrands } from "@/services/brand";
 import { HeroSection } from "@/types";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const page = await getHomePage();
-
-  if (!page) {
-    return {
-      title: "Thumbstack",
-    };
-  }
-
-  return {
-    title: `${page.title} | Thumbstack`,
-    description: page.title,
-  };
-}
+export const metadata: Metadata = {
+  title: "Thumbstack - Lead Magnet",
+  description: "Lead Magnet Platform",
+};
 
 export default async function Home() {
   const [page, brands] = await Promise.all([

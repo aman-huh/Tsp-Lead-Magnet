@@ -37,11 +37,6 @@
         "sections.navbar",
         "shared.audit-bar"
       ]
-    },
-    "auditBar": {
-      "type": "component",
-      "component": "shared.audit-bar",
-      "repeatable": false
     }
   }
 }

@@ -34,12 +34,27 @@ export async function getHomePage(): Promise<Page | undefined> {
   try {
     const response = await fetcher<StrapiResponse<Page[]>>("/api/pages", {
       params: {
+        "filters[$or][0][slug][$eq]": "landing-page",
+        "filters[$or][1][slug][$eq]": "home",
+        "sort[0]": "updatedAt:desc",
         "pagination[pageSize]": "1",
         ...PAGE_SECTIONS_POPULATE,
       },
     });
 
-    return response.data?.[0];
+    if (response.data?.[0]) {
+      return response.data[0];
+    }
+
+    const fallbackResponse = await fetcher<StrapiResponse<Page[]>>("/api/pages", {
+      params: {
+        "pagination[pageSize]": "1",
+        "sort[0]": "updatedAt:desc",
+        ...PAGE_SECTIONS_POPULATE,
+      },
+    });
+
+    return fallbackResponse.data?.[0];
   } catch (error) {
     console.error("Failed to load home page:", error);
     return undefined;

@@ -1,7 +1,9 @@
-const STRAPI_URL =
+const RAW_STRAPI_URL =
   process.env.NEXT_PUBLIC_STRAPI_URL ||
   process.env.STRAPI_URL ||
   "http://localhost:1337";
+
+const STRAPI_URL = RAW_STRAPI_URL.replace(/\/+$/, "");
 
 const STRAPI_TOKEN =
   process.env.STRAPI_API_TOKEN ||
