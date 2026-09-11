@@ -53,7 +53,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
       onClick={handleCardClick}
       className={`bg-[#1B2F10] ${
         hasHoverList ? "" : "hover:bg-[#254419]"
-      } rounded-[12px] p-[clamp(0.75rem,2vw,2.25rem)] flex flex-col justify-between aspect-[331/421] sm:aspect-[4/3] lg:aspect-[331/421] max-h-[420px] sm:max-h-[280px] md:max-h-[300px] lg:max-h-[420px] min-h-[190px] h-full w-full relative group overflow-hidden transition-all duration-300 ${
+      } rounded-[12px] p-[clamp(0.75rem,2vw,2.25rem)] flex flex-col justify-between aspect-[331/421] sm:aspect-[4/3] lg:aspect-[331/421] max-h-[420px] sm:max-h-[280px] md:max-h-[300px] lg:max-h-[420px] min-h-[210px] h-full w-full relative group overflow-hidden transition-all duration-300 ${
         hasHoverList ? "cursor-pointer" : ""
       }`}
     >
@@ -83,7 +83,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
             {card.title}
           </h3>
 
-          <p className="text-[#95A897] font-satoshi text-[clamp(0.75rem,1vw,0.9375rem)] leading-snug sm:leading-normal lg:leading-relaxed line-clamp-4 sm:line-clamp-none">
+          <p className="text-[#95A897] font-satoshi text-[clamp(0.75rem,1vw,0.9375rem)] font-medium leading-snug sm:leading-normal lg:leading-relaxed line-clamp-4 sm:line-clamp-none">
             {card.description}
           </p>
         </div>
@@ -255,15 +255,15 @@ export default function OurProcess({ data }: OurProcessProps) {
   return (
     <section className="bg-[#0F1D07] py-[clamp(3.5rem,6vw,8rem)] px-[clamp(1rem,4.2vw,11.2rem)] sm:px-[clamp(1.5rem,6vw,11.2rem)] lg:px-[clamp(2.5rem,11.5vw,11.2rem)] text-white">
       <div className="max-w-[1920px] mx-auto w-full">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 sm:gap-8 lg:gap-12 px-0 lg:px-[clamp(1rem,2vw,2rem)]">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 sm:gap-8 lg:gap-12 px-0 lg:px-[clamp(1rem,2vw,2rem)]">
           <div className="flex flex-col gap-3 sm:gap-5 lg:gap-6">
-            <p className="text-white text-[clamp(0.8125rem,4.2vw,0.9375rem)] font-satoshi font-normal tracking-wide">
+            <p className="text-white text-[clamp(0.75rem,4.2vw,0.9375rem)] font-satoshi font-normal tracking-wide">
               {eyebrow}
             </p>
-            <h2 className="font-delight! text-[clamp(1.75rem,3.8vw,2.8rem)] font-medium text-white leading-tight sm:leading-normal tracking-[-0.02em] max-w-[95%] lg:max-w-[70%]">
+            <h2 className="font-delight! text-[clamp(1.65rem,3.8vw,2.8rem)] font-medium text-white leading-tight sm:leading-normal tracking-[-0.02em] max-w-[95%] lg:max-w-[70%]">
               {title}
             </h2>
-            <p className="text-white text-[clamp(0.8rem,4.2vw,0.95rem)] font-satoshi leading-[1.5] max-w-[95%] lg:max-w-[75%]">
+            <p className="text-white text-[clamp(0.75rem,4.2vw,0.95rem)] font-satoshi leading-normal max-w-[95%] lg:max-w-[75%]">
               {description}
             </p>
           </div>
@@ -274,7 +274,7 @@ export default function OurProcess({ data }: OurProcessProps) {
               shape="rounded"
               variant="solid"
               showArrow={false}
-              size="md"
+              size="lg"
               text={ctaText}
               url={ctaUrl}
             />

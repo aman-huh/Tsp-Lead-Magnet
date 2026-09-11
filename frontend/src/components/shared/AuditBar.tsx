@@ -100,7 +100,7 @@ export default function AuditBar({
       role="region"
       aria-label="Bottom notification and quick quote action"
     >
-      <div className="flex flex-col md:flex-row md:items-center rounded-[clamp(1.25rem,2vw,1.5rem)] border border-black/[0.08] bg-white px-[clamp(0.875rem,2.3vw,1.25rem)] py-[clamp(0.5rem,1.6vw,0.875rem)] gap-[clamp(0.5rem,1.8vw,1rem)] shadow-[0_10px_30px_rgba(0,0,0,0.14)] min-h-[clamp(3rem,7.5vw,4.875rem)]">
+      <div className="flex flex-col md:flex-row md:items-center rounded-[clamp(1.25rem,2vw,1.5rem)] border border-black/[0.08] bg-white px-[clamp(0.8rem,2.3vw,1.25rem)] py-[clamp(0.5rem,1.6vw,0.875rem)] gap-[clamp(0.43rem,1.8vw,1rem)] shadow-[0_10px_30px_rgba(0,0,0,0.14)] min-h-[clamp(3rem,7.5vw,4.875rem)]">
         <p className="flex-1 min-w-0 md:flex-none flex items-center font-nohemi text-[clamp(0.8125rem,2vw,1.125rem)] font-medium leading-snug text-[#0F1D07] whitespace-nowrap select-none">
           {auditText}
         </p>
@@ -116,7 +116,7 @@ export default function AuditBar({
             arrowType="right"
             noHover
             containerClassName="md:flex-1"
-            className="h-[clamp(2.25rem,5.5vw,3rem)] w-full justify-center px-[clamp(0.5rem,2.3vw,1rem)] text-[clamp(0.69rem,1.7vw,1.1rem)] font-normal leading-none tracking-normal whitespace-nowrap active:scale-[0.97]"
+            className="h-[clamp(2.25rem,5.5vw,3rem)] w-full justify-center px-[clamp(0.43rem,2.3vw,1rem)] text-[clamp(0.78rem,1.7vw,1.1rem)] font-normal leading-none tracking-normal whitespace-nowrap active:scale-[0.97]"
           />
 
           <Button
@@ -129,7 +129,7 @@ export default function AuditBar({
             arrowType="right"
             noHover
             containerClassName="md:flex-1"
-            className="h-[clamp(2.25rem,5.5vw,3rem)] w-full justify-center !bg-white hover:!bg-gray-50 !border-[#0F1D07] px-[clamp(0.5rem,2.3vw,1rem)] text-[clamp(0.69rem,1.7vw,1.1rem)] font-medium leading-none tracking-normal whitespace-nowrap active:scale-[0.97]"
+            className="h-[clamp(2.25rem,5.5vw,3rem)] w-full justify-center !bg-white hover:!bg-gray-50 !border-[#0F1D07] px-[clamp(0.43rem,2.3vw,1rem)] text-[clamp(0.78rem,1.7vw,1.1rem)] font-medium leading-none tracking-normal whitespace-nowrap active:scale-[0.97]"
           />
         </div>
       </div>
