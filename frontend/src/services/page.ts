@@ -29,6 +29,7 @@ export const PAGE_SECTIONS_POPULATE: Record<string, string> = {
   "populate[sections][on][sections.faq][populate][questions]": "*",
   "populate[sections][on][sections.footer][populate]": "*",
   "populate[sections][on][shared.button][populate]": "*",
+  "populate[sections][on][shared.audit-bar][populate]": "*",
 };
 
 export async function getHomePage(): Promise<Page | undefined> {

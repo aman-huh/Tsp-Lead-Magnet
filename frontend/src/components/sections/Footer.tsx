@@ -100,46 +100,70 @@ function getSocialIcon(platform?: string | null) {
   return socialSvgMap[p] ?? null;
 }
 
-function resolveLink(url?: string | null): {
+function resolveLink(
+  url?: string | null,
+  text?: string | null
+): {
   href: string;
   isAnchor: boolean;
   isExternal: boolean;
 } {
-  if (!url) return { href: "#", isAnchor: true, isExternal: false };
-  const trimmed = url.trim();
+  const label = (text || "").toLowerCase().trim();
+  const trimmed = (url || "").trim();
 
   if (trimmed.includes("#")) {
     const id = trimmed.split("#")[1].split("?")[0].replace(/\/$/, "");
     return { href: `#${id}`, isAnchor: true, isExternal: false };
   }
 
-  const knownSections = [
-    "our-work",
-    "work",
-    "solutions",
-    "capabilities",
-    "case-studies",
-    "process",
-    "faq",
-    "hero",
-    "lead-form",
-    "assessment",
-    "clients",
-    "brand-fit",
-    "contact",
-  ];
   const clean = trimmed.replace(/^\//, "").toLowerCase();
-  if (knownSections.includes(clean)) {
-    const mapped =
-      clean === "work" ? "our-work" : clean === "capabilities" ? "solutions" : clean;
-    return { href: `#${mapped}`, isAnchor: true, isExternal: false };
+
+  if (clean === "our-work" || clean === "work" || label.includes("work")) {
+    return { href: "#our-work", isAnchor: true, isExternal: false };
+  }
+
+  if (
+    clean === "solutions" ||
+    clean === "capabilities" ||
+    clean === "service" ||
+    clean === "services" ||
+    label.includes("solution") ||
+    label.includes("service") ||
+    label.includes("capabilit")
+  ) {
+    return { href: "#solutions", isAnchor: true, isExternal: false };
+  }
+
+  if (
+    clean === "case-studies" ||
+    clean === "case-study" ||
+    clean === "news-and-insights" ||
+    clean === "news" ||
+    clean === "insights" ||
+    label.includes("case") ||
+    label.includes("insight") ||
+    label.includes("news")
+  ) {
+    return { href: "#case-studies", isAnchor: true, isExternal: false };
+  }
+
+  if (clean === "process" || clean === "our-process" || label.includes("process")) {
+    return { href: "#process", isAnchor: true, isExternal: false };
+  }
+
+  if (clean === "faq" || label.includes("faq")) {
+    return { href: "#faq", isAnchor: true, isExternal: false };
+  }
+
+  if (clean === "contact" || label.includes("contact")) {
+    return { href: "#contact", isAnchor: true, isExternal: false };
   }
 
   if (trimmed.startsWith("/")) {
     return { href: trimmed, isAnchor: false, isExternal: false };
   }
 
-  return { href: trimmed, isAnchor: false, isExternal: true };
+  return { href: trimmed || "#", isAnchor: false, isExternal: trimmed.startsWith("http") };
 }
 
 export default function Footer({ data }: FooterProps) {
@@ -336,7 +360,7 @@ export default function Footer({ data }: FooterProps) {
                 </h2>
                 <div className="flex flex-col space-y-2.5 sm:space-y-3 lg:space-y-3.5">
                   {quickLinks.map((item, idx) => {
-                    const resolved = resolveLink(item.URL);
+                    const resolved = resolveLink(item.URL, item.text);
 
                     if (resolved.isExternal) {
                       return (

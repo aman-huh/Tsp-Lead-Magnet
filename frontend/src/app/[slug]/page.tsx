@@ -6,7 +6,7 @@ import AuditBarModal from "@/components/shared/AuditBarModal";
 import SectionRenderer from "@/components/shared/SectionRenderer";
 import { getAllPages, getPageBySlug } from "@/services/page";
 import { getBrands } from "@/services/brand";
-import { HeroSection } from "@/types";
+import { HeroSection, AuditBarData, SharedButtonSection } from "@/types";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -58,6 +58,15 @@ export default async function DynamicPage({ params }: PageProps) {
     (section): section is HeroSection => section.__component === "sections.hero"
   );
 
+  const auditBarSection = sections.find(
+    (section) => section.__component === "shared.audit-bar"
+  ) as AuditBarData | undefined;
+
+  const sharedButtonSection = sections.find(
+    (section): section is SharedButtonSection =>
+      section.__component === "shared.button"
+  );
+
   return (
     <>
       <Navbar />
@@ -66,7 +75,15 @@ export default async function DynamicPage({ params }: PageProps) {
         {!hasFooter && <Footer />}
       </main>
       <AuditBarModal
-        data={page.auditBar}
+        data={
+          auditBarSection ||
+          (sharedButtonSection
+            ? {
+                primaryButtonText: sharedButtonSection.text,
+                secondaryButtonUrl: sharedButtonSection.url,
+              }
+            : page.auditBar)
+        }
         fallbackForm={heroSection?.leadForm}
       />
     </>
