@@ -306,7 +306,7 @@ export default function CaseStudyShowcase({ data }: CaseStudyShowcaseProps) {
   );
 
   return (
-    <section className="w-full bg-[#F5F5F5]">
+    <section id="case-studies" className="w-full bg-[#F5F5F5] scroll-mt-20">
       <div className="max-w-[1920px] mx-auto w-full px-[clamp(1.25rem,4.2vw,2rem)] lg:px-[clamp(3.5rem,5.2vw,6.25rem)] pt-[clamp(4rem,6vw,7.5rem)] pb-[clamp(5rem,8vw,10rem)]">
         <div className="w-full flex flex-col gap-y-[clamp(0.75rem,4.2vw,1.25rem)] mb-[clamp(1.5rem,4.2vw,3.625rem)]">
           <h2 className="font-delight! text-[clamp(2.125rem,4.2vw,5rem)] font-medium leading-tight 2xl:leading-[1.12] tracking-[-0.01em] w-full lg:w-[78%]">

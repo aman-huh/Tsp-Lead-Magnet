@@ -80,7 +80,7 @@ export default function OurWork({ data }: OurWorkProps) {
   };
 
   return (
-    <section className="bg-[#F5F5F5] w-full">
+    <section id="our-work" className="bg-[#F5F5F5] w-full scroll-mt-20">
       <div className="max-w-[1920px] mx-auto w-full px-[clamp(1.25rem,4.2vw,2rem)] lg:px-[clamp(3.5rem,5.2vw,6.25rem)] pt-[clamp(4.5rem,7vw,9rem)]">
         <div className="w-full flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-[clamp(1.5rem,4.2vw,2.5rem)]">
             <div className="w-full sm:w-[72%] lg:w-[78%] flex flex-col gap-y-[clamp(0.75rem,4.2vw,1.25rem)]">

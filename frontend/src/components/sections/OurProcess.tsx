@@ -253,7 +253,7 @@ export default function OurProcess({ data }: OurProcessProps) {
   const rows = chunkCardsIntoRows(cards);
 
   return (
-    <section className="bg-[#0F1D07] py-[clamp(3.5rem,6vw,8rem)] px-[clamp(1rem,4.2vw,11.2rem)] sm:px-[clamp(1.5rem,6vw,11.2rem)] lg:px-[clamp(2.5rem,11.5vw,11.2rem)] text-white">
+    <section id="process" className="bg-[#0F1D07] py-[clamp(3.5rem,6vw,8rem)] px-[clamp(1rem,4.2vw,11.2rem)] sm:px-[clamp(1.5rem,6vw,11.2rem)] lg:px-[clamp(2.5rem,11.5vw,11.2rem)] text-white scroll-mt-20">
       <div className="max-w-[1920px] mx-auto w-full">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 sm:gap-8 lg:gap-12 px-0 lg:px-[clamp(1rem,2vw,2rem)]">
           <div className="flex flex-col gap-3 sm:gap-5 lg:gap-6">

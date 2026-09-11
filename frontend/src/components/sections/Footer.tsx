@@ -100,6 +100,48 @@ function getSocialIcon(platform?: string | null) {
   return socialSvgMap[p] ?? null;
 }
 
+function resolveLink(url?: string | null): {
+  href: string;
+  isAnchor: boolean;
+  isExternal: boolean;
+} {
+  if (!url) return { href: "#", isAnchor: true, isExternal: false };
+  const trimmed = url.trim();
+
+  if (trimmed.includes("#")) {
+    const id = trimmed.split("#")[1].split("?")[0].replace(/\/$/, "");
+    return { href: `#${id}`, isAnchor: true, isExternal: false };
+  }
+
+  const knownSections = [
+    "our-work",
+    "work",
+    "solutions",
+    "capabilities",
+    "case-studies",
+    "process",
+    "faq",
+    "hero",
+    "lead-form",
+    "assessment",
+    "clients",
+    "brand-fit",
+    "contact",
+  ];
+  const clean = trimmed.replace(/^\//, "").toLowerCase();
+  if (knownSections.includes(clean)) {
+    const mapped =
+      clean === "work" ? "our-work" : clean === "capabilities" ? "solutions" : clean;
+    return { href: `#${mapped}`, isAnchor: true, isExternal: false };
+  }
+
+  if (trimmed.startsWith("/")) {
+    return { href: trimmed, isAnchor: false, isExternal: false };
+  }
+
+  return { href: trimmed, isAnchor: false, isExternal: true };
+}
+
 export default function Footer({ data }: FooterProps) {
   const headingRaw = data?.intro?.heading || "Say hi! {{Logo}}";
   const hasLogoPlaceholder = headingRaw.includes("{{Logo}}");
@@ -135,10 +177,10 @@ export default function Footer({ data }: FooterProps) {
   ];
 
   const defaultQuickLinks: FooterLink[] = [
-    { id: 1, text: "Capabilities", URL: "#capabilities" },
-    { id: 2, text: "Our Work", URL: "#work" },
-    { id: 3, text: "News & Insights", URL: "#news" },
-    { id: 4, text: "About us", URL: "#about" },
+    { id: 1, text: "Our Work", URL: "#our-work" },
+    { id: 2, text: "Solutions", URL: "#solutions" },
+    { id: 3, text: "Case Studies", URL: "#case-studies" },
+    { id: 4, text: "Process", URL: "#process" },
   ];
 
   const defaultContacts: FooterContact[] = [
@@ -294,28 +336,42 @@ export default function Footer({ data }: FooterProps) {
                 </h2>
                 <div className="flex flex-col space-y-2.5 sm:space-y-3 lg:space-y-3.5">
                   {quickLinks.map((item, idx) => {
-                    const isRoute = item.URL?.startsWith("/");
-                    if (isRoute) {
+                    const resolved = resolveLink(item.URL);
+
+                    if (resolved.isExternal) {
                       return (
-                        <Link
+                        <a
                           key={item.id ?? idx}
-                          href={item.URL || "/"}
+                          href={resolved.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="font-satoshi text-[11.5px] sm:text-[12.5px] lg:text-[13px] font-bold text-white/80 hover:text-[#95E7D3] transition-colors w-fit"
                         >
                           {item.text}
-                        </Link>
+                        </a>
                       );
                     }
+
+                    if (resolved.isAnchor) {
+                      return (
+                        <a
+                          key={item.id ?? idx}
+                          href={resolved.href}
+                          className="font-satoshi text-[11.5px] sm:text-[12.5px] lg:text-[13px] font-bold text-white/80 hover:text-[#95E7D3] transition-colors w-fit"
+                        >
+                          {item.text}
+                        </a>
+                      );
+                    }
+
                     return (
-                      <a
+                      <Link
                         key={item.id ?? idx}
-                        href={item.URL || "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href={resolved.href}
                         className="font-satoshi text-[11.5px] sm:text-[12.5px] lg:text-[13px] font-bold text-white/80 hover:text-[#95E7D3] transition-colors w-fit"
                       >
                         {item.text}
-                      </a>
+                      </Link>
                     );
                   })}
                 </div>

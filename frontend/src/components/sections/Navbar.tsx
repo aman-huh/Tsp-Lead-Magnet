@@ -313,7 +313,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
               <Link
                 className="block w-fit font-delight text-white hover:text-[#95E7D3] transition-colors duration-200 text-[clamp(24px,5.5vw,62px)] font-normal leading-[1.18]"
                 style={{ fontFamily: "var(--font-delight)" }}
-                href="/our-work"
+                href="#our-work"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Our Work
@@ -321,26 +321,26 @@ export default function Navbar({ className = "" }: NavbarProps) {
               <Link
                 className="block w-fit font-delight text-white hover:text-[#95E7D3] transition-colors duration-200 text-[clamp(24px,5.5vw,62px)] font-normal leading-[1.18]"
                 style={{ fontFamily: "var(--font-delight)" }}
-                href="/service"
+                href="#solutions"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Services
+                Solutions
               </Link>
               <Link
                 className="block w-fit font-delight text-white hover:text-[#95E7D3] transition-colors duration-200 text-[clamp(24px,5.5vw,62px)] font-normal leading-[1.18]"
                 style={{ fontFamily: "var(--font-delight)" }}
-                href="/capabilities"
+                href="#case-studies"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Capabilities
+                Case Studies
               </Link>
               <Link
                 className="block w-fit font-delight text-white hover:text-[#95E7D3] transition-colors duration-200 text-[clamp(24px,5.5vw,62px)] font-normal leading-[1.18]"
                 style={{ fontFamily: "var(--font-delight)" }}
-                href="/news-and-insights"
+                href="#process"
                 onClick={() => setIsMenuOpen(false)}
               >
-                News &amp; Insights
+                Process
               </Link>
             </nav>
 

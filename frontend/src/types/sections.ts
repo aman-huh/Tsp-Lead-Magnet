@@ -124,6 +124,13 @@ export interface FooterSection {
   marquee?: string | null;
 }
 
+export interface SharedButtonSection {
+  id: number;
+  __component: "shared.button";
+  text: string;
+  url?: string;
+}
+
 export type LandingPageSection =
   | HeroSection
   | ProblemAssessmentSection
@@ -135,5 +142,6 @@ export type LandingPageSection =
   | OurProcessSection
   | FaqSection
   | FooterSection
+  | SharedButtonSection
   | { id: number; __component: string; [key: string]: unknown };
 
