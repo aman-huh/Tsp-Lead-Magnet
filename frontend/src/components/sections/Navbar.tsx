@@ -48,44 +48,73 @@ export default function Navbar({ className = "" }: NavbarProps) {
   }, []);
 
   useEffect(() => {
+    const isModalElement = (el: Element | null): boolean => {
+      if (!el) return false;
+      return !!el.closest(
+        '[data-modal], [role="dialog"], [aria-modal="true"], #quote-modal, #callback-modal, [class*="modal"]'
+      );
+    };
+
     const checkColorAtElement = (el: HTMLElement | null): boolean => {
+      const scrollY =
+        typeof window !== "undefined"
+          ? window.scrollY || document.documentElement.scrollTop || 0
+          : 0;
+      const isAtTop = scrollY < 50;
+
       if (!el || typeof window === "undefined" || typeof document === "undefined") {
-        return true;
+        return isAtTop;
       }
       try {
         const rect = el.getBoundingClientRect();
-        const x = Math.min(Math.max(rect.left + rect.width / 2, 0), window.innerWidth - 1);
-        const y = Math.min(Math.max(rect.top + rect.height / 2, 0), window.innerHeight - 1);
+        const coords = [
+          {
+            x: Math.min(Math.max(rect.left + rect.width / 2, 0), window.innerWidth - 1),
+            y: Math.min(Math.max(rect.top + rect.height / 2, 0), window.innerHeight - 1),
+          },
+          {
+            x: Math.round(window.innerWidth / 2),
+            y: Math.min(Math.max(rect.top + rect.height / 2, 0), window.innerHeight - 1),
+          },
+        ];
 
-        const elements = document.elementsFromPoint(x, y);
-        for (const item of elements) {
-          if (headerRef.current && headerRef.current.contains(item)) {
-            continue;
-          }
-          let curr: Element | null = item;
-          while (curr && curr !== document.documentElement) {
-            const style = window.getComputedStyle(curr);
-            const bg = style.backgroundColor;
-            if (bg && bg !== "transparent" && bg !== "rgba(0, 0, 0, 0)") {
-              const match = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
-              if (match) {
-                const alpha = match[4] !== undefined ? parseFloat(match[4]) : 1;
-                if (alpha > 0.1) {
-                  const r = parseInt(match[1], 10);
-                  const g = parseInt(match[2], 10);
-                  const b = parseInt(match[3], 10);
-                  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-                  return luminance < 0.55;
+        for (const coord of coords) {
+          const elements = document.elementsFromPoint(coord.x, coord.y);
+          for (const item of elements) {
+            if (headerRef.current && headerRef.current.contains(item)) {
+              continue;
+            }
+            if (isModalElement(item)) {
+              continue;
+            }
+            let curr: Element | null = item;
+            while (curr) {
+              if (isModalElement(curr)) {
+                break;
+              }
+              const style = window.getComputedStyle(curr);
+              const bg = style.backgroundColor;
+              if (bg && bg !== "transparent" && bg !== "rgba(0, 0, 0, 0)") {
+                const match = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+                if (match) {
+                  const alpha = match[4] !== undefined ? parseFloat(match[4]) : 1;
+                  if (alpha > 0.1) {
+                    const r = parseInt(match[1], 10);
+                    const g = parseInt(match[2], 10);
+                    const b = parseInt(match[3], 10);
+                    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                    return luminance < 0.55;
+                  }
                 }
               }
+              curr = curr.parentElement;
             }
-            curr = curr.parentElement;
           }
         }
       } catch {
-        return true;
+        return isAtTop;
       }
-      return true;
+      return isAtTop;
     };
 
     let rafId: number | null = null;
@@ -100,6 +129,13 @@ export default function Navbar({ className = "" }: NavbarProps) {
         if (isMenuOpen) {
           setLogoIsDark(true);
           setButtonIsDark(true);
+          return;
+        }
+        if (
+          document.querySelector(
+            '[data-modal], #quote-modal, #callback-modal, [role="dialog"][aria-modal="true"]'
+          )
+        ) {
           return;
         }
         const logoDark = checkColorAtElement(logoRef.current);
@@ -135,7 +171,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
     <>
       <header
         ref={headerRef}
-        className={`fixed top-0 left-0 w-full h-[clamp(3.75rem,4.2vw,5.5rem)] flex items-center justify-between px-5 sm:px-8 md:px-12 lg:px-16 xl:px-[clamp(3.5rem,5.2vw,6.25rem)] transition-all duration-500 z-[10001] ${className}`}
+        className={`fixed top-0 left-0 w-full h-[clamp(3.75rem,4.2vw,5.5rem)] flex items-center justify-between px-[clamp(1.25rem,4.2vw,2rem)] lg:px-[clamp(3.5rem,5.2vw,6.25rem)] transition-all duration-500 z-[10001] ${className}`}
         style={{ background: "transparent", backdropFilter: "none" }}
       >
         <div ref={logoRef} className="flex items-center">
@@ -181,7 +217,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
           style={{
             backgroundColor: showButtonBg
               ? effectiveButtonDark
-                ? "rgba(181, 253, 236, 0.58)"
+                ? "rgba(255, 255, 255, 0.12)"
                 : "rgba(181, 253, 236, 0.75)"
               : "transparent",
             backdropFilter: showButtonBg ? "blur(12px)" : "none",
@@ -192,15 +228,9 @@ export default function Navbar({ className = "" }: NavbarProps) {
             viewBox="0 0 30 30"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="w-[20px] h-[20px] sm:w-[22px] sm:h-[22px] md:w-[24px] md:h-[24px] transition-colors duration-400 ease-[cubic-bezier(0.76,0,0.24,1)]"
+            className="w-[24px] h-[24px] sm:w-[26px] sm:h-[26px] md:w-[28px] md:h-[28px] lg:w-[30px] lg:h-[30px] transition-colors duration-400 ease-[cubic-bezier(0.76,0,0.24,1)]"
             style={{
-              color: isMenuOpen
-                ? "#FFFFFF"
-                : showButtonBg
-                ? "#3145DD"
-                : effectiveButtonDark
-                ? "#FFFFFF"
-                : "#3145DD",
+              color: effectiveButtonDark ? "#FFFFFF" : "#3145DD",
             }}
           >
             <g clipPath="url(#clip0_9011_1876)">
@@ -217,9 +247,8 @@ export default function Navbar({ className = "" }: NavbarProps) {
                     ? "rotate(45deg) translateY(7.5px)"
                     : undefined,
                 }}
-                className={`transition-all duration-400 ease-[cubic-bezier(0.76,0,0.24,1)] motion-reduce:transition-none ${
-                  isMenuOpen ? "" : "group-hover:translate-x-[2.5px]"
-                }`}
+                className={`transition-all duration-400 ease-[cubic-bezier(0.76,0,0.24,1)] motion-reduce:transition-none ${isMenuOpen ? "" : "group-hover:translate-x-[2.5px]"
+                  }`}
               />
               <path
                 strokeWidth="1.8"
@@ -233,9 +262,8 @@ export default function Navbar({ className = "" }: NavbarProps) {
                   opacity: isMenuOpen ? 0 : 1,
                   transform: isMenuOpen ? "translateX(-6px)" : undefined,
                 }}
-                className={`transition-all duration-400 ease-[cubic-bezier(0.76,0,0.24,1)] motion-reduce:transition-none ${
-                  isMenuOpen ? "" : "group-hover:translate-x-[-2.5px]"
-                }`}
+                className={`transition-all duration-400 ease-[cubic-bezier(0.76,0,0.24,1)] motion-reduce:transition-none ${isMenuOpen ? "" : "group-hover:translate-x-[-2.5px]"
+                  }`}
               />
               <path
                 strokeWidth="1.8"
@@ -250,9 +278,8 @@ export default function Navbar({ className = "" }: NavbarProps) {
                     ? "rotate(-45deg) translateY(-7.5px)"
                     : undefined,
                 }}
-                className={`transition-all duration-400 ease-[cubic-bezier(0.76,0,0.24,1)] motion-reduce:transition-none ${
-                  isMenuOpen ? "" : "group-hover:translate-x-[2.5px]"
-                }`}
+                className={`transition-all duration-400 ease-[cubic-bezier(0.76,0,0.24,1)] motion-reduce:transition-none ${isMenuOpen ? "" : "group-hover:translate-x-[2.5px]"
+                  }`}
               />
             </g>
             <defs>
@@ -268,11 +295,10 @@ export default function Navbar({ className = "" }: NavbarProps) {
         data-lenis-prevent="true"
         data-lenis-prevent-wheel="true"
         data-lenis-prevent-touch="true"
-        className={`fixed top-0 left-0 w-full z-[9999] transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] h-[100dvh] md:h-full md:right-0 md:left-auto md:w-full md:grid md:grid-cols-[1.4fr_1fr] custom-menu-overlay overflow-hidden ${
-          isMenuOpen
-            ? "translate-y-0 pointer-events-auto"
-            : "-translate-y-full pointer-events-none"
-        }`}
+        className={`fixed top-0 right-0 w-full z-[9999] transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] h-[100dvh] md:h-full md:grid md:grid-cols-[1.4fr_1fr] custom-menu-overlay overflow-hidden ${isMenuOpen
+            ? "translate-x-0 pointer-events-auto"
+            : "translate-x-full pointer-events-none"
+          }`}
         style={{
           background: "rgba(15, 29, 7, 0.97)",
           borderBottom: "1px solid rgba(82, 80, 80, 0.32)",

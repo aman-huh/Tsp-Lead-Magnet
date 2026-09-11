@@ -75,9 +75,9 @@ export default function FAQ({ data }: FAQProps) {
   };
 
   return (
-    <section className="w-full bg-white pt-[clamp(4.5rem,7vw,9.5rem)] pb-[clamp(5rem,8vw,11rem)] px-0 sm:px-12 2xl:px-20 3xl:px-[89.5px]">
+    <section className="w-full bg-white pt-[clamp(4.5rem,7vw,9.5rem)] pb-[clamp(5rem,8vw,11rem)] px-[clamp(1.25rem,4.2vw,2rem)] lg:px-[clamp(3.5rem,5.2vw,6.25rem)]">
       <div className="max-w-[1920px] mx-auto w-full">
-        <div className="mb-6 sm:mb-12 2xl:mb-14 px-6 sm:px-0">
+        <div className="mb-6 sm:mb-12 2xl:mb-14">
           <h2 className="font-heading font-medium text-[36px] sm:text-[52px] 2xl:text-[62px] 3xl:text-[70px] leading-[1.1] tracking-[-0.02em] text-[#0F1D07]">
             {heading?.mobileTitle ? (
               <>
@@ -121,7 +121,7 @@ export default function FAQ({ data }: FAQProps) {
                 <button
                   type="button"
                   onClick={() => toggleItem(index)}
-                  className="w-full py-5 sm:py-6 2xl:py-7 px-6 sm:px-0 flex items-center justify-between gap-6 text-left cursor-pointer group select-none"
+                  className="w-full py-5 sm:py-6 2xl:py-7 flex items-center justify-between gap-6 text-left cursor-pointer group select-none"
                   aria-expanded={isOpen}
                 >
                   <span className="font-heading font-medium text-[17px] sm:text-[24px] 2xl:text-[28px] 3xl:text-[32px] leading-[1.4] tracking-[0.01em] text-[#0F1D07] group-hover:text-black transition-colors">
@@ -145,7 +145,7 @@ export default function FAQ({ data }: FAQProps) {
                         : "grid-rows-[0fr] opacity-0 pb-0"
                     }`}
                   >
-                    <div className="overflow-hidden px-6 sm:px-0">
+                    <div className="overflow-hidden">
                       <p className="font-satoshi text-[15px] sm:text-[16px] 2xl:text-[17px] 3xl:text-[18px] text-black leading-relaxed max-w-4xl">
                         {answerText}
                       </p>

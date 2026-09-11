@@ -67,7 +67,7 @@ export default function Hero({ data }: HeroProps) {
   };
 
   return (
-    <section className="bg-[#37386B] min-h-0 lg:min-h-screen relative flex flex-col justify-between">
+    <section id="hero" className="bg-[#37386B] min-h-0 lg:min-h-screen relative flex flex-col justify-between">
 
       <div className="relative mx-auto px-0 lg:px-[clamp(3.5rem,5.2vw,6.25rem)] max-w-[1920px] w-full lg:pt-0 lg:mt-[clamp(6rem,7vw,10.2rem)] flex-1 flex flex-col pb-0 lg:pb-[clamp(3.5rem,4.2vw,5.375rem)]">
         <div className="flex flex-col lg:flex-row gap-0 lg:gap-[clamp(2rem,4.2vw,3rem)] flex-1 items-stretch">

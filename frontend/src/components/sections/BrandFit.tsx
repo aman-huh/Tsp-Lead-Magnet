@@ -93,7 +93,7 @@ export default function BrandFit({ data }: BrandFitProps) {
   };
 
   return (
-    <section className="min-h-0 xl:min-h-screen flex flex-col justify-center pt-[clamp(4.5rem,7vw,9rem)] pb-[clamp(5rem,8vw,10rem)] px-[clamp(1.25rem,4.2vw,6.2rem)] max-w-[1920px] mx-auto w-full">
+    <section className="min-h-0 xl:min-h-screen flex flex-col justify-center pt-[clamp(4.5rem,7vw,9rem)] pb-[clamp(5rem,8vw,10rem)] px-[clamp(1.25rem,4.2vw,2rem)] lg:px-[clamp(3.5rem,5.2vw,6.25rem)] max-w-[1920px] mx-auto w-full">
       <div className="w-full flex flex-col xl:flex-row items-stretch justify-between gap-[clamp(2rem,3.5vw,4.5rem)]">
         <div className="w-full xl:w-[44%] 2xl:w-[42%] flex flex-col justify-center self-stretch">
           <h2 className="font-delight! text-[clamp(1.65rem,4.2vw,2.35rem)] xl:text-[clamp(2.125rem,3.2vw,4.85rem)] 2xl:text-[clamp(2.5rem,4.2vw,4.02rem)] font-medium leading-[1.2] tracking-[-0.02em] text-[#0F1D07]">

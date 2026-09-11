@@ -36,7 +36,7 @@ export default function SolutionHighlights({ data }: SolutionHighlightsProps) {
     "The trading calendar has taught shoppers here to wait. When a storefront doesn't make the case for a product at full price, the promotion has to — and margin pays for it. We redesign Shopify stores so the buying argument sits on the page, not in the discount code.";
 
   return (
-    <section className="mb-[clamp(4.5rem,7vw,9rem)] px-[clamp(1.25rem,4.2vw,6.2rem)] max-w-[1920px] mx-auto">
+    <section className="mb-[clamp(4.5rem,7vw,9rem)] px-[clamp(1.25rem,4.2vw,2rem)] lg:px-[clamp(3.5rem,5.2vw,6.25rem)] max-w-[1920px] mx-auto">
       <div className="w-full max-w-full flex flex-col lg:table lg:w-fit mb-[clamp(1.75rem,4.2vw,3.25rem)]">
         <h2 className="font-delight! text-[clamp(1.75rem,5.5vw,2.75rem)] lg:text-[clamp(2.125rem,4.2vw,5rem)] font-medium leading-tight lg:leading-[1.12] tracking-[-0.01em] w-full lg:w-fit">
           {header?.mobileTitle ? (

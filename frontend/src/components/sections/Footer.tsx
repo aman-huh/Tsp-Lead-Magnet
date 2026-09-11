@@ -225,7 +225,7 @@ export default function Footer({ data }: FooterProps) {
       data-theme="dark"
       className="relative w-full min-h-screen pt-16 pb-10 sm:pt-20 sm:pb-12 md:pt-24 md:pb-14 bg-[#3145DD] overflow-hidden select-none flex flex-col justify-between"
     >
-      <div className="mx-auto w-full max-w-[1880px] px-6 lg:px-[60px] xl:px-[80px] flex-1 flex flex-col justify-between">
+      <div className="mx-auto w-full max-w-[1920px] px-[clamp(1.25rem,4.2vw,2rem)] lg:px-[clamp(3.5rem,5.2vw,6.25rem)] flex-1 flex flex-col justify-between">
         <div className="flex flex-col lg:flex-row lg:justify-between gap-24 sm:gap-28 lg:gap-10 xl:gap-16">
           <div className="flex flex-col w-full lg:max-w-[480px] xl:max-w-[540px]">
             <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap">
