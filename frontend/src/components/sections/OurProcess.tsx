@@ -274,7 +274,7 @@ export default function OurProcess({ data }: OurProcessProps) {
               shape="rounded"
               variant="solid"
               showArrow={false}
-              size="lg"
+              size="md"
               text={ctaText}
               url={ctaUrl}
             />
