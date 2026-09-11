@@ -79,9 +79,9 @@ function SolutionHighlightCard({ feature }: { feature?: Feature }) {
 
   return (
     <div
-      className={`w-full min-h-[clamp(21rem,30vw,26rem)] lg:min-h-[clamp(24rem,33vw,32rem)] rounded-[clamp(20px,4.2vw,30px)] p-6 sm:p-8 lg:p-[clamp(1.75rem,3vw,2.5rem)] flex flex-col justify-between gap-6 sm:gap-8 overflow-hidden ${variant.container}`}
+      className={`w-full rounded-[16px] md:rounded-[clamp(20px,4.2vw,30px)] p-6 sm:p-8 lg:p-[clamp(1.75rem,3vw,2.5rem)] flex flex-col justify-between  h-full ${variant.container}`}
     >
-      <div className="w-full h-1/2 max-h-[50%] relative flex items-center justify-start">
+      <div className="w-full h-[clamp(110px,13vw,180px)] relative shrink-0">
         {illustrationUrl && (
           <Image
             src={illustrationUrl}
@@ -97,14 +97,14 @@ function SolutionHighlightCard({ feature }: { feature?: Feature }) {
         )}
       </div>
 
-      <div className="w-full shrink-0 flex flex-col gap-y-2.5 sm:gap-y-3">
+      <div className="w-full flex-1 flex flex-col gap-y-2.5 sm:gap-y-3 pt-5 sm:pt-6">
         <h3
           className={`font-heading font-normal text-[20px] sm:text-[22px] lg:text-[clamp(1.125rem,2vw,1.75rem)] leading-snug tracking-normal ${variant.title}`}
         >
           {feature?.title}
         </h3>
         <p
-          className={`font-satoshi font-medium text-[15px] sm:text-[16px] lg:text-[clamp(0.875rem,1.1vw,1rem)] leading-[1.5] tracking-normal ${variant.desc}`}
+          className={`font-satoshi text-[15px] sm:text-[16px] lg:text-[clamp(0.875rem,1.1vw,1rem)] leading-[1.5] tracking-normal ${variant.desc}`}
         >
           {feature?.description}
         </p>

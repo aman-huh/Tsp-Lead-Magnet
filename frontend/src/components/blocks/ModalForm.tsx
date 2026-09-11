@@ -24,6 +24,7 @@ export default function ModalForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
 
   const steps = data?.Steps ?? [];
   const totalSteps = steps.length || 1;
@@ -52,49 +53,105 @@ export default function ModalForm({
   };
 
   const handleFieldChange = (fieldId: number, value: string) => {
-    setError(null);
     setFormValues((prev) => ({ ...prev, [String(fieldId)]: value }));
   };
 
-  const handleMultiSelectToggle = (fieldId: number, value: string) => {
-    setError(null);
+  const handleMultiSelectToggle = (fieldId: number, optionValue: string) => {
     setFormValues((prev) => {
       const current = prev[String(fieldId)];
       const list = Array.isArray(current)
-        ? current
-        : current
-          ? [current]
-          : [];
-      const updated = list.includes(value)
-        ? list.filter((v) => v !== value)
-        : [...list, value];
-      return { ...prev, [String(fieldId)]: updated };
+        ? [...current]
+        : typeof current === "string" && current
+        ? [current]
+        : [];
+      const idx = list.indexOf(optionValue);
+      if (idx > -1) {
+        list.splice(idx, 1);
+      } else {
+        list.push(optionValue);
+      }
+      return { ...prev, [String(fieldId)]: list };
     });
   };
 
   const isOptionActive = (field: FormField, optionValue: string): boolean => {
     const val = formValues[String(field.id)];
     if (isMultiSelectField(field)) {
-      const list = Array.isArray(val) ? val : val ? [val] : [];
+      const list = Array.isArray(val) ? val : typeof val === "string" && val ? [val] : [];
       return list.includes(optionValue);
     }
     return typeof val === "string" && val === optionValue;
   };
 
+  const validateField = (field: FormField, val: unknown): string | null => {
+    const isEmpty =
+      val === undefined ||
+      val === null ||
+      (typeof val === "string" && val.trim() === "") ||
+      (Array.isArray(val) && val.length === 0);
+
+    const labelLower = (field.label || "").toLowerCase();
+
+    if (field.required && isEmpty) {
+      if (labelLower.includes("shopify") && (field.type === "radio" || field.type === "select")) {
+        return "Please select whether you own a Shopify store.";
+      }
+      if (labelLower.includes("improvement") || labelLower.includes("issue") || labelLower.includes("ux")) {
+        return "Please choose at least one area you'd like to improve.";
+      }
+      if (labelLower.includes("budget") || labelLower.includes("plan") || labelLower.includes("range")) {
+        return "Please select your budget range.";
+      }
+      if (field.type === "phone" || labelLower.includes("phone")) {
+        return "Please enter your phone number to receive your quote.";
+      }
+      if (field.type === "email" || labelLower.includes("email")) {
+        return "Please enter your email address.";
+      }
+      if (field.type === "url" || labelLower.includes("link") || labelLower.includes("url")) {
+        return "Please enter your store link.";
+      }
+      if (labelLower.includes("name")) {
+        return "Please enter your name.";
+      }
+      const cleanLabel = field.label.replace(/[?:!]+$/, "").trim();
+      return `Please provide your ${cleanLabel.toLowerCase()}.`;
+    }
+
+    if (!isEmpty && typeof val === "string") {
+      const rawString = val.trim();
+      if (field.type === "phone" || labelLower.includes("phone")) {
+        const digitsOnly = rawString.replace(/\D/g, "");
+        if (digitsOnly.length < 7 || digitsOnly.length > 15) {
+          return "Please enter a valid phone number (7 to 15 digits).";
+        }
+      }
+
+      if (field.type === "email" || labelLower.includes("email")) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(rawString)) {
+          return "Please enter a valid email address (e.g., name@example.com).";
+        }
+      }
+
+      if (field.type === "url" || (labelLower.includes("link") && field.type === "text")) {
+        if (rawString.length > 0 && !rawString.includes(".") && !rawString.startsWith("http")) {
+          return "Please enter a valid store link (e.g., yourstore.myshopify.com).";
+        }
+      }
+    }
+
+    return null;
+  };
+
   const handleNext = async () => {
     const currentFields = step?.fields ?? [];
     for (const f of currentFields) {
-      if (f.required) {
-        const val = formValues[String(f.id)];
-        const isEmpty =
-          val === undefined ||
-          val === null ||
-          val === "" ||
-          (Array.isArray(val) && val.length === 0);
-        if (isEmpty) {
-          setError(`Please complete "${f.label}" to continue.`);
-          return;
-        }
+      const val = formValues[String(f.id)];
+      const validationError = validateField(f, val);
+      if (validationError) {
+        setError(validationError);
+        return;
       }
     }
     setError(null);
@@ -155,18 +212,24 @@ export default function ModalForm({
         (f) => f.type === "text" && f.label?.toLowerCase().includes("name")
       );
 
+      const rawShopify = shopifyField
+        ? ((formValues[String(shopifyField.id)] as string) ?? getFieldValue(shopifyField))
+        : undefined;
+      const validShopify = rawShopify === "yes" || rawShopify === "no" ? rawShopify : undefined;
+
+      const shopifyUrl = urlField ? (formValues[String(urlField.id)] as string)?.trim() : undefined;
+      const email = emailField ? (formValues[String(emailField.id)] as string)?.trim() : undefined;
+      const phone = phoneField ? (formValues[String(phoneField.id)] as string)?.trim() : undefined;
+      const name = nameField ? (formValues[String(nameField.id)] as string)?.trim() : undefined;
+
       await submitLead({
-        hasShopifyWebsite: shopifyField
-          ? ((formValues[String(shopifyField.id)] as string) ?? getFieldValue(shopifyField))
-          : undefined,
-        shopifyUrl: urlField ? (formValues[String(urlField.id)] as string) : undefined,
-        email: emailField ? (formValues[String(emailField.id)] as string) : undefined,
-        name: phoneField
-          ? (formValues[String(phoneField.id)] as string)
-          : nameField
-            ? (formValues[String(nameField.id)] as string)
-            : undefined,
+        hasShopifyWebsite: validShopify,
+        shopifyUrl: shopifyUrl || undefined,
+        email: email || undefined,
+        phone: phone || undefined,
+        name: name || undefined,
         source,
+        honeypot,
         formData,
       });
 
@@ -517,36 +580,72 @@ export default function ModalForm({
       </div>
 
       <div className="flex flex-col justify-between flex-1">
-        <div className="space-y-4 sm:space-y-6">
-          {step?.showEstimate &&
-            data?.pricingTiers &&
-            data.pricingTiers.length > 0 &&
-            renderBudgetTiers(data.pricingTiers)}
+        <fieldset disabled={submitted || isSubmitting} className="contents">
+          <div className="space-y-4 sm:space-y-6">
+            {step?.showEstimate &&
+              data?.pricingTiers &&
+              data.pricingTiers.length > 0 &&
+              renderBudgetTiers(data.pricingTiers)}
 
-          {fields.length > 0 && (
-            <div
-              className={
-                step?.layout === "two-column"
-                  ? "grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4"
-                  : "space-y-4 sm:space-y-6"
-              }
-            >
-              {fields.map((field) => renderField(field))}
-            </div>
-          )}
-        </div>
+            {fields.length > 0 && (
+              <div
+                className={
+                  step?.layout === "two-column"
+                    ? "grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4"
+                    : "space-y-4 sm:space-y-6"
+                }
+              >
+                {fields.map((field) => renderField(field))}
+              </div>
+            )}
+          </div>
+        </fieldset>
 
         <div className="mt-5 sm:mt-10 md:mt-16">
-          {error && <p className="text-red-500 text-xs sm:text-sm mb-2.5">{error}</p>}
-          <button
-            type="button"
-            disabled={isSubmitting}
-            onClick={handleNext}
-            className="font-satoshi w-full bg-[#242120] hover:bg-black text-white font-medium py-2.5 sm:py-3.5 md:py-4 px-5 sm:px-6 rounded-full transition-all duration-200 flex justify-center items-center gap-2 text-[clamp(0.8125rem,3vw,0.96875rem)] cursor-pointer shadow-md active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
-          >
-            <span>{isSubmitting ? "Submitting..." : buttonText}</span>
-            {!isSubmitting && <span className="text-[clamp(0.875rem,3.5vw,1.0625rem)]">→</span>}
-          </button>
+          <input
+            type="text"
+            name="website_hp"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            className="opacity-0 absolute -top-[9999px] left-0 h-0 w-0 pointer-events-none"
+            aria-hidden="true"
+          />
+          {submitted ? (
+            <div
+              className="font-satoshi w-full bg-[#005540] text-white font-medium py-2.5 sm:py-3.5 md:py-4 px-5 sm:px-6 rounded-full flex justify-center items-center gap-2 text-[clamp(0.8125rem,3vw,0.96875rem)] shadow-md select-none"
+              role="status"
+              aria-live="polite"
+            >
+              <svg
+                className="w-4 h-4 text-[#95E7D3] shrink-0"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <span>{successMessage || "Quote Requested! We'll be in touch."}</span>
+            </div>
+          ) : (
+            <>
+              {error && <p className="text-red-500 text-xs sm:text-sm mb-2.5">{error}</p>}
+              <button
+                type="button"
+                disabled={isSubmitting}
+                onClick={handleNext}
+                className="font-satoshi w-full bg-[#242120] hover:bg-black text-white font-medium py-2.5 sm:py-3.5 md:py-4 px-5 sm:px-6 rounded-full transition-all duration-200 flex justify-center items-center gap-2 text-[clamp(0.8125rem,3vw,0.96875rem)] cursor-pointer shadow-md active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                <span>{isSubmitting ? "Submitting..." : buttonText}</span>
+                {!isSubmitting && <span className="text-[clamp(0.875rem,3.5vw,1.0625rem)]">→</span>}
+              </button>
+            </>
+          )}
           {step?.footerText ? (
             <p className="font-satoshi text-[clamp(0.625rem,2.2vw,0.75rem)] mt-2 text-center text-[#555555]">
               {step.footerText}

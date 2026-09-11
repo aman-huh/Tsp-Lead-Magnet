@@ -228,23 +228,19 @@ export default function Footer({ data }: FooterProps) {
       <div className="mx-auto w-full max-w-[1920px] px-[clamp(1.25rem,4.2vw,2rem)] lg:px-[clamp(3.5rem,5.2vw,6.25rem)] flex-1 flex flex-col justify-between">
         <div className="flex flex-col lg:flex-row lg:justify-between gap-24 sm:gap-28 lg:gap-10 xl:gap-16">
           <div className="flex flex-col w-full lg:max-w-[480px] xl:max-w-[540px]">
-            <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap">
-              <h2 className="font-delight text-[clamp(44px,4.2vw,80px)] font-medium leading-none text-white tracking-tight">
-                {hasLogoPlaceholder ? headingParts[0]?.trim() : headingRaw}
-              </h2>
+            <h2 className="font-delight text-[clamp(44px,4.2vw,80px)] font-medium leading-none text-white tracking-tight flex items-center gap-2.5 sm:gap-3">
+              <span>{hasLogoPlaceholder ? headingParts[0]?.trim() : headingRaw}</span>
               <Image
                 src="/footercircle.avif"
                 alt="Logo"
-                width={64}
-                height={64}
-                className="h-[48px] w-[48px] sm:h-[64px] sm:w-[64px] animate-spin-pause shrink-0 object-contain"
+                width={80}
+                height={80}
+                className="w-[1em] h-[1em] -translate-y-[13%] animate-spin-pause shrink-0 object-contain"
               />
               {hasLogoPlaceholder && headingParts[1]?.trim() && (
-                <h2 className="font-delight text-[clamp(44px,4.2vw,80px)] font-medium leading-none text-white tracking-tight">
-                  {headingParts[1].trim()}
-                </h2>
+                <span>{headingParts[1].trim()}</span>
               )}
-            </div>
+            </h2>
 
             <div className="mt-4 space-y-2 text-white font-satoshi text-[10.5px] sm:text-[12px] leading-[1.65] max-w-[550px]">
               {description && (

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { PointerEvent, useState, useEffect } from "react";
+import { PointerEvent, useState, useEffect, useRef } from "react";
 import { CaseStudy, CaseStudyShowcaseSection } from "@/types";
 import { getStrapiMediaUrl } from "@/lib/fetcher";
 
@@ -13,6 +13,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
   const [position, setPosition] = useState(50);
   const [isVertical, setIsVertical] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [studyKey, setStudyKey] = useState(study?.id);
 
   useEffect(() => {
     const checkOrientation = () => {
@@ -23,8 +24,18 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
     return () => window.removeEventListener("resize", checkOrientation);
   }, []);
 
-  const updatePosition = (clientX: number, clientY: number, currentTarget: HTMLElement) => {
-    const rect = currentTarget.getBoundingClientRect();
+  // Reset to 50% instantly when switching to a different study (no animation flash)
+  useEffect(() => {
+    if (study?.id !== studyKey) {
+      setPosition(50);
+      setStudyKey(study?.id);
+    }
+  }, [study?.id, studyKey]);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const updatePosition = (clientX: number, clientY: number, container: HTMLElement) => {
+    const rect = container.getBoundingClientRect();
     if (isVertical) {
       const nextPosition = ((clientY - rect.top) / rect.height) * 100;
       setPosition(Math.min(100, Math.max(0, nextPosition)));
@@ -34,18 +45,44 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
     }
   };
 
-  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+  const handleContainerPointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (isVertical) return;
     setIsDragging(true);
     event.currentTarget.setPointerCapture(event.pointerId);
-    updatePosition(event.clientX, event.clientY, event.currentTarget);
+    if (containerRef.current) {
+      updatePosition(event.clientX, event.clientY, containerRef.current);
+    }
   };
 
-  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+  const handleContainerPointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (isVertical || !isDragging) return;
+    if (containerRef.current) {
+      updatePosition(event.clientX, event.clientY, containerRef.current);
+    }
+  };
+
+  const handleContainerPointerUp = (event: PointerEvent<HTMLDivElement>) => {
+    if (isVertical) return;
+    setIsDragging(false);
+    try {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    } catch {}
+  };
+
+  const handleSliderPointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+    setIsDragging(true);
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handleSliderPointerMove = (event: PointerEvent<HTMLDivElement>) => {
     if (!isDragging) return;
-    updatePosition(event.clientX, event.clientY, event.currentTarget);
+    if (containerRef.current) {
+      updatePosition(event.clientX, event.clientY, containerRef.current);
+    }
   };
 
-  const handlePointerUp = (event: PointerEvent<HTMLDivElement>) => {
+  const handleSliderPointerUp = (event: PointerEvent<HTMLDivElement>) => {
     setIsDragging(false);
     try {
       event.currentTarget.releasePointerCapture(event.pointerId);
@@ -57,13 +94,14 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
 
   return (
     <div
-      className={`relative w-full h-[724px] md:h-auto md:aspect-[1720/969] rounded-xl md:rounded-2xl overflow-hidden touch-none select-none bg-white ${
-        isVertical ? "cursor-pointer" : "cursor-pointer"
+      ref={containerRef}
+      className={`relative w-full aspect-[9/16] md:aspect-[1720/969] rounded-xl md:rounded-2xl overflow-hidden select-none bg-white ${
+        isVertical ? "touch-pan-y cursor-default" : "touch-none cursor-pointer"
       }`}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerUp}
+      onPointerDown={handleContainerPointerDown}
+      onPointerMove={handleContainerPointerMove}
+      onPointerUp={handleContainerPointerUp}
+      onPointerCancel={handleContainerPointerUp}
     >
       {study?.afterMobileImage?.url ? (
         <>
@@ -164,85 +202,89 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
         {study?.afterLabel || "After"}
       </div>
 
+      {/* Slider Line & Thumb Drag Handler */}
       <div
-        className={`absolute z-20 bg-black pointer-events-none ${
+        className={`absolute z-30 flex items-center justify-center select-none ${
           isVertical
-            ? "left-0 right-0 h-0.5 -translate-y-1/2"
-            : "top-0 bottom-0 w-0.5 -translate-x-1/2"
+            ? "left-0 right-0 h-14 -translate-y-1/2 cursor-grab active:cursor-grabbing touch-none"
+            : "top-0 bottom-0 w-14 -translate-x-1/2 pointer-events-none"
         }`}
         style={isVertical ? { top: `${position}%` } : { left: `${position}%` }}
-      />
-      <div
-        className="absolute z-30 flex h-11 w-11 sm:h-13 sm:w-13 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-black text-white shadow-[0_8px_24px_rgba(0,0,0,0.24)] pointer-events-none"
-        style={
-          isVertical
-            ? { top: `${position}%`, left: "50%" }
-            : { left: `${position}%`, top: "50%" }
-        }
+        onPointerDown={isVertical ? handleSliderPointerDown : undefined}
+        onPointerMove={isVertical ? handleSliderPointerMove : undefined}
+        onPointerUp={isVertical ? handleSliderPointerUp : undefined}
+        onPointerCancel={isVertical ? handleSliderPointerUp : undefined}
       >
-        {isVertical ? (
-          <div className="flex flex-col items-center gap-1">
-            <svg
-              viewBox="0 0 14 8"
-              fill="none"
-              className="w-3.5 h-2"
-              aria-hidden="true"
-            >
-              <path
-                d="M1.5 6.5L7 1.5L12.5 6.5"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <svg
-              viewBox="0 0 14 8"
-              fill="none"
-              className="w-3.5 h-2"
-              aria-hidden="true"
-            >
-              <path
-                d="M1.5 1.5L7 6.5L12.5 1.5"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-        ) : (
-          <div className="flex items-center gap-2">
-            <svg
-              viewBox="0 0 8 14"
-              fill="none"
-              className="h-4 w-2.5"
-              aria-hidden="true"
-            >
-              <path
-                d="M6.5 1.5L1.5 7L6.5 12.5"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <svg
-              viewBox="0 0 8 14"
-              fill="none"
-              className="h-4 w-2.5"
-              aria-hidden="true"
-            >
-              <path
-                d="M1.5 1.5L6.5 7L1.5 12.5"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-        )}
+        <div
+          className={`absolute bg-black pointer-events-none ${
+            isVertical ? "left-0 right-0 h-0.5" : "top-0 bottom-0 w-0.5"
+          }`}
+        />
+        <div className="relative z-10 flex h-11 w-11 sm:h-13 sm:w-13 items-center justify-center rounded-full bg-black text-white shadow-[0_8px_24px_rgba(0,0,0,0.24)] pointer-events-none">
+          {isVertical ? (
+            <div className="flex flex-col items-center gap-1">
+              <svg
+                viewBox="0 0 14 8"
+                fill="none"
+                className="w-3.5 h-2"
+                aria-hidden="true"
+              >
+                <path
+                  d="M1.5 6.5L7 1.5L12.5 6.5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <svg
+                viewBox="0 0 14 8"
+                fill="none"
+                className="w-3.5 h-2"
+                aria-hidden="true"
+              >
+                <path
+                  d="M1.5 1.5L7 6.5L12.5 1.5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <svg
+                viewBox="0 0 8 14"
+                fill="none"
+                className="h-4 w-2.5"
+                aria-hidden="true"
+              >
+                <path
+                  d="M6.5 1.5L1.5 7L6.5 12.5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <svg
+                viewBox="0 0 8 14"
+                fill="none"
+                className="h-4 w-2.5"
+                aria-hidden="true"
+              >
+                <path
+                  d="M1.5 1.5L6.5 7L1.5 12.5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

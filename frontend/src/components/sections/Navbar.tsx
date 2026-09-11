@@ -171,7 +171,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
     <>
       <header
         ref={headerRef}
-        className={`fixed top-0 left-0 w-full h-[clamp(3.75rem,4.2vw,5.5rem)] flex items-center justify-between px-[clamp(1.25rem,4.2vw,2rem)] lg:px-[clamp(3.5rem,5.2vw,6.25rem)] transition-all duration-500 z-[10001] ${className}`}
+        className={`fixed top-0 left-0 w-full h-[clamp(4.25rem,5vw,5.5rem)] flex items-center justify-between px-[clamp(1.25rem,4.2vw,2rem)] lg:px-[clamp(3.5rem,5.2vw,6.25rem)] transition-all duration-500 z-[10001] ${className}`}
         style={{ background: "transparent", backdropFilter: "none" }}
       >
         <div ref={logoRef} className="flex items-center">

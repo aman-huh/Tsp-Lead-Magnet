@@ -95,7 +95,7 @@ export default function OurWork({ data }: OurWorkProps) {
                 )}
               </h1>
               {(description || header?.mobileDescription) && (
-                <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.2rem)] font-semibold leading-[1.5] tracking-normal w-full sm:max-w-xl lg:w-[77%]">
+                <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.2rem)] font-semibold leading-[1.5] tracking-normal w-full sm:w-[85%] lg:w-[77%]">
                   {header?.mobileDescription ? (
                     <>
                       <span className="block lg:hidden">{header.mobileDescription}</span>
@@ -140,7 +140,7 @@ export default function OurWork({ data }: OurWorkProps) {
               className="flex items-center gap-2 font-satoshi text-[clamp(0.875rem,4.2vw,1rem)] font-medium text-[#0F1D07] hover:opacity-75 transition-opacity cursor-pointer"
               aria-label="Previous project"
             >
-              <SliderArrowIcon className="w-5 h-auto text-[#0F1D07]" />
+              <span className="text-[1.15em] leading-none select-none" aria-hidden="true">←</span>
               <span>Back</span>
             </button>
 
@@ -167,7 +167,7 @@ export default function OurWork({ data }: OurWorkProps) {
               aria-label="Next project"
             >
               <span>Next</span>
-              <SliderArrowIcon className="w-5 h-auto text-[#0F1D07] rotate-180" />
+              <span className="text-[1.15em] leading-none select-none" aria-hidden="true">→</span>
             </button>
           </div>
         )}

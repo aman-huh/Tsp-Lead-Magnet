@@ -67,29 +67,29 @@ export default function Hero({ data }: HeroProps) {
   };
 
   return (
-    <section id="hero" className="bg-[#37386B] min-h-0 lg:min-h-screen relative flex flex-col justify-between">
+    <section id="hero" className="bg-[#37386B] min-h-0 xl:min-h-screen relative flex flex-col justify-between">
 
-      <div className="relative mx-auto px-0 lg:px-[clamp(3.5rem,5.2vw,6.25rem)] max-w-[1920px] w-full lg:pt-0 lg:mt-[clamp(6rem,7vw,10.2rem)] flex-1 flex flex-col pb-0 lg:pb-[clamp(3.5rem,4.2vw,5.375rem)]">
-        <div className="flex flex-col lg:flex-row gap-0 lg:gap-[clamp(2rem,4.2vw,3rem)] flex-1 items-stretch">
-          <div className="w-full lg:w-[55%] flex flex-col justify-between px-[clamp(1.25rem,4.2vw,2rem)] lg:px-0 pt-[clamp(6rem,14vw,7.5rem)] lg:pt-0 pb-[clamp(1.5rem,4vw,2rem)] lg:pb-0 h-auto">
-            <div className="flex flex-col gap-y-[clamp(1.5rem,3.2vw,1.5rem)] mb-[clamp(4.5rem,6vw,5rem)] lg:mb-0 my-0">
+      <div className="relative mx-auto px-0 xl:px-[clamp(3.5rem,5.2vw,6.25rem)] max-w-[1920px] w-full xl:pt-0 xl:mt-[clamp(6rem,7vw,10.2rem)] flex-1 flex flex-col pb-0 xl:pb-[clamp(3.5rem,4.2vw,5.375rem)]">
+        <div className="flex flex-col xl:flex-row gap-0 xl:gap-[clamp(2rem,4.2vw,3rem)] flex-1 items-stretch">
+          <div className="w-full xl:w-[55%] flex flex-col justify-between px-[clamp(1.25rem,4.2vw,2rem)] xl:px-0 pt-[clamp(6rem,14vw,7.5rem)] xl:pt-0 pb-[clamp(1.5rem,4vw,2rem)] xl:pb-0 h-auto">
+            <div className="flex flex-col gap-y-[clamp(1.5rem,3.2vw,1.5rem)] mb-[clamp(4.5rem,6vw,5rem)] xl:mb-0 my-0">
               <div className="space-y-5">
-                <h1 className="font-heading! text-[clamp(2.2rem,4.2vw,5rem)] text-white leading-relaxed md:leading-tight tracking-[-0.02em]">
+                <h1 className="font-heading! text-[clamp(2.2rem,4.2vw,5rem)] text-white leading-relaxed tracking-[-0.02em]">
                 {header?.mobileTitle ? (
                   <>
-                    <span className="block lg:hidden">{renderTitle(header.mobileTitle)}</span>
-                    <span className="hidden lg:block">{renderTitle(title)}</span>
+                    <span className="block xl:hidden">{renderTitle(header.mobileTitle)}</span>
+                    <span className="hidden xl:block">{renderTitle(title)}</span>
                   </>
                 ) : (
                   renderTitle(title)
                 )}
               </h1>
               {(description || header?.mobileDescription) && (
-                <p className="w-full lg:w-[85%] font-satoshi text-[clamp(14px,2.8vw,1.15rem)] font-normal text-white/90 sm:text-white leading-relaxed tracking-normal">
+                <p className="w-full xl:w-[85%] font-satoshi text-[clamp(14px,2.8vw,1.15rem)] font-normal text-white/90 sm:text-white leading-relaxed tracking-normal">
                   {header?.mobileDescription ? (
                     <>
-                      <span className="block lg:hidden">{header.mobileDescription}</span>
-                      <span className="hidden lg:block">{description}</span>
+                      <span className="block xl:hidden">{header.mobileDescription}</span>
+                      <span className="hidden xl:block">{description}</span>
                     </>
                   ) : (
                     description
@@ -114,11 +114,11 @@ export default function Hero({ data }: HeroProps) {
 
             <ClientShowcase
               logos={data?.brandLogos}
-              className="lg:pt-12"
+              className="xl:pt-12"
             />
           </div>
 
-          <div id="lead-form" className="w-full flex-none lg:flex-1 self-stretch">
+          <div id="lead-form" className="w-full flex-none xl:flex-1 self-stretch">
             <LeadForm data={leadForm} className="w-full h-full" />
           </div>
         </div>

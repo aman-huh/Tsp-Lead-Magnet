@@ -649,6 +649,8 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'sections.our-process',
         'sections.faq',
         'sections.footer',
+        'sections.navbar',
+        'shared.audit-bar',
       ]
     >;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;

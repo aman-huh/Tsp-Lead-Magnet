@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_sections_navbars",
+  "info": {
+    "displayName": "Navbar"
+  },
+  "options": {},
+  "attributes": {
+    "pageLinks": {
+      "type": "component",
+      "component": "blocks.link",
+      "repeatable": true
+    },
+    "contacts": {
+      "type": "component",
+      "component": "blocks.contact",
+      "repeatable": true
+    },
+    "socialLinks": {
+      "type": "component",
+      "component": "blocks.link",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

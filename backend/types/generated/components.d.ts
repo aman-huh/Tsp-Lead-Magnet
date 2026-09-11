@@ -313,6 +313,18 @@ export interface SectionsHero extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsNavbar extends Struct.ComponentSchema {
+  collectionName: 'components_sections_navbars';
+  info: {
+    displayName: 'Navbar';
+  };
+  attributes: {
+    contacts: Schema.Attribute.Component<'blocks.contact', true>;
+    pageLinks: Schema.Attribute.Component<'blocks.link', true>;
+    socialLinks: Schema.Attribute.Component<'blocks.link', true>;
+  };
+}
+
 export interface SectionsOurProcess extends Struct.ComponentSchema {
   collectionName: 'components_sections_our_processes';
   info: {
@@ -470,6 +482,7 @@ declare module '@strapi/strapi' {
       'sections.faq': SectionsFaq;
       'sections.footer': SectionsFooter;
       'sections.hero': SectionsHero;
+      'sections.navbar': SectionsNavbar;
       'sections.our-process': SectionsOurProcess;
       'sections.our-work': SectionsOurWork;
       'sections.problem-assessment': SectionsProblemAssessment;

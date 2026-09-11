@@ -142,3 +142,7 @@ html.lenis body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+body.modal-open header {
+  pointer-events: none !important;
+}

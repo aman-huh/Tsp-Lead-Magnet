@@ -21,6 +21,7 @@ export default function CallbackModal({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
 
   useEffect(() => {
     if (!isOpen) return;
@@ -32,6 +33,7 @@ export default function CallbackModal({
     const originalHtmlOverflow = document.documentElement.style.overflow;
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
+    document.body.classList.add("modal-open");
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -47,6 +49,7 @@ export default function CallbackModal({
       }
       document.body.style.overflow = originalBodyOverflow;
       document.documentElement.style.overflow = originalHtmlOverflow;
+      document.body.classList.remove("modal-open");
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, onClose, lenis]);
@@ -68,35 +71,76 @@ export default function CallbackModal({
     if (e) e.preventDefault();
 
     for (const field of fields) {
-      if (field.required && !formValues[String(field.id)]?.trim()) {
-        setError(`Please enter your ${field.label.toLowerCase()}`);
+      const val = formValues[String(field.id)]?.trim() || "";
+      const labelLower = (field.label || "").toLowerCase();
+
+      if (field.required && !val) {
+        if (field.type === "phone" || labelLower.includes("phone")) {
+          setError("Please enter your phone number.");
+          return;
+        }
+        if (field.type === "email" || labelLower.includes("email")) {
+          setError("Please enter your email address.");
+          return;
+        }
+        if (labelLower.includes("name")) {
+          setError("Please enter your name.");
+          return;
+        }
+        const cleanLabel = field.label.replace(/[?:!]+$/, "").trim();
+        setError(`Please enter your ${cleanLabel.toLowerCase()}.`);
         return;
+      }
+
+      if (val) {
+        if (field.type === "phone" || labelLower.includes("phone")) {
+          const digitsOnly = val.replace(/\D/g, "");
+          if (digitsOnly.length < 7 || digitsOnly.length > 15) {
+            setError("Please enter a valid phone number (7 to 15 digits).");
+            return;
+          }
+        }
+        if (field.type === "email" || labelLower.includes("email")) {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(val)) {
+            setError("Please enter a valid email address (e.g., name@example.com).");
+            return;
+          }
+        }
       }
     }
 
-    setIsSubmitting(true);
-    setError(null);
-
     try {
+      setIsSubmitting(true);
+      setError(null);
+
       const emailField = fields.find((f) => f.type === "email");
-      const phoneField = fields.find((f) => f.type === "phone");
+      const phoneField = fields.find(
+        (f) => f.type === "phone" || f.label?.toLowerCase().includes("phone")
+      );
+      const nameField = fields.find(
+        (f) => f.type === "text" && f.label?.toLowerCase().includes("name")
+      );
       const shopifyField = fields.find(
         (f) =>
           f.type === "url" ||
-          f.label.toLowerCase().includes("shopify")
+          f.label?.toLowerCase().includes("shopify") ||
+          f.label?.toLowerCase().includes("store")
       );
 
-      const formData: Record<string, string> = {};
+      const formData: Record<string, unknown> = {};
       fields.forEach((f) => {
         formData[f.label] = formValues[String(f.id)] || "";
       });
 
       await submitLead({
-        email: emailField ? formValues[String(emailField.id)] : undefined,
-        name: phoneField ? formValues[String(phoneField.id)] : undefined,
-        shopifyUrl: shopifyField ? formValues[String(shopifyField.id)] : undefined,
+        email: emailField ? (formValues[String(emailField.id)] as string)?.trim() : undefined,
+        name: nameField ? (formValues[String(nameField.id)] as string)?.trim() : undefined,
+        phone: phoneField ? (formValues[String(phoneField.id)] as string)?.trim() : undefined,
+        shopifyUrl: shopifyField ? (formValues[String(shopifyField.id)] as string)?.trim() : undefined,
         source: "callback_modal",
-        formData,
+        honeypot,
+        formData: formData as Record<string, string>,
       });
 
       setSubmitted(true);
@@ -112,7 +156,7 @@ export default function CallbackModal({
       id="callback-modal"
       data-modal="callback"
       data-lenis-prevent="true"
-      className="fixed inset-0 z-[999] flex items-center justify-center p-3 sm:p-5 md:p-6 overflow-y-auto overscroll-contain no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+      className="fixed inset-0 z-[20000] flex items-center justify-center p-3 sm:p-5 md:p-6 overflow-y-auto overscroll-contain no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
     >
       <div
         className="fixed inset-0 bg-black/60 cursor-pointer touch-none"
@@ -145,94 +189,100 @@ export default function CallbackModal({
           </svg>
         </button>
 
-        {submitted ? (
-          <div className="text-center py-8 sm:py-14 space-y-3 sm:space-y-4">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-100 text-green-700 flex items-center justify-center mx-auto">
-              <svg
-                className="w-5 h-5 sm:w-6 sm:h-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2.5"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <h2 className="font-nohemi text-[clamp(1.25rem,4.5vw,1.875rem)] font-normal text-[#111827] leading-tight">
-              Thanks! We'll be in touch soon.
-            </h2>
-            <p className="font-satoshi text-[#555555] text-[clamp(0.75rem,2.8vw,0.875rem)]">
-              We received your information and will reach out shortly.
-            </p>
-            <div className="pt-3 sm:pt-4">
-              <button
-                type="button"
-                onClick={onClose}
-                className="font-satoshi py-3 px-8 rounded-full bg-[#242120] hover:bg-black text-white text-[clamp(0.8125rem,3vw,0.9375rem)] font-medium transition-all cursor-pointer shadow-md active:scale-[0.99]"
-              >
-                Done
-              </button>
-            </div>
-          </div>
-        ) : (
           <div className="flex flex-col justify-between flex-1">
-            <div>
-              <div className="mb-3 sm:mb-4 pr-8">
-                <h2 className="font-nohemi text-[clamp(1.25rem,4.5vw,1.875rem)] font-normal text-[#111827] leading-[1.15] tracking-tight">
-                  {formTitle}
-                </h2>
-                {description && (
-                  <p className="font-satoshi text-[#555555] text-[clamp(0.6875rem,2.5vw,0.8125rem)] leading-relaxed mt-1 whitespace-pre-line">
-                    {description}
-                  </p>
-                )}
-              </div>
+            <fieldset disabled={submitted || isSubmitting} className="contents">
+              <div>
+                <div className="mb-3 sm:mb-4 pr-8">
+                  <h2 className="font-nohemi text-[clamp(1.25rem,4.5vw,1.875rem)] font-normal text-[#111827] leading-[1.15] tracking-tight">
+                    {formTitle}
+                  </h2>
+                  {description && (
+                    <p className="font-satoshi text-[#555555] text-[clamp(0.6875rem,2.5vw,0.8125rem)] leading-relaxed mt-1 whitespace-pre-line">
+                      {description}
+                    </p>
+                  )}
+                </div>
 
-              <div className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
-                {fields.map((field) => {
-                  const inputType =
-                    field.type === "phone"
-                      ? "tel"
-                      : field.type === "email"
-                        ? "email"
-                        : "text";
+                <div className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
+                  {fields.map((field) => {
+                    const inputType =
+                      field.type === "phone"
+                        ? "tel"
+                        : field.type === "email"
+                          ? "email"
+                          : "text";
 
-                  return (
-                    <div key={field.id}>
-                      <label className="font-nohemi block text-[clamp(0.875rem,3.2vw,1.0625rem)] font-normal text-[#111827] mb-2">
-                        {field.label}
-                      </label>
-                      <input
-                        type={inputType}
-                        value={formValues[String(field.id)] || ""}
-                        onChange={(e) => {
-                          setError(null);
-                          setFormValues((prev) => ({
-                            ...prev,
-                            [String(field.id)]: e.target.value,
-                          }));
-                        }}
-                        placeholder={field.placeholder ?? ""}
-                        required={field.required}
-                        className="font-satoshi w-full px-4 sm:px-5 py-2.5 sm:py-3.5 rounded-full border border-[#D1D5DB] focus:outline-none focus:border-[#18181B] focus:ring-1 focus:ring-[#18181B] text-[clamp(0.75rem,2.8vw,0.875rem)] text-[#111827] bg-[#F1F1F3] placeholder-[#8E8E93] transition-all duration-200"
-                      />
-                    </div>
-                  );
-                })}
+                    return (
+                      <div key={field.id}>
+                        <label className="font-nohemi block text-[clamp(0.875rem,3.2vw,1.0625rem)] font-normal text-[#111827] mb-2">
+                          {field.label}
+                        </label>
+                        <input
+                          type={inputType}
+                          value={formValues[String(field.id)] || ""}
+                          onChange={(e) => {
+                            setError(null);
+                            setFormValues((prev) => ({
+                              ...prev,
+                              [String(field.id)]: e.target.value,
+                            }));
+                          }}
+                          placeholder={field.placeholder ?? ""}
+                          required={field.required}
+                          className="font-satoshi w-full px-4 sm:px-5 py-2.5 sm:py-3.5 rounded-full border border-[#D1D5DB] focus:outline-none focus:border-[#18181B] focus:ring-1 focus:ring-[#18181B] text-[clamp(0.75rem,2.8vw,0.875rem)] text-[#111827] bg-[#F1F1F3] placeholder-[#8E8E93] transition-all duration-200"
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            </fieldset>
 
             <div className="mt-5 sm:mt-10 md:mt-16">
-              {error && <p className="text-red-500 text-xs sm:text-sm mb-2.5">{error}</p>}
-              <button
-                type="button"
-                disabled={isSubmitting}
-                onClick={() => handleSubmit()}
-                className="font-satoshi w-full bg-[#242120] hover:bg-black text-white font-medium py-2.5 sm:py-3.5 md:py-4 px-5 sm:px-6 rounded-full transition-all duration-200 flex justify-center items-center gap-2 text-[clamp(0.8125rem,3vw,0.96875rem)] cursor-pointer shadow-md active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                <span>{isSubmitting ? "Booking..." : buttonText}</span>
-                {!isSubmitting && <span className="text-[clamp(0.875rem,3.5vw,1.0625rem)]">→</span>}
-              </button>
+              <input
+                type="text"
+                name="website_hp"
+                tabIndex={-1}
+                autoComplete="off"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                className="opacity-0 absolute -top-[9999px] left-0 h-0 w-0 pointer-events-none"
+                aria-hidden="true"
+              />
+              {submitted ? (
+                <div
+                  className="font-satoshi w-full bg-[#005540] text-white font-medium py-2.5 sm:py-3.5 md:py-4 px-5 sm:px-6 rounded-full flex justify-center items-center gap-2 text-[clamp(0.8125rem,3vw,0.96875rem)] shadow-md select-none"
+                  role="status"
+                  aria-live="polite"
+                >
+                  <svg
+                    className="w-4 h-4 text-[#95E7D3] shrink-0"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <span>Call Booked! We&apos;ll reach out shortly.</span>
+                </div>
+              ) : (
+                <>
+                  {error && <p className="text-red-500 text-xs sm:text-sm mb-2.5">{error}</p>}
+                  <button
+                    type="button"
+                    disabled={isSubmitting}
+                    onClick={() => handleSubmit()}
+                    className="font-satoshi w-full bg-[#242120] hover:bg-black text-white font-medium py-2.5 sm:py-3.5 md:py-4 px-5 sm:px-6 rounded-full transition-all duration-200 flex justify-center items-center gap-2 text-[clamp(0.8125rem,3vw,0.96875rem)] cursor-pointer shadow-md active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
+                  >
+                    <span>{isSubmitting ? "Booking..." : buttonText}</span>
+                    {!isSubmitting && <span className="text-[clamp(0.875rem,3.5vw,1.0625rem)]">→</span>}
+                  </button>
+                </>
+              )}
               {footerText ? (
                 <p className="font-satoshi text-[clamp(0.625rem,2.2vw,0.75rem)] mt-2 text-center text-[#555555]">
                   {footerText}
@@ -244,7 +294,6 @@ export default function CallbackModal({
               )}
             </div>
           </div>
-        )}
       </div>
     </div>
   );

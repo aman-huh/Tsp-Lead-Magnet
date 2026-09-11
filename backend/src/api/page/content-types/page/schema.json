@@ -33,7 +33,9 @@
         "sections.client-showcase",
         "sections.our-process",
         "sections.faq",
-        "sections.footer"
+        "sections.footer",
+        "sections.navbar",
+        "shared.audit-bar"
       ]
     },
     "auditBar": {

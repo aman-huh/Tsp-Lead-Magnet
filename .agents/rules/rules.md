@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 # Agent Rules
 
 ## Approval-First Workflow (MANDATORY)
@@ -22,3 +26,7 @@ When a comment is required, explain **why**, not **what**. The code itself shoul
 
 - ❌ `// Normalize path to ensure leading slash` — describes what the code does, redundant.
 - ✅ `// Strapi rejects requests without a leading slash even when the URL is otherwise valid` — explains a non-obvious external constraint.
+
+## Never Open .env files
+
+Never ever open any .env files for any purpose those are secret values that shouldnt be seen by you, instead ask me for variable names and use it using those variables or dotenv

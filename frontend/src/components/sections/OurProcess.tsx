@@ -53,7 +53,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
       onClick={handleCardClick}
       className={`bg-[#1B2F10] ${
         hasHoverList ? "" : "hover:bg-[#254419]"
-      } rounded-[12px] p-[clamp(0.75rem,2vw,2.25rem)] flex flex-col justify-between aspect-[331/421] sm:aspect-[4/3] lg:aspect-[331/421] max-h-[420px] sm:max-h-[280px] md:max-h-[300px] lg:max-h-[420px] min-h-[210px] h-full w-full relative group overflow-hidden transition-all duration-300 ${
+      } rounded-[12px] p-[clamp(0.85rem,1.9vw,2.25rem)] flex flex-col justify-between aspect-[331/421] sm:aspect-[4/3] lg:aspect-[331/421] max-h-[260px] sm:max-h-[280px] md:max-h-[300px] lg:max-h-[420px] min-h-[210px] h-full w-full relative group overflow-hidden transition-all duration-300 ${
         hasHoverList ? "cursor-pointer" : ""
       }`}
     >
@@ -65,7 +65,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
         }`}
       >
         <div>
-          <div className="w-[clamp(1.5rem,2vw,2.25rem)] h-[clamp(1.5rem,2vw,2.25rem)] relative mb-2.5 sm:mb-4 lg:mb-6 flex items-center">
+          <div className="w-[clamp(1.3rem,2vw,2.25rem)] h-[clamp(1.3rem,2vw,2.25rem)] relative mb-2.5 sm:mb-4 lg:mb-4 xl:mb-6 flex items-center">
             {card.icon?.url ? (
               <Image
                 src={getStrapiMediaUrl(card.icon.url)}
@@ -79,7 +79,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
             )}
           </div>
 
-          <h3 className="text-white font-medium text-[clamp(0.9375rem,1.8vw,1.75rem)] tracking-[-0.01em] mb-1.5 sm:mb-2.5 lg:mb-3 font-delight! leading-[1.15] sm:leading-tight">
+          <h3 className="text-white font-medium text-[clamp(0.9375rem,1.7vw,1.75rem)] tracking-[-0.01em] mb-1.5 sm:mb-2.5 lg:mb-3 font-delight! leading-[1.15] sm:leading-tight">
             {card.title}
           </h3>
 
@@ -88,7 +88,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
           </p>
         </div>
 
-        <div className="pt-2 sm:pt-4 lg:pt-6 mt-auto">
+        <div className="pt-2 sm:pt-4 lg:pt-5 xl:pt-6 mt-auto">
           <Link
             href={ctaUrl}
             onClick={(e) => {
@@ -120,7 +120,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
                 style={{
                   ["--enter-delay" as string]: `${idx * 40}ms`,
                 }}
-                className={`flex items-start gap-2.5 sm:gap-3 py-2 sm:py-2.5 lg:py-[clamp(0.45rem,0.7vw,0.65rem)] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+                className={`flex items-center gap-2 sm:gap-2.5 py-1.5 sm:py-2.5 lg:py-[clamp(0.45rem,0.7vw,0.65rem)] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
                   isTapped
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-3 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 delay-0 lg:group-hover:[transition-delay:var(--enter-delay)]"
@@ -133,11 +133,11 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white/70 shrink-0 mt-0.5"
+                  className="w-3 h-3 sm:w-3.5 sm:h-3.5 lg:w-4 lg:h-4 text-white/70 shrink-0"
                 >
                   <path d="M9 5l7 7-7 7" />
                 </svg>
-                <span className="text-white font-satoshi text-[clamp(0.8125rem,0.95vw,0.9375rem)] leading-[1.3] font-normal">
+                <span className="text-white font-satoshi text-[clamp(0.625rem,2.6vw,0.9375rem)] leading-[1.3] font-normal">
                   {item.Text || item.text}
                 </span>
               </li>
