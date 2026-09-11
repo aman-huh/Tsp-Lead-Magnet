@@ -292,16 +292,16 @@ export default function Footer({ data }: FooterProps) {
       className="relative w-full min-h-screen pt-16 pb-10 sm:pt-20 sm:pb-12 md:pt-24 md:pb-14 bg-[#3145DD] overflow-hidden select-none flex flex-col justify-between"
     >
       <div className="mx-auto w-full max-w-[1920px] px-[clamp(1.25rem,4.2vw,2rem)] lg:px-[clamp(3.5rem,5.2vw,6.25rem)] flex-1 flex flex-col justify-between">
-        <div className="flex flex-col lg:flex-row lg:justify-between gap-24 sm:gap-28 lg:gap-10 xl:gap-16">
-          <div className="flex flex-col w-full lg:max-w-[480px] xl:max-w-[540px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] gap-12 sm:gap-10 lg:gap-12 xl:gap-16">
+          <div className="sm:col-span-2 lg:col-span-1 flex flex-col">
             <h2 className="font-delight text-[clamp(44px,4.2vw,80px)] font-medium leading-none text-white tracking-tight flex items-center gap-2.5 sm:gap-3">
               <span>{hasLogoPlaceholder ? headingParts[0]?.trim() : headingRaw}</span>
               <Image
                 src="/footercircle.avif"
                 alt="Logo"
-                width={80}
-                height={80}
-                className="w-[1em] h-[1em] -translate-y-[13%] animate-spin-pause shrink-0 object-contain"
+                width={64}
+                height={64}
+                className="-translate-y-[0.05em] animate-spin-pause shrink-0 object-contain"
               />
               {hasLogoPlaceholder && headingParts[1]?.trim() && (
                 <span>{headingParts[1].trim()}</span>
@@ -352,100 +352,96 @@ export default function Footer({ data }: FooterProps) {
             </div>
           </div>
 
-          <div className="flex flex-col w-full lg:max-w-[620px] xl:max-w-[700px]">
-            <div className="grid grid-cols-2 gap-x-6 sm:gap-x-10 gap-y-8">
-              <div className="order-1 lg:order-2 lg:pl-6 xl:pl-10">
-                <h2 className="font-satoshi text-[13px] sm:text-[14px] lg:text-[15px] font-normal text-white tracking-normal mb-3 sm:mb-4 lg:mb-5">
-                  Quick Links
-                </h2>
-                <div className="flex flex-col space-y-2.5 sm:space-y-3 lg:space-y-3.5">
-                  {quickLinks.map((item, idx) => {
-                    const resolved = resolveLink(item.URL, item.text);
+          <div className="flex flex-col">
+            <h2 className="font-satoshi! text-[clamp(13px,0.95vw,15px)] font-bold text-white tracking-wide mb-3 sm:mb-4 lg:mb-5">
+              Contact
+            </h2>
+            <div className="flex flex-col space-y-3.5 sm:space-y-4 lg:space-y-8">
+              {contacts.map((contact, idx) => {
+                const address =
+                  contact.address ||
+                  (contact.location?.toLowerCase().includes("mumbai")
+                    ? "Building G and D-1, Zoo Media Pvt. Ltd, Worli, Mumbai, Maharashtra 400013"
+                    : null);
 
-                    if (resolved.isExternal) {
-                      return (
-                        <a
-                          key={item.id ?? idx}
-                          href={resolved.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="font-satoshi text-[11.5px] sm:text-[12.5px] lg:text-[13px] font-bold text-white/80 hover:text-[#95E7D3] transition-colors w-fit"
-                        >
-                          {item.text}
-                        </a>
-                      );
-                    }
-
-                    if (resolved.isAnchor) {
-                      return (
-                        <a
-                          key={item.id ?? idx}
-                          href={resolved.href}
-                          className="font-satoshi text-[11.5px] sm:text-[12.5px] lg:text-[13px] font-bold text-white/80 hover:text-[#95E7D3] transition-colors w-fit"
-                        >
-                          {item.text}
-                        </a>
-                      );
-                    }
-
-                    return (
-                      <Link
-                        key={item.id ?? idx}
-                        href={resolved.href}
-                        className="font-satoshi text-[11.5px] sm:text-[12.5px] lg:text-[13px] font-bold text-white/80 hover:text-[#95E7D3] transition-colors w-fit"
+                return (
+                  <div key={contact.id ?? idx} className="flex flex-col gap-1.5 sm:gap-2.5">
+                    {contact.location && (
+                      <p className="font-satoshi! text-[clamp(11.5px,0.85vw,13px)] font-medium text-white">
+                        {contact.location}
+                      </p>
+                    )}
+                    {contact.phone && (
+                      <a
+                        href={`tel:${contact.phone}`}
+                        className="font-satoshi! text-[clamp(11.5px,0.85vw,13px)] font-normal text-[#95E7D3] underline underline-offset-4 hover:opacity-90 transition-opacity w-fit"
                       >
-                        {item.text}
-                      </Link>
-                    );
-                  })}
-                </div>
-              </div>
+                        {contact.phone}
+                      </a>
+                    )}
+                    {address && (
+                      <p className="hidden lg:block max-w-70 font-satoshi! text-[clamp(11px,0.8vw,12.5px)] font-normal leading-[1.6] text-white">
+                        {address}
+                      </p>
+                    )}
+                    {contact.email && (
+                      <a
+                        href={`mailto:${contact.email}`}
+                        className="hidden lg:block font-satoshi! text-[clamp(11.5px,0.8vw,12.5px)] font-normal text-white hover:underline w-fit"
+                      >
+                        {contact.email}
+                      </a>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
 
-              <div className="order-2 lg:order-1">
-                <h2 className="font-satoshi text-[13px] sm:text-[14px] lg:text-[15px] font-normal text-white tracking-normal mb-3 sm:mb-4 lg:mb-5">
-                  Contacts
-                </h2>
-                <div className="flex flex-col space-y-3.5 sm:space-y-4 lg:space-y-5">
-                  {contacts.map((contact, idx) => {
-                    const address =
-                      contact.address ||
-                      (contact.location?.toLowerCase().includes("mumbai")
-                        ? "Building G and D-1, Zoo Media Pvt. Ltd, Worli, Mumbai, Maharashtra 400013"
-                        : null);
+          <div className="flex flex-col">
+            <h2 className="font-satoshi! text-[clamp(13px,0.95vw,15px)] font-bold text-white tracking-wide mb-3 sm:mb-4 lg:mb-5">
+              Quick Links
+            </h2>
+            <div className="flex flex-col space-y-2.5 sm:space-y-3 lg:space-y-3.5">
+              {quickLinks.map((item, idx) => {
+                const resolved = resolveLink(item.URL, item.text);
 
-                    return (
-                      <div key={contact.id ?? idx}>
-                        {contact.location && (
-                          <p className="font-satoshi text-[11.5px] sm:text-[12.5px] lg:text-[13px] font-normal text-white">
-                            {contact.location}
-                          </p>
-                        )}
-                        {contact.phone && (
-                          <a
-                            href={`tel:${contact.phone}`}
-                            className="block mt-0.5 font-satoshi text-[11.5px] sm:text-[12.5px] lg:text-[13px] font-normal text-[#95E7D3] underline underline-offset-4 hover:opacity-90 transition-opacity w-fit"
-                          >
-                            {contact.phone}
-                          </a>
-                        )}
-                        {address && (
-                          <p className="hidden lg:block mt-2.5 max-w-[280px] font-satoshi text-[11px] sm:text-[12px] lg:text-[12.5px] font-normal leading-[1.4] text-white/80">
-                            {address}
-                          </p>
-                        )}
-                        {contact.email && (
-                          <a
-                            href={`mailto:${contact.email}`}
-                            className="hidden lg:block mt-2 font-satoshi text-[11.5px] sm:text-[12px] lg:text-[12.5px] font-normal text-white/90 hover:underline w-fit"
-                          >
-                            {contact.email}
-                          </a>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+                if (resolved.isExternal) {
+                  return (
+                    <a
+                      key={item.id ?? idx}
+                      href={resolved.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-satoshi! text-[clamp(11.5px,0.85vw,13px)] font-medium text-white hover:text-[#95E7D3] transition-colors w-fit"
+                    >
+                      {item.text}
+                    </a>
+                  );
+                }
+
+                if (resolved.isAnchor) {
+                  return (
+                    <a
+                      key={item.id ?? idx}
+                      href={resolved.href}
+                      className="font-satoshi! text-[clamp(11.5px,0.85vw,13px)] font-medium text-white hover:text-[#95E7D3] transition-colors w-fit"
+                    >
+                      {item.text}
+                    </a>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={item.id ?? idx}
+                    href={resolved.href}
+                    className="font-satoshi! text-[clamp(11.5px,0.85vw,13px)] font-medium text-white hover:text-[#95E7D3] transition-colors w-fit"
+                  >
+                    {item.text}
+                  </Link>
+                );
+              })}
             </div>
 
             <div className="mt-14 sm:mt-12 w-full lg:hidden">
