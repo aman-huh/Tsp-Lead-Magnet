@@ -45,6 +45,11 @@ export default function OurWork({ data }: OurWorkProps) {
 
   const [swiped, setSwiped] = useState(false);
 
+  const [dragStartX, setDragStartX] = useState<number | null>(null);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isPointerDown, setIsPointerDown] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+
   const minSwipeDistance = 50;
 
   const handlePrev = () => {
@@ -77,6 +82,44 @@ export default function OurWork({ data }: OurWorkProps) {
       setSwiped(true);
       handlePrev();
     }
+  };
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    setDragStartX(e.clientX);
+    setDragOffset(0);
+    setIsPointerDown(true);
+    setIsDragging(false);
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isPointerDown || dragStartX === null) return;
+    const diff = dragStartX - e.clientX;
+    if (Math.abs(diff) > 6) {
+      setIsDragging(true);
+    }
+    setDragOffset(diff);
+  };
+
+  const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isPointerDown) return;
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    } catch {}
+
+    if (isDragging) {
+      if (dragOffset > minSwipeDistance) {
+        handleNext();
+      } else if (dragOffset < -minSwipeDistance) {
+        handlePrev();
+      }
+    }
+
+    setIsPointerDown(false);
+    setIsDragging(false);
+    setDragStartX(null);
+    setDragOffset(0);
   };
 
   return (
@@ -174,10 +217,14 @@ export default function OurWork({ data }: OurWorkProps) {
       </div>
 
       <div
-        className="relative w-full aspect-[375/580] sm:aspect-[1920/680] overflow-hidden shadow-sm touch-pan-y"
+        className="relative w-full aspect-[375/580] sm:aspect-[1920/680] overflow-hidden shadow-sm touch-pan-y select-none cursor-grab active:cursor-grabbing"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
       >
         {projects.length > 1 && (
           <div className="absolute inset-0 z-20 flex sm:hidden pointer-events-none">
@@ -201,8 +248,16 @@ export default function OurWork({ data }: OurWorkProps) {
         )}
 
         <div
-          className="flex w-full h-full transition-transform duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none will-change-transform"
-          style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+          className={`flex w-full h-full will-change-transform ${
+            isDragging
+              ? "transition-none"
+              : "transition-transform duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none"
+          }`}
+          style={{
+            transform: isDragging
+              ? `translateX(calc(-${activeIndex * 100}% - ${dragOffset}px))`
+              : `translateX(-${activeIndex * 100}%)`,
+          }}
         >
           {projects.map((brand, idx) => {
             const desktopImg = brand.desktopImage?.url ? brand.desktopImage : brand.mobileImage;
@@ -211,13 +266,13 @@ export default function OurWork({ data }: OurWorkProps) {
             return (
               <div
                 key={brand.id || idx}
-                className="w-full h-full shrink-0 relative overflow-hidden"
+                className="w-full h-full shrink-0 relative overflow-hidden select-none"
                 style={{
                   backgroundColor: brand.brandColor || "#ffffff",
                 }}
               >
                 {desktopImg?.url && (
-                  <div className={`relative w-full h-full ${mobileImg?.url ? "hidden sm:block" : "block"}`}>
+                  <div className={`relative w-full h-full select-none pointer-events-none ${mobileImg?.url ? "hidden sm:block" : "block"}`}>
                     <Image
                       src={getStrapiMediaUrl(desktopImg.url)}
                       alt={
@@ -228,14 +283,15 @@ export default function OurWork({ data }: OurWorkProps) {
                       fill
                       sizes="100vw"
                       priority={idx <= 1}
-                      className="object-contain object-bottom"
+                      className="object-contain object-bottom select-none pointer-events-none"
+                      draggable={false}
                       unoptimized
                     />
                   </div>
                 )}
 
                 {mobileImg?.url && (
-                  <div className={`relative w-full h-full ${desktopImg?.url ? "block sm:hidden" : "block"}`}>
+                  <div className={`relative w-full h-full select-none pointer-events-none ${desktopImg?.url ? "block sm:hidden" : "block"}`}>
                     <Image
                       src={getStrapiMediaUrl(mobileImg.url)}
                       alt={
@@ -246,7 +302,8 @@ export default function OurWork({ data }: OurWorkProps) {
                       fill
                       sizes="100vw"
                       priority={idx <= 1}
-                      className="object-cover object-top"
+                      className="object-cover object-top select-none pointer-events-none"
+                      draggable={false}
                       unoptimized
                     />
                   </div>

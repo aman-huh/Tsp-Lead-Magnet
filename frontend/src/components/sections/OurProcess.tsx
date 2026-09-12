@@ -53,7 +53,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
       onClick={handleCardClick}
       className={`bg-[#1B2F10] ${
         hasHoverList ? "" : "hover:bg-[#254419]"
-      } rounded-[12px] p-[clamp(0.85rem,1.9vw,2.25rem)] flex flex-col justify-between aspect-[331/421] sm:aspect-[4/3] lg:aspect-[331/421] max-h-[280px] sm:max-h-[290px] md:max-h-[340px] lg:max-h-[420px] min-h-[210px] h-full w-full relative group overflow-hidden transition-all duration-300 ${
+      } rounded-[12px] p-[clamp(0.95rem,1.8vw,2.25rem)] flex flex-col justify-between aspect-[331/421] sm:aspect-[4/3] lg:aspect-[331/421] max-h-[300px] sm:max-h-[310px] md:max-h-[340px] lg:max-h-[420px] min-h-[210px] h-full w-full relative group overflow-hidden transition-all duration-300 ${
         hasHoverList ? "cursor-pointer" : ""
       }`}
     >
@@ -79,11 +79,11 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
             )}
           </div>
 
-          <h3 className="text-white font-medium text-[clamp(0.9375rem,1.7vw,1.75rem)] tracking-[-0.01em] mb-1.5 sm:mb-2.5 lg:mb-3 font-delight! leading-[1.15] sm:leading-tight">
+          <h3 className="text-white font-medium text-[clamp(0.875rem,1.6vw,1.75rem)] tracking-[-0.01em] mb-1.5 sm:mb-2.5 lg:mb-3 font-delight! leading-[1.15] sm:leading-tight">
             {card.title}
           </h3>
 
-          <p className="text-[#95A897] font-satoshi text-[clamp(0.75rem,1vw,0.9375rem)] font-medium leading-snug sm:leading-normal lg:leading-relaxed line-clamp-4 sm:line-clamp-none">
+          <p className="text-[#95A897] font-satoshi text-[clamp(0.7rem,1vw,0.9375rem)] font-medium leading-snug sm:leading-normal lg:leading-relaxed line-clamp-4 sm:line-clamp-none">
             {card.description}
           </p>
         </div>
@@ -107,7 +107,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
 
       {hasHoverList && (
         <div
-          className={`absolute inset-0 z-20 bg-[#1B2F10] p-[clamp(1rem,1.8vw,1.75rem)] flex flex-col justify-start transition-opacity duration-300 ease-out rounded-[12px] overflow-y-auto no-scrollbar ${
+          className={`absolute inset-0 z-20 bg-[#2D4620] p-[clamp(0.75rem,1.6vw,1.75rem)] flex flex-col justify-start transition-opacity duration-300 ease-out rounded-[12px] overflow-y-auto no-scrollbar ${
             isTapped
               ? "opacity-100 pointer-events-auto"
               : "opacity-0 pointer-events-none lg:group-hover:opacity-100 lg:group-hover:pointer-events-auto lg:group-hover:duration-500"
@@ -120,7 +120,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
                 style={{
                   ["--enter-delay" as string]: `${idx * 40}ms`,
                 }}
-                className={`flex items-center gap-2 sm:gap-2.5 py-1.5 sm:py-2.5 lg:py-[clamp(0.45rem,0.7vw,0.65rem)] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+                className={`flex items-center gap-[4.5px] sm:gap-2.5 py-1.75 sm:py-3.5 lg:py-[clamp(0.75rem,0.7vw,0.65rem)] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
                   isTapped
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-3 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 delay-0 lg:group-hover:[transition-delay:var(--enter-delay)]"
@@ -137,7 +137,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
                 >
                   <path d="M9 5l7 7-7 7" />
                 </svg>
-                <span className="text-white font-satoshi text-[clamp(0.625rem,2.6vw,0.9375rem)] leading-[1.3] font-normal">
+                <span className="text-white font-satoshi text-[clamp(0.54rem,2.2vw,0.9375rem)] leading-[1.3] font-normal">
                   {item.Text || item.text}
                 </span>
               </li>

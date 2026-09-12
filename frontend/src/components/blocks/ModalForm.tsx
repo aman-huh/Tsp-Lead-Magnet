@@ -30,7 +30,8 @@ export default function ModalForm({
   const totalSteps = steps.length || 1;
   const step = steps[currentStep];
   const fields = step?.fields ?? [];
-  const buttonText = step?.primaryButton?.text || (currentStep < totalSteps - 1 ? "Continue" : "Submit");
+  const isLastStep = currentStep >= totalSteps - 1;
+  const buttonText = step?.primaryButton?.text || (isLastStep ? "Submit" : "Continue");
   const successMessage = data?.successMessage || "Thanks! We'll be in touch soon.";
 
   const isMultiSelectField = (field: FormField): boolean => {
@@ -639,15 +640,35 @@ export default function ModalForm({
                 type="button"
                 disabled={isSubmitting}
                 onClick={handleNext}
-                className="font-satoshi w-full bg-[#242120] hover:bg-black text-white font-medium py-2.5 sm:py-3.5 md:py-4 px-5 sm:px-6 rounded-full transition-all duration-200 flex justify-center items-center gap-2 text-[clamp(0.8125rem,3vw,0.96875rem)] cursor-pointer shadow-md active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
+                className="group relative font-satoshi w-full bg-[#242120] hover:bg-black text-white font-medium py-2.5 sm:py-3.5 md:py-4 px-5 sm:px-6 rounded-full transition-all duration-200 flex justify-center items-center gap-2 text-[clamp(0.8125rem,3vw,0.96875rem)] cursor-pointer shadow-md active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed overflow-hidden"
               >
-                <span>{isSubmitting ? "Submitting..." : buttonText}</span>
-                {!isSubmitting && <span className="text-[clamp(0.875rem,3.5vw,1.0625rem)]">→</span>}
+                {isSubmitting ? (
+                  <span>Submitting...</span>
+                ) : isLastStep ? (
+                  <span className="relative inline-flex flex-col justify-center overflow-hidden h-[1.3em] select-none">
+                    <span className="inline-flex items-center gap-2 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-y-full">
+                      <span>{buttonText}</span>
+                      <span className="text-[clamp(0.875rem,3.5vw,1.0625rem)]">→</span>
+                    </span>
+                    <span
+                      className="absolute top-full left-0 w-full inline-flex items-center justify-center gap-2 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-y-full"
+                      aria-hidden="true"
+                    >
+                      <span>{buttonText}</span>
+                      <span className="text-[clamp(0.875rem,3.5vw,1.0625rem)]">→</span>
+                    </span>
+                  </span>
+                ) : (
+                  <>
+                    <span>{buttonText}</span>
+                    <span className="text-[clamp(0.875rem,3.5vw,1.0625rem)]">→</span>
+                  </>
+                )}
               </button>
             </>
           )}
           {step?.footerText ? (
-            <p className="font-satoshi text-[clamp(0.625rem,2.2vw,0.75rem)] mt-2 text-center text-[#555555]">
+            <p className="font-satoshi text-[clamp(0.625rem,2.2vw,0.75rem)] mt-2 text-center text-black">
               {step.footerText}
             </p>
           ) : (

@@ -77,9 +77,9 @@ export default function ProblemSelector({
                     : "bg-white text-[#111827]"
                 }`}
               >
-                <div className="relative w-[21.33px] h-[21.33px] flex items-center justify-center">
+                <div className="relative w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center">
                   <svg
-                    className={`absolute inset-0 m-auto w-[20.33px] h-[20.33px] transition-all duration-150 ease-out ${
+                    className={`absolute inset-0 m-auto w-3.75 h-3.75 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5 transition-all duration-150 ease-out ${
                       isSelected
                         ? "opacity-0 rotate-45 scale-50"
                         : "opacity-100 rotate-0 scale-100"
@@ -97,7 +97,7 @@ export default function ProblemSelector({
                   </svg>
 
                   <svg
-                    className={`absolute inset-0 m-auto w-4.5 h-4.5 transition-all duration-150 ease-out ${
+                    className={`absolute inset-0 m-auto w-3.5 h-3.5 sm:w-4.25 sm:h-4.25 md:w-5 md:h-5 transition-all duration-150 ease-out ${
                       isSelected
                         ? "opacity-100 rotate-0 scale-100"
                         : "opacity-0 -rotate-45 scale-50"

@@ -102,7 +102,7 @@ export default function FAQ({ data }: FAQProps) {
           )}
         </div>
 
-        <div className="w-full flex flex-col gap-0 sm:gap-4.75">
+        <div className="w-full flex flex-col gap-0 border-t border-[#E5E5E5] sm:border-[#000000]">
           {rawQuestions.map((item, index) => {
             const isOpen = openIndex === index;
             const fallbackItem =
@@ -128,12 +128,21 @@ export default function FAQ({ data }: FAQProps) {
                     {item.question}
                   </span>
                   <span
-                    className={`shrink-0 flex items-center justify-center w-8 h-8 2xl:w-11 2xl:h-11 3xl:w-10 3xl:h-10 text-[26px] 2xl:text-[48px] 3xl:text-[34px] font-light text-[#0F1D07] transition-transform duration-300 ease-out select-none leading-none ${
+                    className={`shrink-0 flex items-center justify-center w-8 h-8 2xl:w-11 2xl:h-11 3xl:w-10 3xl:h-10 text-[#0F1D07] transition-transform duration-300 ease-out select-none ${
                       isOpen ? "rotate-45" : "rotate-0"
                     }`}
                     aria-hidden="true"
                   >
-                    +
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      className="w-5 h-5 sm:w-6 sm:h-6 2xl:w-8 2xl:h-8"
+                    >
+                      <line x1="12" y1="4" x2="12" y2="20" />
+                      <line x1="4" y1="12" x2="20" y2="12" />
+                    </svg>
                   </span>
                 </button>
 

@@ -474,7 +474,7 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
         </div>
       </fieldset>
 
-      <div className="mt-32 sm:mt-36 lg:mt-6 pb-6 lg:pb-0">
+      <div className="mt-16 sm:mt-20 xl:mt-6 pb-6 xl:pb-0">
         <input
           type="text"
           name="website_hp"

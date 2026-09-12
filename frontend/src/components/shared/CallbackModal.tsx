@@ -17,11 +17,30 @@ export default function CallbackModal({
   data,
 }: CallbackModalProps) {
   const lenis = useLenis();
+  const [mounted, setMounted] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [formValues, setFormValues] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [honeypot, setHoneypot] = useState("");
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isOpen) {
+      setMounted(true);
+      timer = setTimeout(() => {
+        setIsVisible(true);
+      }, 20);
+      return () => clearTimeout(timer);
+    } else {
+      setIsVisible(false);
+      timer = setTimeout(() => {
+        setMounted(false);
+      }, 240);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -54,7 +73,7 @@ export default function CallbackModal({
     };
   }, [isOpen, onClose, lenis]);
 
-  if (!isOpen) return null;
+  if (!mounted) return null;
 
   const step = data?.Steps?.[0];
   const fields = step?.fields ?? [];
@@ -159,13 +178,19 @@ export default function CallbackModal({
       className="fixed inset-0 z-[20000] flex items-center justify-center p-3 sm:p-5 md:p-6 overflow-y-auto overscroll-contain no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
     >
       <div
-        className="fixed inset-0 bg-black/60 cursor-pointer touch-none"
+        className={`fixed inset-0 bg-black/60 cursor-pointer touch-none transition-opacity ${
+          isVisible ? "opacity-100 duration-300 ease-out" : "opacity-0 duration-200 ease-in"
+        }`}
         aria-hidden="true"
         onClick={onClose}
       />
       <div
         data-lenis-prevent="true"
-        className="relative w-full sm:min-w-[580px] md:min-w-[620px] max-w-[580px] sm:max-w-[620px] md:max-w-[660px] max-h-[92vh] sm:max-h-[88vh] bg-[#FAFAFC] rounded-none p-[clamp(1.125rem,3.5vw,2rem)] shadow-[0_20px_60px_rgba(0,0,0,0.3)] my-auto text-[#111827] z-10 flex flex-col justify-between overflow-y-auto overscroll-contain"
+        className={`relative w-full sm:min-w-[580px] md:min-w-[620px] max-w-[580px] sm:max-w-[620px] md:max-w-[660px] max-h-[92vh] sm:max-h-[88vh] bg-[#FAFAFC] rounded-none p-[clamp(1.125rem,3.5vw,2rem)] shadow-[0_20px_60px_rgba(0,0,0,0.3)] my-auto text-[#111827] z-10 flex flex-col justify-between overflow-y-auto overscroll-contain transition-all ${
+          isVisible
+            ? "opacity-100 scale-100 translate-y-0 duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            : "opacity-0 scale-[0.97] translate-y-3 duration-200 ease-in pointer-events-none"
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -276,15 +301,30 @@ export default function CallbackModal({
                     type="button"
                     disabled={isSubmitting}
                     onClick={() => handleSubmit()}
-                    className="font-satoshi w-full bg-[#242120] hover:bg-black text-white font-medium py-2.5 sm:py-3.5 md:py-4 px-5 sm:px-6 rounded-full transition-all duration-200 flex justify-center items-center gap-2 text-[clamp(0.8125rem,3vw,0.96875rem)] cursor-pointer shadow-md active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="group relative font-satoshi w-full bg-[#242120] hover:bg-black text-white font-medium py-2.5 sm:py-3.5 md:py-4 px-5 sm:px-6 rounded-full transition-all duration-200 flex justify-center items-center gap-2 text-[clamp(0.8125rem,3vw,0.96875rem)] cursor-pointer shadow-md active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed overflow-hidden"
                   >
-                    <span>{isSubmitting ? "Booking..." : buttonText}</span>
-                    {!isSubmitting && <span className="text-[clamp(0.875rem,3.5vw,1.0625rem)]">→</span>}
+                    {isSubmitting ? (
+                      <span>Booking...</span>
+                    ) : (
+                      <span className="relative inline-flex flex-col justify-center overflow-hidden h-[1.3em] select-none">
+                        <span className="inline-flex items-center gap-2 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-y-full">
+                          <span>{buttonText}</span>
+                          <span className="text-[clamp(0.875rem,3.5vw,1.0625rem)]">→</span>
+                        </span>
+                        <span
+                          className="absolute top-full left-0 w-full inline-flex items-center justify-center gap-2 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-y-full"
+                          aria-hidden="true"
+                        >
+                          <span>{buttonText}</span>
+                          <span className="text-[clamp(0.875rem,3.5vw,1.0625rem)]">→</span>
+                        </span>
+                      </span>
+                    )}
                   </button>
                 </>
               )}
               {footerText ? (
-                <p className="font-satoshi text-[clamp(0.625rem,2.2vw,0.75rem)] mt-2 text-center text-[#555555]">
+                <p className="font-satoshi text-[clamp(0.625rem,2.2vw,0.75rem)] mt-2 text-center text-black">
                   {footerText}
                 </p>
               ) : (
