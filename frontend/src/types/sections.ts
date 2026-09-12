@@ -67,6 +67,7 @@ export interface ClientShowcaseSection {
   __component: "sections.client-showcase";
   badge?: string;
   title?: string;
+  mobileTitle?: string;
   description?: string;
   actions?: ButtonComponent[];
   services?: ListItem[];

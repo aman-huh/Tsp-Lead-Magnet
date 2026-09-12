@@ -94,7 +94,7 @@ function DynamicBrandLogo({ brands }: { brands?: Brand[] }) {
     >
       {brandA?.logo?.url && (
         <span
-          className="absolute inset-[clamp(0.5rem,1.6vw,0.75rem)] sm:inset-[clamp(0.6rem,1.1vw,0.9rem)] flex items-center justify-center transition-opacity motion-reduce:transition-none pointer-events-none"
+          className="absolute inset-[clamp(0.375rem,1.2vw,0.55rem)] sm:inset-[clamp(0.45rem,0.9vw,0.7rem)] flex items-center justify-center transition-opacity motion-reduce:transition-none pointer-events-none"
           style={{
             opacity: opacityA,
             transitionDuration: `${CROSSFADE_MS}ms`,
@@ -113,7 +113,7 @@ function DynamicBrandLogo({ brands }: { brands?: Brand[] }) {
       )}
       {brandB?.logo?.url && (
         <span
-          className="absolute inset-[clamp(0.5rem,1.6vw,0.75rem)] sm:inset-[clamp(0.6rem,1.1vw,0.9rem)] flex items-center justify-center transition-opacity motion-reduce:transition-none pointer-events-none"
+          className="absolute inset-[clamp(0.375rem,1.2vw,0.55rem)] sm:inset-[clamp(0.45rem,0.9vw,0.7rem)] flex items-center justify-center transition-opacity motion-reduce:transition-none pointer-events-none"
           style={{
             opacity: opacityB,
             transitionDuration: `${CROSSFADE_MS}ms`,
@@ -136,7 +136,8 @@ function DynamicBrandLogo({ brands }: { brands?: Brand[] }) {
 
 export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
   const badge = data?.badge || "5+ Years of Shopify Excellence";
-  const title = data?.title || "Where brands like {logo} transformed their Shopify.";
+  const desktopTitle = data?.title || "Where brands like {logo} transformed their Shopify.";
+  const mobileTitle = data?.mobileTitle?.trim() || desktopTitle;
   const description =
     data?.description ||
     "We redesign Shopify stores with refined UX, stunning visuals, and performance-focused decisions.";
@@ -156,20 +157,18 @@ export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
 
   const services = (rawServices.length > 0 ? rawServices : DEFAULT_SERVICES) as string[];
 
-  const parsedTitle = useMemo(() => {
+  const parseTitle = (rawText: string) => {
     const logoPlaceholderRegex = /\{\{brandLogo\}\}|\{logo\}|\[logo\]/i;
-    if (!logoPlaceholderRegex.test(title)) {
+    if (!logoPlaceholderRegex.test(rawText)) {
       return null;
     }
 
-    const [rawPrefix, rawSuffix] = title.split(logoPlaceholderRegex);
+    const [rawPrefix, rawSuffix] = rawText.split(logoPlaceholderRegex);
 
-    // Split prefix into "Where brands" and "like"
     const prefixMatch = rawPrefix.match(/^(.*?)\b(like)\s*$/i);
     const line1Prefix = prefixMatch ? prefixMatch[1].trim() : rawPrefix.trim();
     const likeText = prefixMatch ? prefixMatch[2] : "";
 
-    // Split suffix into first word ("transformed") and rest ("their Shopify.")
     const suffixMatch = rawSuffix.match(/^\s*(\S+)\s*([\s\S]*)$/);
     const firstSuffixWord = suffixMatch ? suffixMatch[1].trim() : rawSuffix.trim();
     const restSuffixText = suffixMatch ? suffixMatch[2].trim() : "";
@@ -182,40 +181,41 @@ export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
       rawPrefix: rawPrefix.trim(),
       rawSuffix: rawSuffix.trim(),
     };
-  }, [title]);
+  };
 
-  const renderTitle = () => {
-    if (!parsedTitle) {
-      return title;
+  const renderTitleContent = (text: string, isMobile: boolean) => {
+    const parsed = parseTitle(text);
+    if (!parsed) {
+      return <span className="whitespace-pre-line">{text}</span>;
+    }
+
+    if (isMobile) {
+      return (
+        <>
+          <span className="block leading-[1.14]">{parsed.line1Prefix}</span>
+          <span className="block whitespace-nowrap leading-[1.14] my-0.5">
+            {parsed.likeText && <span>{parsed.likeText}</span>}
+            <DynamicBrandLogo key={`mob-${brands?.length ?? 0}`} brands={brands} />
+            {parsed.firstSuffixWord && <span>{parsed.firstSuffixWord}</span>}
+          </span>
+          {parsed.restSuffixText && (
+            <span className="block leading-[1.14]">{parsed.restSuffixText}</span>
+          )}
+        </>
+      );
     }
 
     return (
       <>
-        {/* Mobile layout (< sm): exactly 3 lines */}
-        <span className="block sm:hidden">
-          <span className="block leading-[1.14]">{parsedTitle.line1Prefix}</span>
-          <span className="block whitespace-nowrap leading-[1.14] my-0.5">
-            {parsedTitle.likeText && <span>{parsedTitle.likeText}</span>}
-            <DynamicBrandLogo key={`mob-${brands?.length ?? 0}`} brands={brands} />
-            {parsedTitle.firstSuffixWord && <span>{parsedTitle.firstSuffixWord}</span>}
-          </span>
-          {parsedTitle.restSuffixText && (
-            <span className="block leading-[1.14]">{parsedTitle.restSuffixText}</span>
-          )}
+        <span className="sm:inline-block sm:whitespace-nowrap leading-[1.14]">
+          {parsed.line1Prefix}
+          {parsed.likeText ? ` ${parsed.likeText}` : ""}
+          <DynamicBrandLogo key={`desk-${brands?.length ?? 0}`} brands={brands} />
+          {parsed.firstSuffixWord}
         </span>
-
-        {/* Middle and desktop layout (sm+): exactly 2 lines with 'transformed' on line 1 */}
-        <span className="hidden sm:inline">
-          <span className="sm:inline-block sm:whitespace-nowrap leading-[1.14]">
-            {parsedTitle.line1Prefix}
-            {parsedTitle.likeText ? ` ${parsedTitle.likeText}` : ""}
-            <DynamicBrandLogo key={`desk-${brands?.length ?? 0}`} brands={brands} />
-            {parsedTitle.firstSuffixWord}
-          </span>
-          <br />
-          <span className="sm:inline-block sm:whitespace-nowrap leading-[1.14]">
-            {parsedTitle.restSuffixText}
-          </span>
+        <br />
+        <span className="sm:inline-block sm:whitespace-nowrap leading-[1.14]">
+          {parsed.restSuffixText}
         </span>
       </>
     );
@@ -232,7 +232,12 @@ export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
           )}
 
           <h2 className="font-heading text-[clamp(2rem,8.8vw,2.5rem)] sm:text-[clamp(1.875rem,2.9vw,4.25rem)] 2xl:text-[clamp(3.85rem,3.4vw,4.625rem)] text-[#0F1D07] text-left sm:text-center leading-[1.12] sm:leading-[1.14] 2xl:leading-[1.25] tracking-[-0.02em] mx-auto">
-            {renderTitle()}
+            <span className="block sm:hidden">
+              {renderTitleContent(mobileTitle, true)}
+            </span>
+            <span className="hidden sm:inline">
+              {renderTitleContent(desktopTitle, false)}
+            </span>
           </h2>
 
           {description && (

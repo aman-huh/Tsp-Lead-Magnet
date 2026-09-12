@@ -102,7 +102,7 @@ export default function FAQ({ data }: FAQProps) {
           )}
         </div>
 
-        <div className="w-full flex flex-col gap-0 border-t border-[#E5E5E5] sm:border-[#000000]">
+        <div className="w-full flex flex-col gap-0">
           {rawQuestions.map((item, index) => {
             const isOpen = openIndex === index;
             const fallbackItem =

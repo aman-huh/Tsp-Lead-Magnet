@@ -20,24 +20,22 @@ export default function LeadFormModal({
 }: LeadFormModalProps) {
   const lenis = useLenis();
   const [mounted, setMounted] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (isOpen) {
       setMounted(true);
-      timer = setTimeout(() => {
-        setIsVisible(true);
-      }, 20);
-      return () => clearTimeout(timer);
-    } else {
-      setIsVisible(false);
+      setIsClosing(false);
+    } else if (mounted) {
+      setIsClosing(true);
       timer = setTimeout(() => {
         setMounted(false);
-      }, 240);
+        setIsClosing(false);
+      }, 200);
       return () => clearTimeout(timer);
     }
-  }, [isOpen]);
+  }, [isOpen, mounted]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -80,18 +78,16 @@ export default function LeadFormModal({
       className="fixed inset-0 z-[20000] flex items-center justify-center p-3 sm:p-5 md:p-6 overflow-y-auto overscroll-contain no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
     >
       <div
-        className={`fixed inset-0 bg-black/60 cursor-pointer touch-none transition-opacity ${
-          isVisible ? "opacity-100 duration-300 ease-out" : "opacity-0 duration-200 ease-in"
+        className={`fixed inset-0 bg-black/60 cursor-pointer touch-none ${
+          isClosing ? "modal-backdrop-out" : "modal-backdrop-in"
         }`}
         aria-hidden="true"
         onClick={onClose}
       />
       <div
         data-lenis-prevent="true"
-        className={`relative w-full sm:min-w-[580px] md:min-w-[620px] max-w-[580px] sm:max-w-[620px] md:max-w-[660px] max-h-[92vh] sm:max-h-[88vh] bg-[#FAFAFC] rounded-none p-[clamp(1.125rem,3.5vw,2rem)] shadow-[0_20px_60px_rgba(0,0,0,0.3)] my-auto text-[#111827] z-10 flex flex-col justify-between overflow-y-auto overscroll-contain transition-all ${
-          isVisible
-            ? "opacity-100 scale-100 translate-y-0 duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
-            : "opacity-0 scale-[0.97] translate-y-3 duration-200 ease-in pointer-events-none"
+        className={`relative w-full sm:min-w-[580px] md:min-w-[620px] max-w-[580px] sm:max-w-[620px] md:max-w-[660px] max-h-[92vh] sm:max-h-[88vh] bg-[#FAFAFC] rounded-none p-[clamp(1.125rem,3.5vw,2rem)] shadow-[0_20px_60px_rgba(0,0,0,0.3)] my-auto text-[#111827] z-10 flex flex-col justify-between overflow-y-auto overscroll-contain ${
+          isClosing ? "modal-dialog-out pointer-events-none" : "modal-dialog-in"
         }`}
         onClick={(e) => e.stopPropagation()}
       >

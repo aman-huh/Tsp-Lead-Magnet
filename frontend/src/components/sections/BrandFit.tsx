@@ -113,7 +113,7 @@ export default function BrandFit({ data }: BrandFitProps) {
           )}
         </div>
 
-        <div className="w-full xl:w-[56%] 2xl:w-[58%] flex flex-col sm:flex-row gap-[clamp(1.25rem,2.5vw,2rem)] items-stretch justify-end self-stretch">
+        <div className="w-full xl:w-[56%] 2xl:w-[55%] flex flex-col sm:flex-row gap-[clamp(1.25rem,2.5vw,2rem)] items-stretch justify-end self-stretch">
           {suitableCard && (
             <BrandCardItem card={suitableCard} isSuitable={true} />
           )}
@@ -138,7 +138,7 @@ function BrandCardItem({
 
   return (
     <div
-      className={`w-full sm:basis-1/2 flex-1 self-stretch rounded-xl p-[clamp(1.25rem,2.5vw,1.4rem)] border border-[#C8C8C8] flex flex-col gap-6 ${
+      className={`w-full sm:basis-1/2 flex-1 self-stretch rounded-xl p-[clamp(1.25rem,2.4vw,1.2rem)] border border-[#C8C8C8] flex flex-col gap-6 ${
         isSuitable ? "bg-[#EFF0FC]" : "bg-white"
       }`}
     >
