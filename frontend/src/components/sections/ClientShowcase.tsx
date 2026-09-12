@@ -222,8 +222,8 @@ export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
   };
 
   return (
-    <section className="bg-[#95E7D30D] pt-[clamp(6rem,16vw,9rem)] sm:pt-[clamp(7rem,12vw,10.5rem)] lg:pt-0 flex flex-col justify-between overflow-hidden lg:h-screen lg:min-h-[640px]">
-      <div className="max-w-[1920px] mx-auto lg:my-auto w-full px-[clamp(1.25rem,4.2vw,2rem)] lg:px-[clamp(3.5rem,5.2vw,6.25rem)] text-left sm:text-center flex flex-col items-start sm:items-center">
+    <section className="bg-[#95E7D30D] pt-[clamp(6rem,16vw,9rem)] sm:pt-[clamp(7rem,12vw,10.5rem)] xl:pt-0 flex flex-col justify-between overflow-hidden xl:h-screen xl:min-h-[640px]">
+      <div className="max-w-[1920px] mx-auto xl:my-auto w-full px-[clamp(1.25rem,4.2vw,2rem)] lg:px-[clamp(3.5rem,5.2vw,6.25rem)] text-left sm:text-center flex flex-col items-start sm:items-center">
         <div className="w-full max-w-5xl lg:max-w-6xl 2xl:max-w-7xl 3xl:max-w-[90rem]">
           {badge && (
             <div className="hidden sm:block sm:mb-[clamp(1.5rem,2.1vw,2rem)] 2xl:mb-[clamp(2rem,2.5vw,2.5rem)] 3xl:mb-12">
@@ -241,7 +241,7 @@ export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
           </h2>
 
           {description && (
-            <p className="font-satoshi text-[clamp(0.875rem,3.8vw,1.125rem)] font-semibold text-[#0F1D07]/90 leading-[1.5] max-w-md sm:max-w-xl 2xl:max-w-2xl sm:mx-auto mt-[clamp(1.25rem,4vw,1.75rem)] sm:mt-[clamp(1.5rem,1.828vw,2rem)]">
+            <p className="font-satoshi text-[clamp(0.83rem,3.4vw,1rem)] sm:text-[clamp(1rem,1.25vw,1.35rem)] 2xl:text-[clamp(1.2rem,1.1vw,1.6rem)] font-semibold text-[#0F1D07]/90 leading-[1.5] sm:leading-[1.55] max-w-md sm:max-w-[65%] lg:max-w-[55%] 2xl:max-w-[50%] sm:mx-auto mt-[clamp(1.25rem,4vw,1.75rem)] sm:mt-[clamp(1.5rem,1.828vw,2rem)] 2xl:mt-[clamp(2rem,1.8vw,2.5rem)]">
               {description}
             </p>
           )}
@@ -270,7 +270,7 @@ export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
         </div>
       </div>
 
-      <div className="w-full bg-[#4A71A5] shrink-0 overflow-hidden py-[clamp(0.75rem,3vw,1rem)] sm:py-[clamp(1.125rem,1.25vw,1.25rem)] mt-[clamp(5rem,14vw,8.5rem)] sm:mt-[clamp(6.5rem,11vw,9.5rem)] lg:mt-0 select-none">
+      <div className="w-full bg-[#4A71A5] shrink-0 overflow-hidden py-[clamp(0.75rem,3vw,1rem)] sm:py-[clamp(1.125rem,1.25vw,1.25rem)] mt-[clamp(5rem,14vw,8.5rem)] sm:mt-[clamp(6.5rem,11vw,9.5rem)] xl:mt-0 select-none">
         <div className="flex whitespace-nowrap w-max animate-marquee">
           {[0, 1].map((copyIndex) => (
             <div
