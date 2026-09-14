@@ -152,24 +152,21 @@ export default function OurWork({ data }: OurWorkProps) {
             <button
               type="button"
               onClick={handlePrev}
-              className="flex items-center gap-2 font-satoshi text-[clamp(0.875rem,4.2vw,1rem)] font-medium text-[#0F1D07] hover:opacity-75 transition-opacity cursor-pointer"
+              className="flex items-center gap-2 font-satoshi text-[clamp(0.875rem,4.2vw,1rem)] font-medium text-[#0F1D07] hover:opacity-75 transition-opacity cursor-pointer min-h-11 py-2 pr-2"
               aria-label="Previous project"
             >
               <span className="text-[1.15em] leading-none select-none" aria-hidden="true">←</span>
               <span>Back</span>
             </button>
 
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5" aria-hidden="true">
               {projects.map((_, idx) => (
-                <button
+                <span
                   key={idx}
-                  type="button"
-                  onClick={() => setActiveIndex(idx)}
-                  aria-label={`Go to project ${idx + 1}`}
-                  className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
                     idx === activeIndex
                       ? "w-6 bg-[#3145DD]"
-                      : "w-2 bg-[#3145DD]/25 hover:bg-[#3145DD]/50"
+                      : "w-2 bg-[#3145DD]/25"
                   }`}
                 />
               ))}
@@ -178,7 +175,7 @@ export default function OurWork({ data }: OurWorkProps) {
             <button
               type="button"
               onClick={handleNext}
-              className="flex items-center gap-2 font-satoshi text-[clamp(0.875rem,4.2vw,1rem)] font-medium text-[#0F1D07] hover:opacity-75 transition-opacity cursor-pointer"
+              className="flex items-center gap-2 font-satoshi text-[clamp(0.875rem,4.2vw,1rem)] font-medium text-[#0F1D07] hover:opacity-75 transition-opacity cursor-pointer min-h-11 py-2 pl-2"
               aria-label="Next project"
             >
               <span>Next</span>
