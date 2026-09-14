@@ -116,7 +116,7 @@ export default function AuditBar({
             arrowType="right"
             noHover
             containerClassName="w-full md:w-auto shrink-0"
-            className="h-[clamp(2.25rem,5.5vw,3rem)] w-full md:w-auto justify-center px-[clamp(1rem,1.4vw,1.35rem)] text-[clamp(0.78rem,1.7vw,1.15rem)] font-normal leading-none tracking-normal whitespace-nowrap active:scale-[0.97]"
+            className="h-[clamp(2.25rem,5.5vw,3rem)] w-full md:w-auto justify-center px-[clamp(1rem,1.4vw,1.35rem)] text-[clamp(0.7rem,1.7vw,1.15rem)] font-normal leading-none tracking-normal whitespace-nowrap active:scale-[0.97]"
           />
 
           <Button
@@ -129,7 +129,7 @@ export default function AuditBar({
             arrowType="right"
             noHover
             containerClassName="w-full md:w-auto shrink-0"
-            className="h-[clamp(2.25rem,5.5vw,3rem)] w-full md:w-auto justify-center !bg-white hover:!bg-gray-50 !border-[#0F1D07] px-[clamp(1rem,1.4vw,1.35rem)] text-[clamp(0.78rem,1.7vw,1.15rem)] font-medium leading-none tracking-normal whitespace-nowrap active:scale-[0.97]"
+            className="h-[clamp(2.25rem,5.5vw,3rem)] w-full md:w-auto justify-center !bg-white hover:!bg-gray-50 !border-[#0F1D07] px-[clamp(1rem,1.4vw,1.35rem)] text-[clamp(0.7rem,1.7vw,1.15rem)] font-medium leading-none tracking-normal whitespace-nowrap active:scale-[0.97]"
           />
         </div>
       </div>

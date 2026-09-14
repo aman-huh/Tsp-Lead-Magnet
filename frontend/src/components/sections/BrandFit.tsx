@@ -143,7 +143,7 @@ function BrandCardItem({
       }`}
     >
       <div>
-        <h3 className="font-delight! text-[clamp(1.25rem,2.5vw,1.4rem)] font-medium leading-tight text-[#0F1D07]">
+        <h3 className="font-delight! text-[clamp(1.12rem,2.5vw,1.4rem)] font-medium leading-tight text-[#0F1D07]">
           {card.title}
         </h3>
       </div>

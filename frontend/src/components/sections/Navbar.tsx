@@ -84,17 +84,11 @@ export default function Navbar({ className = "", data }: NavbarProps) {
   useEffect(() => {
     if (isMenuOpen) {
       if (lenis) lenis.stop();
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
     } else {
       if (lenis) lenis.start();
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
     }
     return () => {
       if (lenis) lenis.start();
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
     };
   }, [isMenuOpen, lenis]);
 
