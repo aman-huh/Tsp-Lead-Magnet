@@ -44,7 +44,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
 
   useEffect(() => {
     const checkOrientation = () => {
-      setIsVertical(window.innerWidth < 768);
+      setIsVertical(window.innerWidth < 600);
     };
     checkOrientation();
     window.addEventListener("resize", checkOrientation);
@@ -91,7 +91,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
     setIsDragging(false);
     try {
       event.currentTarget.releasePointerCapture(event.pointerId);
-    } catch {}
+    } catch { }
   };
 
   const handleSliderPointerDown = (event: PointerEvent<HTMLDivElement>) => {
@@ -111,7 +111,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
     setIsDragging(false);
     try {
       event.currentTarget.releasePointerCapture(event.pointerId);
-    } catch {}
+    } catch { }
   };
 
   const beforeImage = study?.beforeImage?.url;
@@ -120,7 +120,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
   return (
     <div
       ref={containerRef}
-      className={`relative w-full aspect-9/16 md:aspect-1720/969 rounded-xl md:rounded-2xl overflow-hidden select-none bg-white ${
+      className={`relative w-full aspect-9/16 min-[600px]:aspect-1720/969 rounded-xl min-[600px]:rounded-2xl overflow-hidden select-none bg-white ${
         isVertical ? "touch-pan-y cursor-default" : "touch-none cursor-pointer"
       }`}
       onPointerDown={handleContainerPointerDown}
@@ -130,7 +130,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
     >
       {study?.afterMobileImage?.url ? (
         <>
-          <div className="block md:hidden absolute inset-0 w-full h-full pointer-events-none select-none">
+          <div className="block min-[600px]:hidden absolute inset-0 w-full h-full pointer-events-none select-none">
             <Image
               src={getStrapiMediaUrl(study.afterMobileImage.url)}
               alt={study.afterMobileImage.alternativeText || study?.afterLabel || "After"}
@@ -140,7 +140,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
               draggable={false}
             />
           </div>
-          <div className="hidden md:block absolute inset-0 w-full h-full pointer-events-none select-none">
+          <div className="hidden min-[600px]:block absolute inset-0 w-full h-full pointer-events-none select-none">
             {afterImage && (
               <Image
                 src={getStrapiMediaUrl(afterImage)}
@@ -174,7 +174,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
       >
         {study?.mobileBeforeImage?.url ? (
           <>
-            <div className="block md:hidden absolute inset-0 w-full h-full pointer-events-none select-none">
+            <div className="block min-[600px]:hidden absolute inset-0 w-full h-full pointer-events-none select-none">
               <Image
                 src={getStrapiMediaUrl(study.mobileBeforeImage.url)}
                 alt={study.mobileBeforeImage.alternativeText || study?.beforeLabel || "Before"}
@@ -184,7 +184,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
                 draggable={false}
               />
             </div>
-            <div className="hidden md:block absolute inset-0 w-full h-full pointer-events-none select-none">
+            <div className="hidden min-[600px]:block absolute inset-0 w-full h-full pointer-events-none select-none">
               {beforeImage && (
                 <Image
                   src={getStrapiMediaUrl(beforeImage)}
@@ -214,19 +214,17 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
       </div>
 
       <div
-        className={`absolute z-10 rounded-full bg-white/80 px-4 py-1.5 font-satoshi text-[12px] sm:text-[13px] font-medium leading-none text-[#3C3C3C] shadow-sm backdrop-blur-sm pointer-events-none ${
-          isVertical ? "right-4 bottom-4" : "right-4 top-4"
-        }`}
+        className={`absolute z-10 rounded-full bg-white/80 px-4 py-1.5 font-satoshi text-[12px] sm:text-[13px] font-medium leading-none text-[#3C3C3C] shadow-sm backdrop-blur-sm pointer-events-none ${isVertical ? "right-4 bottom-4" : "right-4 top-4"
+          }`}
       >
         {study?.afterLabel || "After"}
       </div>
 
       <div
-        className={`absolute z-30 flex items-center justify-center select-none ${
-          isVertical
+        className={`absolute z-30 flex items-center justify-center select-none ${isVertical
             ? "left-0 right-0 h-14 -translate-y-1/2 cursor-grab active:cursor-grabbing touch-none"
             : "top-0 bottom-0 w-14 -translate-x-1/2 pointer-events-none"
-        }`}
+          }`}
         style={isVertical ? { top: `${position}%` } : { left: `${position}%` }}
         onPointerDown={isVertical ? handleSliderPointerDown : undefined}
         onPointerMove={isVertical ? handleSliderPointerMove : undefined}
@@ -234,14 +232,12 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
         onPointerCancel={isVertical ? handleSliderPointerUp : undefined}
       >
         <div
-          className={`absolute bg-black pointer-events-none ${
-            isVertical ? "left-0 right-0 h-0.5" : "top-0 bottom-0 w-0.5"
-          }`}
+          className={`absolute bg-black pointer-events-none ${isVertical ? "left-0 right-0 h-0.5" : "top-0 bottom-0 w-0.5"
+            }`}
         />
         <div
-          className={`relative z-10 flex h-11 w-11 sm:h-13 sm:w-13 shrink-0 aspect-square items-center justify-center rounded-full bg-[#090C15] border border-white/50 pointer-events-none transition-transform duration-200 ${
-            !isVertical ? "animate-slider-handle-pulse" : ""
-          }`}
+          className={`relative z-10 flex h-11 w-11 sm:h-13 sm:w-13 shrink-0 aspect-square items-center justify-center rounded-full bg-[#090C15] border border-white/50 pointer-events-none transition-transform duration-200 ${!isVertical ? "animate-slider-handle-pulse" : ""
+            }`}
         >
           <div className="relative w-6 h-6 sm:w-7 sm:h-7 shrink-0 aspect-square flex items-center justify-center pointer-events-none select-none">
             <Image
@@ -253,8 +249,8 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
               style={
                 !isVertical
                   ? {
-                      filter: "drop-shadow(0 0 2px rgba(255, 255, 255, 0.35))",
-                    }
+                    filter: "drop-shadow(0 0 2px rgba(255, 255, 255, 0.35))",
+                  }
                   : undefined
               }
               draggable={false}
@@ -335,11 +331,10 @@ export default function CaseStudyShowcase({ data }: CaseStudyShowcaseProps) {
                 key={study.id}
                 type="button"
                 onClick={() => setSelectedId(study.id)}
-                className={`h-[clamp(2.5rem,4.2vw,3.6875rem)] px-[clamp(1rem,4.2vw,2rem)] rounded-full border text-[clamp(0.875rem,4.2vw,1.375rem)] font-medium transition-all cursor-pointer flex items-center justify-center shrink-0 whitespace-nowrap ${
-                  isActive
+                className={`h-[clamp(2.5rem,4.2vw,3.6875rem)] px-[clamp(1rem,4.2vw,2rem)] rounded-full border text-[clamp(0.875rem,4.2vw,1.375rem)] font-medium transition-all cursor-pointer flex items-center justify-center shrink-0 whitespace-nowrap ${isActive
                     ? "border-[#005540]/80 bg-[#95E7D3]/30 text-[#3C3C3C]"
                     : "border-[#CAC4D0] text-[#3C3C3C]"
-                }`}
+                  }`}
               >
                 {study.clientName}
               </button>

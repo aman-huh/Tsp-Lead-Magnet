@@ -149,6 +149,88 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
   );
 }
 
+function LazyProcessVideo({
+  url,
+  alt,
+  poster,
+}: {
+  url: string;
+  alt?: string;
+  poster?: string;
+}) {
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const fullMediaUrl = getStrapiMediaUrl(url);
+  const posterUrl =
+    poster ||
+    (url.includes("cloudinary.com")
+      ? fullMediaUrl.replace(/\.[^.]+$/, ".jpg")
+      : undefined);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const loadObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true);
+          loadObserver.disconnect();
+        }
+      },
+      { rootMargin: "500px 0px" }
+    );
+
+    loadObserver.observe(el);
+    return () => {
+      loadObserver.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!shouldLoad) return;
+    const video = videoRef.current;
+    if (!video) return;
+
+    const playbackObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    playbackObserver.observe(video);
+    return () => {
+      playbackObserver.disconnect();
+    };
+  }, [shouldLoad]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="bg-black rounded-xl overflow-hidden relative w-full h-full aspect-755/421 max-h-105 flex items-center justify-center"
+    >
+      <video
+        ref={videoRef}
+        src={shouldLoad ? fullMediaUrl : undefined}
+        poster={posterUrl}
+        preload={shouldLoad ? "auto" : "none"}
+        loop
+        muted
+        playsInline
+        aria-label={alt || "Process video"}
+        className="w-full h-full object-cover"
+      />
+    </div>
+  );
+}
+
 function MediaCardItem({ card }: { card: ProcessCard }) {
   const isVideo =
     card.media?.mime?.includes("video") ||
@@ -156,17 +238,16 @@ function MediaCardItem({ card }: { card: ProcessCard }) {
     card.media?.url?.endsWith(".webm");
 
   if (isVideo && card.media?.url) {
+    const poster = card.media.formats?.thumbnail?.url
+      ? getStrapiMediaUrl(card.media.formats.thumbnail.url)
+      : undefined;
+
     return (
-      <div className="bg-black rounded-xl overflow-hidden relative w-full h-full aspect-755/421 max-h-105 flex items-center justify-center">
-        <video
-          src={getStrapiMediaUrl(card.media.url)}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover"
-        />
-      </div>
+      <LazyProcessVideo
+        url={card.media.url}
+        alt={card.media.alternativeText || undefined}
+        poster={poster}
+      />
     );
   }
 

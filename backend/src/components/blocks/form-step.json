@@ -5,10 +5,10 @@
   },
   "options": {},
   "attributes": {
-    "title": {
+    "formTitle": {
       "type": "string"
     },
-    "formTitle": {
+    "title": {
       "type": "string"
     },
     "description": {

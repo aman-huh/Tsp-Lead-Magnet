@@ -371,6 +371,7 @@ export default function Navbar({ className = "", data }: NavbarProps) {
           WebkitBackdropFilter: "blur(50.55px)",
         }}
         aria-hidden={!isMenuOpen}
+        inert={!isMenuOpen}
       >
         <div className="w-full h-full md:contents custom-menu-wrapper">
           <div className="bg-transparent h-full md:h-full w-full flex flex-col relative overflow-y-auto px-6 sm:px-16 pt-18 pb-6 md:pt-30 md:pb-25 custom-menu-left">
