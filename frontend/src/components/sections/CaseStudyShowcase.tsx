@@ -113,7 +113,6 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
               sizes="100vw"
               className="object-cover object-top pointer-events-none select-none"
               draggable={false}
-              unoptimized
             />
           </div>
           <div className="hidden md:block absolute inset-0 w-full h-full pointer-events-none select-none">
@@ -125,7 +124,6 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
                 sizes="100vw"
                 className="object-cover object-top pointer-events-none select-none"
                 draggable={false}
-                unoptimized
               />
             )}
           </div>
@@ -138,7 +136,6 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
           sizes="100vw"
           className="object-cover object-top pointer-events-none select-none"
           draggable={false}
-          unoptimized
         />
       ) : null}
 
@@ -160,7 +157,6 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
                 sizes="100vw"
                 className="object-cover object-top pointer-events-none select-none"
                 draggable={false}
-                unoptimized
               />
             </div>
             <div className="hidden md:block absolute inset-0 w-full h-full pointer-events-none select-none">
@@ -172,7 +168,6 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
                   sizes="100vw"
                   className="object-cover object-top pointer-events-none select-none"
                   draggable={false}
-                  unoptimized
                 />
               )}
             </div>
@@ -185,7 +180,6 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
             sizes="100vw"
             className="object-cover object-top pointer-events-none select-none"
             draggable={false}
-            unoptimized
           />
         ) : null}
       </div>

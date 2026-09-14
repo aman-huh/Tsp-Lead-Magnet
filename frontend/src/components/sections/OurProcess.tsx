@@ -19,7 +19,7 @@ function DefaultLightbulbIcon() {
 function ContentCardItem({ card }: { card: ProcessCard }) {
   const [isTapped, setIsTapped] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
-  const ctaText = "Explore";
+  const ctaText = card.cta?.text || "Explore";
   const ctaUrl = card.cta?.url || "#";
   const hasHoverList = card.hoverList && card.hoverList.length > 0;
 

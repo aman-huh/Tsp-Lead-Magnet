@@ -3,12 +3,73 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useLenis } from "@/components/providers/SmoothScroll";
+import { NavbarSection, FooterLink, FooterContact } from "@/types";
 
 interface NavbarProps {
   className?: string;
+  data?: NavbarSection;
 }
 
-export default function Navbar({ className = "" }: NavbarProps) {
+const DEFAULT_PAGE_LINKS: FooterLink[] = [
+  { text: "Our Work", URL: "#our-work" },
+  { text: "Solutions", URL: "#solutions" },
+  { text: "Case Studies", URL: "#case-studies" },
+  { text: "Process", URL: "#process" },
+];
+
+const DEFAULT_CONTACTS: FooterContact[] = [
+  {
+    location: "Mumbai, India",
+    phone: "+91 99670 06777",
+    email: "hey@thumbstack.co",
+  },
+  {
+    location: "Amsterdam, Netherlands",
+    phone: "+31 6 4237 3471",
+    email: "eu@thumbstack.co",
+  },
+  {
+    location: "Brisbane, Australia",
+    phone: "+61 475 467 221",
+    email: "au@thumbstack.co",
+  },
+];
+
+function resolveLink(url?: string | null, text?: string | null) {
+  const raw = (url || "").trim();
+  if (raw.startsWith("http://") || raw.startsWith("https://")) {
+    return { href: raw, isExternal: true };
+  }
+  if (raw.startsWith("#") || raw.startsWith("/")) {
+    return { href: raw, isExternal: false };
+  }
+  if (!raw && text) {
+    const slug = text.toLowerCase().replace(/\s+/g, "-");
+    return { href: `#${slug}`, isExternal: false };
+  }
+  return { href: raw ? `/${raw.replace(/^\/+/, "")}` : "#", isExternal: false };
+}
+
+export default function Navbar({ className = "", data }: NavbarProps) {
+  const pageLinks =
+    data?.pageLinks && data.pageLinks.length > 0
+      ? data.pageLinks
+      : DEFAULT_PAGE_LINKS;
+
+  const contacts =
+    data?.contacts && data.contacts.length > 0
+      ? data.contacts
+      : DEFAULT_CONTACTS;
+
+  const getSocialUrl = (platform: string, fallback: string) => {
+    const match = data?.socialLinks?.find(
+      (s) => (s.platform || s.text || "").toLowerCase() === platform.toLowerCase()
+    );
+    return match?.URL || fallback;
+  };
+
+  const ctaText = data?.cta?.text || "Talk to us";
+  const ctaUrl = data?.cta?.url || "/#footer";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [logoIsDark, setLogoIsDark] = useState(true);
   const [buttonIsDark, setButtonIsDark] = useState(true);
@@ -176,7 +237,9 @@ export default function Navbar({ className = "" }: NavbarProps) {
       >
         <div ref={logoRef} className="flex items-center">
           <Link href="/" onClick={() => setIsMenuOpen(false)}>
-            <h1
+            <span
+              role="img"
+              aria-label="Thumbstack Logo"
               className="font-medium text-[24px] sm:text-[32px] tracking-tight flex items-center transition-colors duration-400 ease-[cubic-bezier(0.76,0,0.24,1)]"
               style={{
                 fontFamily: "var(--font-heading)",
@@ -204,7 +267,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
                   fill="currentColor"
                 />
               </svg>
-            </h1>
+            </span>
           </Link>
         </div>
 
@@ -310,38 +373,36 @@ export default function Navbar({ className = "" }: NavbarProps) {
         <div className="w-full h-full md:contents custom-menu-wrapper">
           <div className="bg-transparent h-full md:h-full w-full flex flex-col relative overflow-y-auto scrollbar-hide px-6 sm:px-16 pt-[72px] pb-6 md:pt-[120px] md:pb-[100px] custom-menu-left">
             <nav className="flex flex-col gap-5 sm:gap-7 md:gap-9 pl-4 sm:pl-6 md:pl-12 lg:pl-20 xl:pl-24 custom-menu-nav">
-              <Link
-                className="block w-fit font-delight text-white hover:text-[#95E7D3] transition-colors duration-200 text-[clamp(24px,5.5vw,62px)] font-normal leading-[1.18]"
-                style={{ fontFamily: "var(--font-delight)" }}
-                href="#our-work"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Our Work
-              </Link>
-              <Link
-                className="block w-fit font-delight text-white hover:text-[#95E7D3] transition-colors duration-200 text-[clamp(24px,5.5vw,62px)] font-normal leading-[1.18]"
-                style={{ fontFamily: "var(--font-delight)" }}
-                href="#solutions"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Solutions
-              </Link>
-              <Link
-                className="block w-fit font-delight text-white hover:text-[#95E7D3] transition-colors duration-200 text-[clamp(24px,5.5vw,62px)] font-normal leading-[1.18]"
-                style={{ fontFamily: "var(--font-delight)" }}
-                href="#case-studies"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Case Studies
-              </Link>
-              <Link
-                className="block w-fit font-delight text-white hover:text-[#95E7D3] transition-colors duration-200 text-[clamp(24px,5.5vw,62px)] font-normal leading-[1.18]"
-                style={{ fontFamily: "var(--font-delight)" }}
-                href="#process"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Process
-              </Link>
+              {pageLinks.map((item, idx) => {
+                const resolved = resolveLink(item.URL, item.text);
+                const linkText = item.text || "Link";
+                if (resolved.isExternal) {
+                  return (
+                    <a
+                      key={item.id ?? idx}
+                      className="block w-fit font-delight text-white hover:text-[#95E7D3] transition-colors duration-200 text-[clamp(24px,5.5vw,62px)] font-normal leading-[1.18]"
+                      style={{ fontFamily: "var(--font-delight)" }}
+                      href={resolved.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {linkText}
+                    </a>
+                  );
+                }
+                return (
+                  <Link
+                    key={item.id ?? idx}
+                    className="block w-fit font-delight text-white hover:text-[#95E7D3] transition-colors duration-200 text-[clamp(24px,5.5vw,62px)] font-normal leading-[1.18]"
+                    style={{ fontFamily: "var(--font-delight)" }}
+                    href={resolved.href}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {linkText}
+                  </Link>
+                );
+              })}
             </nav>
 
             {/* Mobile Contact Info */}
@@ -350,55 +411,29 @@ export default function Navbar({ className = "" }: NavbarProps) {
               style={{ fontFamily: "var(--font-satoshi)" }}
             >
               <h3 className="text-white text-[16px] font-bold">Contact</h3>
-              <div className="flex flex-col gap-1">
-                <p className="text-white text-[14px] font-medium">Mumbai, India</p>
-                <a
-                  href="tel:+919967006777"
-                  className="text-white text-[14px] underline underline-offset-4 decoration-white/30 hover:text-[#95E7D3] transition-colors"
-                >
-                  +91 99670 06777
-                </a>
-                <a
-                  href="mailto:hey@thumbstack.co"
-                  className="text-white/80 text-[14px] underline underline-offset-4 decoration-white/30 hover:text-white transition-colors"
-                >
-                  hey@thumbstack.co
-                </a>
-              </div>
-              <div className="flex flex-col gap-1">
-                <p className="text-white text-[14px] font-medium">
-                  Amsterdam, Netherlands
-                </p>
-                <a
-                  href="tel:+31642373471"
-                  className="text-white text-[14px] underline underline-offset-4 decoration-white/30 hover:text-[#95E7D3] transition-colors"
-                >
-                  +31 6 4237 3471
-                </a>
-                <a
-                  href="mailto:eu@thumbstack.co"
-                  className="text-white/80 text-[14px] underline underline-offset-4 decoration-white/30 hover:text-white transition-colors"
-                >
-                  eu@thumbstack.co
-                </a>
-              </div>
-              <div className="flex flex-col gap-1">
-                <p className="text-white text-[14px] font-medium">
-                  Brisbane, Australia
-                </p>
-                <a
-                  href="tel:+61475467221"
-                  className="text-white text-[14px] underline underline-offset-4 decoration-white/30 hover:text-[#95E7D3] transition-colors"
-                >
-                  +61 475 467 221
-                </a>
-                <a
-                  href="mailto:au@thumbstack.co"
-                  className="text-white/80 text-[14px] underline underline-offset-4 decoration-white/30 hover:text-white transition-colors"
-                >
-                  au@thumbstack.co
-                </a>
-              </div>
+              {contacts.map((c, idx) => (
+                <div key={c.id ?? idx} className="flex flex-col gap-1">
+                  {c.location && (
+                    <p className="text-white text-[14px] font-medium">{c.location}</p>
+                  )}
+                  {c.phone && (
+                    <a
+                      href={`tel:${c.phone}`}
+                      className="text-white text-[14px] underline underline-offset-4 decoration-white/30 hover:text-[#95E7D3] transition-colors"
+                    >
+                      {c.phone}
+                    </a>
+                  )}
+                  {c.email && (
+                    <a
+                      href={`mailto:${c.email}`}
+                      className="text-white/80 text-[14px] underline underline-offset-4 decoration-white/30 hover:text-white transition-colors"
+                    >
+                      {c.email}
+                    </a>
+                  )}
+                </div>
+              ))}
             </div>
 
             {/* Social Icons */}
@@ -413,7 +448,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
               >
                 <g style={{ mixBlendMode: "luminosity" }}>
                   <a
-                    href="https://www.instagram.com/thumbstack_tech/"
+                    href={getSocialUrl("instagram", "https://www.instagram.com/thumbstack_tech/")}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -425,7 +460,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
                     </g>
                   </a>
                   <a
-                    href="https://www.youtube.com/@TheHumanAIPodcast"
+                    href={getSocialUrl("youtube", "https://www.youtube.com/@TheHumanAIPodcast")}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -445,7 +480,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
                     </g>
                   </a>
                   <a
-                    href="https://www.facebook.com/ThumbstackTechnologies/"
+                    href={getSocialUrl("facebook", "https://www.facebook.com/ThumbstackTechnologies/")}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -461,7 +496,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
                     </g>
                   </a>
                   <a
-                    href="https://in.linkedin.com/company/thumbstacktechnologies"
+                    href={getSocialUrl("linkedin", "https://in.linkedin.com/company/thumbstacktechnologies")}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -523,65 +558,33 @@ export default function Navbar({ className = "" }: NavbarProps) {
             >
               <h3 className="text-white text-[18px] font-bold mb-5">Contact</h3>
               <div className="flex flex-col gap-6 xl:gap-7">
-                <div className="flex flex-col gap-1.5">
-                  <div>
-                    <p className="text-white text-[15px] font-medium tracking-wide">
-                      Mumbai, India
-                    </p>
-                    <a
-                      href="tel:+919967006777"
-                      className="text-white text-[15px] font-normal underline underline-offset-[5px] decoration-white/40 hover:decoration-white hover:text-[#95E7D3] transition-colors block mt-1"
-                    >
-                      +91 99670 06777
-                    </a>
+                {contacts.map((c, idx) => (
+                  <div key={c.id ?? idx} className="flex flex-col gap-1.5">
+                    <div>
+                      {c.location && (
+                        <p className="text-white text-[15px] font-medium tracking-wide">
+                          {c.location}
+                        </p>
+                      )}
+                      {c.phone && (
+                        <a
+                          href={`tel:${c.phone}`}
+                          className="text-white text-[15px] font-normal underline underline-offset-[5px] decoration-white/40 hover:decoration-white hover:text-[#95E7D3] transition-colors block mt-1"
+                        >
+                          {c.phone}
+                        </a>
+                      )}
+                    </div>
+                    {c.email && (
+                      <a
+                        href={`mailto:${c.email}`}
+                        className="text-white/70 text-[14px] font-normal underline underline-offset-[4px] decoration-white/30 hover:text-white hover:decoration-white transition-colors block"
+                      >
+                        {c.email}
+                      </a>
+                    )}
                   </div>
-                  <a
-                    href="mailto:hey@thumbstack.co"
-                    className="text-white/70 text-[14px] font-normal underline underline-offset-[4px] decoration-white/30 hover:text-white hover:decoration-white transition-colors block"
-                  >
-                    hey@thumbstack.co
-                  </a>
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <div>
-                    <p className="text-white text-[15px] font-medium tracking-wide">
-                      Amsterdam, Netherlands
-                    </p>
-                    <a
-                      href="tel:+31642373471"
-                      className="text-white text-[15px] font-normal underline underline-offset-[5px] decoration-white/40 hover:decoration-white hover:text-[#95E7D3] transition-colors block mt-1"
-                    >
-                      +31 6 4237 3471
-                    </a>
-                  </div>
-                  <a
-                    href="mailto:eu@thumbstack.co"
-                    className="text-white/70 text-[14px] font-normal underline underline-offset-[4px] decoration-white/30 hover:text-white hover:decoration-white transition-colors block"
-                  >
-                    eu@thumbstack.co
-                  </a>
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <div>
-                    <p className="text-white text-[15px] font-medium tracking-wide">
-                      Brisbane, Australia
-                    </p>
-                    <a
-                      href="tel:+61475467221"
-                      className="text-white text-[15px] font-normal underline underline-offset-[5px] decoration-white/40 hover:decoration-white hover:text-[#95E7D3] transition-colors block mt-1"
-                    >
-                      +61 475 467 221
-                    </a>
-                  </div>
-                  <a
-                    href="mailto:au@thumbstack.co"
-                    className="text-white/70 text-[14px] font-normal underline underline-offset-[4px] decoration-white/30 hover:text-white hover:decoration-white transition-colors block"
-                  >
-                    au@thumbstack.co
-                  </a>
-                </div>
+                ))}
 
                 <div className="relative group shrink-0 w-[150px] h-[45px] mt-2">
                   <div
@@ -591,10 +594,10 @@ export default function Navbar({ className = "" }: NavbarProps) {
                   <a
                     className="absolute inset-0 bg-[#3145DD] text-white rounded-[16px] text-[14px] font-bold flex items-center justify-center gap-2 border border-[#3145DD] transition-transform duration-300 translate-x-0 translate-y-0 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 font-satoshi cursor-pointer"
                     style={{ fontFamily: "var(--font-satoshi)" }}
-                    href="/#footer"
+                    href={ctaUrl}
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <span>Talk to us</span>
+                    <span>{ctaText}</span>
                     <svg
                       width="15"
                       height="15"

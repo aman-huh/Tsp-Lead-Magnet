@@ -86,6 +86,9 @@ export default function LeadFormModal({
       />
       <div
         data-lenis-prevent="true"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="quote-modal-title"
         className={`relative w-full sm:min-w-[580px] md:min-w-[620px] max-w-[580px] sm:max-w-[620px] md:max-w-[660px] max-h-[92vh] sm:max-h-[88vh] bg-[#FAFAFC] rounded-none p-[clamp(1.125rem,3.5vw,2rem)] shadow-[0_20px_60px_rgba(0,0,0,0.3)] my-auto text-[#111827] z-10 flex flex-col justify-between overflow-y-auto overscroll-contain ${
           isClosing ? "modal-dialog-out pointer-events-none" : "modal-dialog-in"
         }`}

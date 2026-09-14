@@ -279,14 +279,16 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
         : field.type === "email" ? "email"
           : field.type === "phone" ? "tel"
             : "text";
+    const inputId = `hero-field-${field.id}`;
 
     if (field.type === "textarea") {
       return (
         <div key={field.id}>
-          <label className="font-heading text-[clamp(0.9375rem,4.2vw,1.25rem)] leading-[160%] tracking-tight text-[#1F2A37] block mb-2.5">
+          <label htmlFor={inputId} className="font-heading text-[clamp(0.9375rem,4.2vw,1.25rem)] leading-[160%] tracking-tight text-[#1F2A37] block mb-2.5">
             {field.label}
           </label>
           <textarea
+            id={inputId}
             value={value}
             onChange={(e) => handleFieldChange(field.id, e.target.value)}
             placeholder={field.placeholder ?? ""}
@@ -300,16 +302,17 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
 
     return (
       <div key={field.id}>
-        <label className="font-heading text-[clamp(0.9375rem,4.2vw,1.25rem)] leading-[160%] tracking-tight text-[#1F2A37] block mb-2.5">
+        <label htmlFor={inputId} className="font-heading text-[clamp(0.9375rem,4.2vw,1.25rem)] leading-[160%] tracking-tight text-[#1F2A37] block mb-2.5">
           {field.label}
         </label>
         <input
+          id={inputId}
           type={inputType}
           value={value}
           onChange={(e) => handleFieldChange(field.id, e.target.value)}
           placeholder={field.placeholder ?? ""}
           required={field.required}
-          className="w-full h-[clamp(2.75rem,4.2vw,3.25rem)] bg-[#F2F2F2] border border-black/20 rounded-[48px] px-5 text-[clamp(0.875rem,4.2vw,1rem)] text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-[#3749E9] focus:ring-1 focus:ring-[#3749E9] transition-all"
+          className="w-full bg-[#F2F2F2] border border-black/20 rounded-full px-5 py-4 text-[clamp(0.875rem,4.2vw,1rem)] text-gray-800 placeholder:text-gray-400 focus:outline-none focus:border-[#3749E9] focus:ring-1 focus:ring-[#3749E9] transition-all"
         />
       </div>
     );

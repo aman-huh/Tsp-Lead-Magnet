@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -296,13 +298,15 @@ export default function Footer({ data }: FooterProps) {
           <div className="flex flex-col w-full">
             <h2 className="font-delight text-[clamp(44px,4.2vw,80px)] font-medium leading-none text-white tracking-tight flex items-center gap-2.5 sm:gap-3">
               <span>{hasLogoPlaceholder ? headingParts[0]?.trim() : headingRaw}</span>
-              <Image
-                src="/footercircle.avif"
-                alt="Logo"
-                width={64}
-                height={64}
-                className="w-[clamp(48px,3.8vw,72px)] h-[clamp(48px,3.8vw,72px)] -translate-y-[0.05em] animate-spin-pause shrink-0 object-contain"
-              />
+              {hasLogoPlaceholder && (
+                <Image
+                  src="/footercircle.avif"
+                  alt="Logo"
+                  width={64}
+                  height={64}
+                  className="w-[clamp(48px,3.8vw,72px)] h-[clamp(48px,3.8vw,72px)] -translate-y-[0.05em] animate-spin-pause shrink-0 object-contain"
+                />
+              )}
               {hasLogoPlaceholder && headingParts[1]?.trim() && (
                 <span>{headingParts[1].trim()}</span>
               )}
@@ -355,9 +359,9 @@ export default function Footer({ data }: FooterProps) {
           <div className="flex flex-col w-full lg:contents">
             <div className="grid grid-cols-2 gap-x-6 sm:gap-x-10 gap-y-8 lg:contents">
               <div className="order-2 lg:order-none flex flex-col">
-                <h2 className="font-satoshi! text-[clamp(13px,0.95vw,15px)] font-bold text-white tracking-wide mb-3 sm:mb-4 lg:mb-5">
+                <p className="font-satoshi! text-[clamp(13px,0.95vw,15px)] font-bold text-white tracking-wide mb-3 sm:mb-4 lg:mb-5">
                   Contact
-                </h2>
+                </p>
                 <div className="flex flex-col space-y-3.5 sm:space-y-4 lg:space-y-8">
                   {contacts.map((contact, idx) => {
                     const address =
@@ -401,9 +405,9 @@ export default function Footer({ data }: FooterProps) {
               </div>
 
               <div className="order-1 lg:order-none flex flex-col">
-                <h2 className="font-satoshi! text-[clamp(13px,0.95vw,15px)] font-bold text-white tracking-wide mb-3 sm:mb-4 lg:mb-5">
+                <p className="font-satoshi! text-[clamp(13px,0.95vw,15px)] font-bold text-white tracking-wide mb-3 sm:mb-4 lg:mb-5">
                   Quick Links
-                </h2>
+                </p>
                 <div className="flex flex-col space-y-2.5 sm:space-y-3 lg:space-y-3.5">
                   {quickLinks.map((item, idx) => {
                     const resolved = resolveLink(item.URL, item.text);
@@ -449,8 +453,11 @@ export default function Footer({ data }: FooterProps) {
             </div>
 
             <div className="mt-14 sm:mt-12 w-full lg:hidden">
-              <a
-                href="#news"
+              <button
+                type="button"
+                onClick={() =>
+                  window.dispatchEvent(new CustomEvent("open-callback-modal"))
+                }
                 className="group flex w-full items-center justify-between rounded-full bg-white px-6 sm:px-7 py-3.5 sm:py-4 text-[#1A1A1A] shadow-md transition-all hover:bg-white/95 active:scale-[0.99]"
               >
                 <span className="font-satoshi text-[13.5px] sm:text-[14.5px] font-medium text-[#1A1A1A] tracking-tight">
@@ -472,7 +479,7 @@ export default function Footer({ data }: FooterProps) {
                     strokeLinejoin="round"
                   />
                 </svg>
-              </a>
+              </button>
             </div>
 
             <div className="flex lg:hidden items-center gap-6 mt-6 text-[12px] font-satoshi text-white/90">

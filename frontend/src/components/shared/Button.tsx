@@ -55,7 +55,7 @@ function DiagonalArrow({ className = "", size = "md" }: { className?: string; si
 function RightArrow({ className = "", size = "md" }: { className?: string; size?: "sm" | "md" | "lg" }) {
   const sizeClasses = {
     sm: "w-[0.7em] h-auto",
-    md: "w-[0.75em] h-auto",
+    md: "w-[0.85em] h-auto",
     lg: "w-[1em] h-auto",
   };
   return (

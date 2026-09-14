@@ -320,6 +320,7 @@ export interface SectionsNavbar extends Struct.ComponentSchema {
   };
   attributes: {
     contacts: Schema.Attribute.Component<'blocks.contact', true>;
+    cta: Schema.Attribute.Component<'shared.button', false>;
     pageLinks: Schema.Attribute.Component<'blocks.link', true>;
     socialLinks: Schema.Attribute.Component<'blocks.link', true>;
   };

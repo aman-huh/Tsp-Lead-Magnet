@@ -132,6 +132,15 @@ export interface SharedButtonSection {
   url?: string;
 }
 
+export interface NavbarSection {
+  id: number;
+  __component: "sections.navbar";
+  pageLinks?: FooterLink[];
+  contacts?: FooterContact[];
+  socialLinks?: FooterLink[];
+  cta?: ButtonComponent;
+}
+
 export type LandingPageSection =
   | HeroSection
   | ProblemAssessmentSection
@@ -143,6 +152,7 @@ export type LandingPageSection =
   | OurProcessSection
   | FaqSection
   | FooterSection
+  | NavbarSection
   | SharedButtonSection
   | { id: number; __component: string; [key: string]: unknown };
 

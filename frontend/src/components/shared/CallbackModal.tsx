@@ -184,6 +184,9 @@ export default function CallbackModal({
       />
       <div
         data-lenis-prevent="true"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="callback-modal-title"
         className={`relative w-full sm:min-w-[580px] md:min-w-[620px] max-w-[580px] sm:max-w-[620px] md:max-w-[660px] max-h-[92vh] sm:max-h-[88vh] bg-[#FAFAFC] rounded-none p-[clamp(1.125rem,3.5vw,2rem)] shadow-[0_20px_60px_rgba(0,0,0,0.3)] my-auto text-[#111827] z-10 flex flex-col justify-between overflow-y-auto overscroll-contain ${
           isClosing ? "modal-dialog-out pointer-events-none" : "modal-dialog-in"
         }`}
@@ -214,7 +217,7 @@ export default function CallbackModal({
             <fieldset disabled={submitted || isSubmitting} className="contents">
               <div>
                 <div className="mb-3 sm:mb-4 pr-8">
-                  <h2 className="font-nohemi text-[clamp(1.25rem,4.5vw,1.875rem)] font-normal text-[#111827] leading-[1.15] tracking-tight">
+                  <h2 id="callback-modal-title" className="font-nohemi text-[clamp(1.25rem,4.5vw,1.875rem)] font-normal text-[#111827] leading-[1.15] tracking-tight">
                     {formTitle}
                   </h2>
                   {description && (
@@ -232,13 +235,15 @@ export default function CallbackModal({
                         : field.type === "email"
                           ? "email"
                           : "text";
+                    const inputId = `callback-field-${field.id}`;
 
                     return (
                       <div key={field.id}>
-                        <label className="font-nohemi block text-[clamp(0.875rem,3.2vw,1.0625rem)] font-normal text-[#111827] mb-2">
+                        <label htmlFor={inputId} className="font-nohemi block text-[clamp(0.875rem,3.2vw,1.0625rem)] font-normal text-[#111827] mb-2">
                           {field.label}
                         </label>
                         <input
+                          id={inputId}
                           type={inputType}
                           value={formValues[String(field.id)] || ""}
                           onChange={(e) => {

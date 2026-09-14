@@ -350,13 +350,16 @@ export default function ModalForm({
             ? "tel"
             : "text";
 
+    const inputId = `modal-field-${field.id}`;
+
     if (field.type === "textarea") {
       return (
         <div key={field.id}>
-          <label className="font-nohemi block text-[clamp(0.875rem,3.2vw,1.0625rem)] font-normal text-[#111827] mb-2">
+          <label htmlFor={inputId} className="font-nohemi block text-[clamp(0.875rem,3.2vw,1.0625rem)] font-normal text-[#111827] mb-2">
             {field.label}
           </label>
           <textarea
+            id={inputId}
             value={value}
             onChange={(e) => handleFieldChange(field.id, e.target.value)}
             placeholder={field.placeholder ?? ""}
@@ -370,10 +373,11 @@ export default function ModalForm({
 
     return (
       <div key={field.id}>
-        <label className="font-nohemi block text-[clamp(0.875rem,3.2vw,1.0625rem)] font-normal text-[#111827] mb-2">
+        <label htmlFor={inputId} className="font-nohemi block text-[clamp(0.875rem,3.2vw,1.0625rem)] font-normal text-[#111827] mb-2">
           {field.label}
         </label>
         <input
+          id={inputId}
           type={inputType}
           value={value}
           onChange={(e) => handleFieldChange(field.id, e.target.value)}
@@ -541,7 +545,7 @@ export default function ModalForm({
     <div className={`flex flex-col justify-between flex-1 w-full ${className}`}>
       <div>
         <div className="mb-3 sm:mb-4">
-          <h2 className="font-nohemi text-[clamp(1.25rem,4.5vw,1.875rem)] font-normal text-[#111827] leading-[1.15] tracking-tight pr-8">
+          <h2 id="quote-modal-title" className="font-nohemi text-[clamp(1.25rem,4.5vw,1.875rem)] font-normal text-[#111827] leading-[1.15] tracking-tight pr-8">
             {step?.formTitle || "Get an instant quote"}
           </h2>
           {step?.description && (

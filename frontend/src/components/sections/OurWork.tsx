@@ -127,7 +127,7 @@ export default function OurWork({ data }: OurWorkProps) {
       <div className="max-w-[1920px] mx-auto w-full px-[clamp(1.25rem,4.2vw,2rem)] lg:px-[clamp(3.5rem,5.2vw,6.25rem)] pt-[clamp(4.5rem,7vw,9rem)]">
         <div className="w-full flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-[clamp(1.5rem,4.2vw,2.5rem)]">
             <div className="w-full sm:w-[72%] lg:w-[78%] flex flex-col gap-y-[clamp(0.75rem,4.2vw,1.25rem)]">
-              <h1 className="font-heading! text-[clamp(2.125rem,4.2vw,5.2rem)] font-normal leading-tight 2xl:leading-[1.12] tracking-[-0.01em]">
+              <h2 className="font-heading! text-[clamp(2.125rem,4.2vw,5.2rem)] font-normal leading-tight 2xl:leading-[1.12] tracking-[-0.01em]">
                 {header?.mobileTitle ? (
                   <>
                     <span className="block lg:hidden">{header.mobileTitle}</span>
@@ -136,7 +136,7 @@ export default function OurWork({ data }: OurWorkProps) {
                 ) : (
                   title
                 )}
-              </h1>
+              </h2>
               {(description || header?.mobileDescription) && (
                 <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.2rem)] font-semibold leading-[1.5] tracking-normal w-full sm:w-[85%] lg:w-[77%]">
                   {header?.mobileDescription ? (
@@ -285,7 +285,6 @@ export default function OurWork({ data }: OurWorkProps) {
                       priority={idx <= 1}
                       className="object-contain object-bottom select-none pointer-events-none"
                       draggable={false}
-                      unoptimized
                     />
                   </div>
                 )}
@@ -304,7 +303,6 @@ export default function OurWork({ data }: OurWorkProps) {
                       priority={idx <= 1}
                       className="object-cover object-top select-none pointer-events-none"
                       draggable={false}
-                      unoptimized
                     />
                   </div>
                 )}

@@ -6,7 +6,7 @@ import AuditBarModal from "@/components/shared/AuditBarModal";
 import SectionRenderer from "@/components/shared/SectionRenderer";
 import { getHomePage } from "@/services/page";
 import { getBrands } from "@/services/brand";
-import { HeroSection, AuditBarData, SharedButtonSection } from "@/types";
+import { HeroSection, AuditBarData, SharedButtonSection, NavbarSection } from "@/types";
 
 export const metadata: Metadata = {
   title: "Thumbstack - Lead Magnet",
@@ -28,6 +28,11 @@ export default async function Home() {
     (section) => section.__component === "sections.footer"
   );
 
+  const navbarSection = sections.find(
+    (section): section is NavbarSection =>
+      section.__component === "sections.navbar"
+  );
+
   const heroSection = sections.find(
     (section): section is HeroSection => section.__component === "sections.hero"
   );
@@ -43,7 +48,7 @@ export default async function Home() {
 
   return (
     <>
-      <Navbar />
+      <Navbar data={navbarSection} />
       <main className="w-full min-h-screen overflow-x-hidden bg-white">
         <SectionRenderer sections={sections} brands={brands} />
         {!hasFooter && <Footer />}

@@ -19,6 +19,11 @@
       "type": "component",
       "component": "blocks.link",
       "repeatable": true
+    },
+    "cta": {
+      "type": "component",
+      "component": "shared.button",
+      "repeatable": false
     }
   },
   "config": {}
