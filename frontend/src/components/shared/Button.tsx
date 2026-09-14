@@ -101,7 +101,7 @@ export default function Button({
 
   const customRadiusMatch = className.match(/(^|\s)(rounded(?:-[a-z0-9\[\]]+)?)/);
   const customRadius = customRadiusMatch ? customRadiusMatch[2] : null;
-  const shapeClass = customRadius || (shape === "rounded" ? "rounded-[12px] sm:rounded-[14px]" : "rounded-full");
+  const shapeClass = customRadius || (shape === "rounded" ? "rounded-xl sm:rounded-[14px]" : "rounded-full");
 
   const offsetColorClass =
     theme === "light" ? "bg-[#3145DD]" : "bg-[#95E7D3]";

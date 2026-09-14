@@ -89,7 +89,7 @@ export default function FAQ({ data }: FAQProps) {
             )}
           </h2>
           {(description || heading?.mobileDescription) && (
-            <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-medium leading-[1.5] text-black mt-3 sm:mt-4 max-w-2xl">
+            <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-medium leading-normal text-black mt-3 sm:mt-4 max-w-2xl">
               {heading?.mobileDescription ? (
                 <>
                   <span className="block lg:hidden">{heading.mobileDescription}</span>

@@ -25,18 +25,24 @@ export default function CallbackModal({
   const [error, setError] = useState<string | null>(null);
   const [honeypot, setHoneypot] = useState("");
 
+  if (isOpen && !mounted) {
+    setMounted(true);
+    setIsClosing(false);
+  }
+
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (isOpen) {
-      setMounted(true);
-      setIsClosing(false);
-    } else if (mounted) {
-      setIsClosing(true);
-      timer = setTimeout(() => {
+    if (!isOpen && mounted) {
+      const animFrame = requestAnimationFrame(() => {
+        setIsClosing(true);
+      });
+      const timer = setTimeout(() => {
         setMounted(false);
         setIsClosing(false);
       }, 200);
-      return () => clearTimeout(timer);
+      return () => {
+        cancelAnimationFrame(animFrame);
+        clearTimeout(timer);
+      };
     }
   }, [isOpen, mounted]);
 
@@ -173,7 +179,7 @@ export default function CallbackModal({
       id="callback-modal"
       data-modal="callback"
       data-lenis-prevent="true"
-      className="fixed inset-0 z-[20000] flex items-center justify-center p-3 sm:p-5 md:p-6 overflow-y-auto overscroll-contain no-scrollbar [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+      className="fixed inset-0 z-20000 flex items-center justify-center p-3 sm:p-5 md:p-6 overflow-y-auto overscroll-contain no-scrollbar scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
     >
       <div
         className={`fixed inset-0 bg-black/60 cursor-pointer touch-none ${
@@ -187,7 +193,7 @@ export default function CallbackModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="callback-modal-title"
-        className={`relative w-full sm:min-w-[580px] md:min-w-[620px] max-w-[580px] sm:max-w-[620px] md:max-w-[660px] max-h-[92vh] sm:max-h-[88vh] bg-[#FAFAFC] rounded-none p-[clamp(1.125rem,3.5vw,2rem)] shadow-[0_20px_60px_rgba(0,0,0,0.3)] my-auto text-[#111827] z-10 flex flex-col justify-between overflow-y-auto overscroll-contain ${
+        className={`relative w-full sm:min-w-145 md:min-w-155 max-w-145 sm:max-w-155 md:max-w-165 max-h-[92vh] sm:max-h-[88vh] bg-[#FAFAFC] rounded-none p-[clamp(1.125rem,3.5vw,2rem)] shadow-[0_20px_60px_rgba(0,0,0,0.3)] my-auto text-[#111827] z-10 flex flex-col justify-between overflow-y-auto overscroll-contain ${
           isClosing ? "modal-dialog-out pointer-events-none" : "modal-dialog-in"
         }`}
         onClick={(e) => e.stopPropagation()}
@@ -272,7 +278,7 @@ export default function CallbackModal({
                 autoComplete="off"
                 value={honeypot}
                 onChange={(e) => setHoneypot(e.target.value)}
-                className="opacity-0 absolute -top-[9999px] left-0 h-0 w-0 pointer-events-none"
+                className="opacity-0 absolute top-[-9999px] left-0 h-0 w-0 pointer-events-none"
                 aria-hidden="true"
               />
               {submitted ? (

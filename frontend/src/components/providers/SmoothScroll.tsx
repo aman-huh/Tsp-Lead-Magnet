@@ -34,16 +34,16 @@ export default function SmoothScroll({
       infinite: false,
     });
 
-    setLenisInstance(lenis);
-
     let rafId: number;
 
-    function raf(time: number) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
-
-    rafId = requestAnimationFrame(raf);
+    rafId = requestAnimationFrame((time) => {
+      setLenisInstance(lenis);
+      function loop(t: number) {
+        lenis.raf(t);
+        rafId = requestAnimationFrame(loop);
+      }
+      loop(time);
+    });
 
     return () => {
       cancelAnimationFrame(rafId);

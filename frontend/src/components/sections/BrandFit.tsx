@@ -160,7 +160,7 @@ function BrandCardItem({
               width={24}
               height={19}
               aria-hidden="true"
-              className="w-[20px] sm:w-[24px] h-auto shrink-0"
+              className="w-5 sm:w-6 h-auto shrink-0"
             />
             <span className="font-satoshi font-normal text-[clamp(0.9375rem,1.2vw,1.0625rem)] leading-[1.4] text-[#000000]">
               {item.text}

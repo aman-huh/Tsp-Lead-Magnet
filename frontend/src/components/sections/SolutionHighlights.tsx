@@ -48,7 +48,7 @@ export default function SolutionHighlights({ data }: SolutionHighlightsProps) {
             title
           )}
         </h2>
-        <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-medium leading-[1.5] tracking-normal pt-[clamp(0.75rem,4.2vw,1.25rem)] w-full max-w-xl lg:max-w-none lg:w-auto lg:table-caption lg:caption-bottom">
+        <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-medium leading-normal tracking-normal pt-[clamp(0.75rem,4.2vw,1.25rem)] w-full max-w-xl lg:max-w-none lg:w-auto lg:table-caption lg:caption-bottom">
           {header?.mobileDescription ? (
             <>
               <span className="block lg:hidden">{header.mobileDescription}</span>
@@ -79,7 +79,7 @@ function SolutionHighlightCard({ feature }: { feature?: Feature }) {
 
   return (
     <div
-      className={`w-full rounded-[16px] md:rounded-[clamp(20px,4.2vw,30px)] p-6 sm:p-8 lg:p-[clamp(1.75rem,3vw,2.5rem)] flex flex-col justify-between  h-full ${variant.container}`}
+      className={`w-full rounded-2xl md:rounded-[clamp(20px,4.2vw,30px)] p-6 sm:p-8 lg:p-[clamp(1.75rem,3vw,2.5rem)] flex flex-col justify-between  h-full ${variant.container}`}
     >
       <div className="w-full h-[clamp(110px,13vw,180px)] relative shrink-0">
         {illustrationUrl && (
@@ -104,7 +104,7 @@ function SolutionHighlightCard({ feature }: { feature?: Feature }) {
           {feature?.title}
         </h3>
         <p
-          className={`font-satoshi text-[15px] sm:text-[16px] lg:text-[clamp(0.875rem,1.1vw,1rem)] leading-[1.5] tracking-normal ${variant.desc}`}
+          className={`font-satoshi text-[15px] sm:text-[16px] lg:text-[clamp(0.875rem,1.1vw,1rem)] leading-normal tracking-normal ${variant.desc}`}
         >
           {feature?.description}
         </p>

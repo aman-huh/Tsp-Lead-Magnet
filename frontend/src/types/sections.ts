@@ -1,7 +1,6 @@
 import {
   SectionHeader,
   ButtonComponent,
-  ClientShowcase,
   ProblemCard,
   Feature,
   CaseStudy,

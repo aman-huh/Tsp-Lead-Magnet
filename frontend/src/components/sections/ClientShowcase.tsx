@@ -85,7 +85,7 @@ function DynamicBrandLogo({ brands }: { brands?: Brand[] }) {
 
   return (
     <span
-      className="relative inline-flex items-center justify-center align-middle mx-[clamp(0.55rem,1.8vw,0.85rem)] sm:mx-[clamp(0.75rem,1.2vw,1.15rem)] w-[clamp(2.625rem,10.5vw,3.5rem)] h-[clamp(2.625rem,10.5vw,3.5rem)] sm:w-[clamp(3.125rem,3.8vw,4.75rem)] sm:h-[clamp(3.125rem,3.8vw,4.75rem)] aspect-square rounded-[8px] sm:rounded-[10px] border border-black/[0.08] overflow-hidden shrink-0 select-none -translate-y-[0.1em] sm:-translate-y-[0.12em] transition-[background-color] motion-reduce:transition-none"
+      className="relative inline-flex items-center justify-center align-middle mx-[clamp(0.55rem,1.8vw,0.85rem)] sm:mx-[clamp(0.75rem,1.2vw,1.15rem)] w-[clamp(2.625rem,10.5vw,3.5rem)] h-[clamp(2.625rem,10.5vw,3.5rem)] sm:w-[clamp(3.125rem,3.8vw,4.75rem)] sm:h-[clamp(3.125rem,3.8vw,4.75rem)] aspect-square rounded-lg sm:rounded-[10px] border border-black/8 overflow-hidden shrink-0 select-none translate-y-[-0.1em] sm:translate-y-[-0.12em] transition-[background-color] motion-reduce:transition-none"
       style={{
         backgroundColor: targetBgColor,
         transitionDuration: `${CROSSFADE_MS}ms`,
@@ -222,16 +222,16 @@ export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
   };
 
   return (
-    <section className="bg-[#95E7D30D] pt-[clamp(6rem,16vw,9rem)] sm:pt-[clamp(7rem,12vw,10.5rem)] xl:pt-0 flex flex-col justify-between overflow-hidden xl:h-screen xl:min-h-[640px]">
+    <section className="bg-[#95E7D30D] pt-[clamp(6rem,16vw,9rem)] sm:pt-[clamp(7rem,12vw,10.5rem)] xl:pt-0 flex flex-col justify-between overflow-hidden xl:h-screen xl:min-h-160">
       <div className="max-w-[1920px] mx-auto xl:my-auto w-full px-[clamp(1.25rem,4.2vw,2rem)] lg:px-[clamp(3.5rem,5.2vw,6.25rem)] text-left sm:text-center flex flex-col items-start sm:items-center">
-        <div className="w-full max-w-5xl lg:max-w-6xl 2xl:max-w-7xl 3xl:max-w-[90rem]">
+        <div className="w-full max-w-5xl lg:max-w-6xl 2xl:max-w-7xl 3xl:max-w-360">
           {badge && (
             <div className="hidden sm:block sm:mb-[clamp(1.5rem,2.1vw,2rem)] 2xl:mb-[clamp(2rem,2.5vw,2.5rem)] 3xl:mb-12">
               <Badge>{badge}</Badge>
             </div>
           )}
 
-          <h2 className="font-heading text-[clamp(2rem,8.8vw,2.5rem)] sm:text-[clamp(1.875rem,2.9vw,4.25rem)] 2xl:text-[clamp(3.85rem,3.4vw,4.625rem)] text-[#0F1D07] text-left sm:text-center leading-[1.12] sm:leading-[1.14] 2xl:leading-[1.25] tracking-[-0.02em] mx-auto">
+          <h2 className="font-heading text-[clamp(2rem,8.8vw,2.5rem)] sm:text-[clamp(1.875rem,2.9vw,4.25rem)] 2xl:text-[clamp(3.85rem,3.4vw,4.625rem)] text-[#0F1D07] text-left sm:text-center leading-[1.12] sm:leading-[1.14] 2xl:leading-tight tracking-[-0.02em] mx-auto">
             <span className="block sm:hidden">
               {renderTitleContent(mobileTitle, true)}
             </span>
@@ -241,7 +241,7 @@ export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
           </h2>
 
           {description && (
-            <p className="font-satoshi text-[clamp(0.83rem,3.4vw,1rem)] sm:text-[clamp(1rem,1.25vw,1.35rem)] 2xl:text-[clamp(1.2rem,1.1vw,1.6rem)] font-semibold text-[#0F1D07]/90 leading-[1.5] sm:leading-[1.55] max-w-md sm:max-w-[65%] lg:max-w-[55%] 2xl:max-w-[50%] sm:mx-auto mt-[clamp(1.25rem,4vw,1.75rem)] sm:mt-[clamp(1.5rem,1.828vw,2rem)] 2xl:mt-[clamp(2rem,1.8vw,2.5rem)]">
+            <p className="font-satoshi text-[clamp(0.83rem,3.4vw,1rem)] sm:text-[clamp(1rem,1.25vw,1.35rem)] 2xl:text-[clamp(1.2rem,1.1vw,1.6rem)] font-semibold text-[#0F1D07]/90 leading-normal sm:leading-[1.55] max-w-md sm:max-w-[65%] lg:max-w-[55%] 2xl:max-w-[50%] sm:mx-auto mt-[clamp(1.25rem,4vw,1.75rem)] sm:mt-[clamp(1.5rem,1.828vw,2rem)] 2xl:mt-[clamp(2rem,1.8vw,2.5rem)]">
               {description}
             </p>
           )}

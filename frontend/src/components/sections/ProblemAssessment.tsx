@@ -27,7 +27,7 @@ export default function ProblemAssessment({ data }: ProblemAssessmentProps) {
           )}
         </h2>
         {(description || header?.mobileDescription) && (
-          <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-medium leading-[1.5] tracking-normal w-auto max-w-xl 2xl:max-w-2xl">
+          <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-medium leading-normal tracking-normal w-auto max-w-xl 2xl:max-w-2xl">
             {header?.mobileDescription ? (
               <>
                 <span className="block lg:hidden">{header.mobileDescription}</span>

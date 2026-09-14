@@ -53,7 +53,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
       onClick={handleCardClick}
       className={`bg-[#1B2F10] ${
         hasHoverList ? "" : "hover:bg-[#254419]"
-      } rounded-[12px] p-[clamp(0.95rem,1.8vw,2.25rem)] flex flex-col justify-between aspect-[331/421] sm:aspect-[4/3] lg:aspect-[331/421] max-h-[300px] sm:max-h-[310px] md:max-h-[340px] lg:max-h-[420px] min-h-[210px] h-full w-full relative group overflow-hidden transition-all duration-300 ${
+      } rounded-xl p-[clamp(0.95rem,1.8vw,2.25rem)] flex flex-col justify-between aspect-331/421 sm:aspect-4/3 lg:aspect-331/421 max-h-75 sm:max-h-77.5 md:max-h-85 lg:max-h-105 min-h-52.5 h-full w-full relative group overflow-hidden transition-all duration-300 ${
         hasHoverList ? "cursor-pointer" : ""
       }`}
     >
@@ -107,7 +107,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
 
       {hasHoverList && (
         <div
-          className={`absolute inset-0 z-20 bg-[#2D4620] p-[clamp(0.75rem,1.6vw,1.75rem)] flex flex-col justify-start transition-opacity duration-300 ease-out rounded-[12px] overflow-y-auto no-scrollbar ${
+          className={`absolute inset-0 z-20 bg-[#2D4620] p-[clamp(0.75rem,1.6vw,1.75rem)] flex flex-col justify-start transition-opacity duration-300 ease-out rounded-xl overflow-y-auto no-scrollbar ${
             isTapped
               ? "opacity-100 pointer-events-auto"
               : "opacity-0 pointer-events-none lg:group-hover:opacity-100 lg:group-hover:pointer-events-auto lg:group-hover:duration-500"
@@ -123,7 +123,7 @@ function ContentCardItem({ card }: { card: ProcessCard }) {
                 className={`flex items-center gap-[4.5px] sm:gap-2.5 py-1.75 sm:py-3.5 lg:py-[clamp(0.75rem,0.7vw,0.65rem)] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
                   isTapped
                     ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-3 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 delay-0 lg:group-hover:[transition-delay:var(--enter-delay)]"
+                    : "opacity-0 translate-y-3 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 delay-0 lg:group-hover:delay-(--enter-delay)"
                 }`}
               >
                 <svg
@@ -157,7 +157,7 @@ function MediaCardItem({ card }: { card: ProcessCard }) {
 
   if (isVideo && card.media?.url) {
     return (
-      <div className="bg-black rounded-[12px] overflow-hidden relative w-full h-full aspect-[755/421] max-h-[420px] flex items-center justify-center">
+      <div className="bg-black rounded-xl overflow-hidden relative w-full h-full aspect-755/421 max-h-105 flex items-center justify-center">
         <video
           src={getStrapiMediaUrl(card.media.url)}
           autoPlay
@@ -172,20 +172,20 @@ function MediaCardItem({ card }: { card: ProcessCard }) {
 
   if (card.media?.url) {
     return (
-      <div className="bg-white rounded-[12px] overflow-hidden relative w-full h-full aspect-[755/421] max-h-[420px] flex items-center justify-center p-3 sm:p-4">
+      <div className="bg-white rounded-xl overflow-hidden relative w-full h-full aspect-755/421 max-h-105 flex items-center justify-center p-3 sm:p-4">
         <Image
           src={getStrapiMediaUrl(card.media.url)}
           alt={card.media.alternativeText || "Strategic design process"}
           width={card.media.width || 1679}
           height={card.media.height || 937}
-          className="w-full h-full object-contain rounded-[12px]"
+          className="w-full h-full object-contain rounded-xl"
         />
       </div>
     );
   }
 
   return (
-    <div className="bg-[#1B2F10] rounded-[12px] w-full h-full aspect-[755/421] max-h-[420px]" />
+    <div className="bg-[#1B2F10] rounded-xl w-full h-full aspect-755/421 max-h-105" />
   );
 }
 
@@ -293,10 +293,10 @@ export default function OurProcess({ data }: OurProcessProps) {
                 {row.map((card) => {
                   const isWide = card.size === "wide" || card.variant === "media";
                   const spanClass = isWide ? "col-span-2 lg:col-span-1" : "col-span-1 lg:col-span-1";
-                  const orderClass = isWide ? "order-first lg:order-none" : "";
+                  const orderClass = isWide ? "order-first lg:order-0" : "";
                   const maxHClass = isWide
-                    ? "max-h-[420px]"
-                    : "max-h-[420px] sm:max-h-[280px] md:max-h-[300px] lg:max-h-[420px]";
+                    ? "max-h-105"
+                    : "max-h-105 sm:max-h-70 md:max-h-75 lg:max-h-105";
 
                   return (
                     <div key={card.id} className={`${spanClass} ${orderClass} h-full ${maxHClass}`}>

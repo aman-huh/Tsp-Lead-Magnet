@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Button from "@/components/shared/Button";
 import { LeadForm as LeadFormType, FormField, BudgetRange } from "@/types";
 import { submitLead } from "@/services/lead";
 
@@ -286,7 +285,7 @@ export default function ModalForm({
               >
                 {isMulti ? (
                   <span
-                    className={`w-4 h-4 rounded-[4px] border-[1.5px] flex items-center justify-center shrink-0 transition-colors ${
+                    className={`w-4 h-4 rounded-sm border-[1.5px] flex items-center justify-center shrink-0 transition-colors ${
                       active
                         ? "border-[#18181B] bg-[#18181B] text-white"
                         : "border-[#4B5563]"
@@ -573,7 +572,7 @@ export default function ModalForm({
                     onClick={() => {
                       if (isClickable) setCurrentStep(i);
                     }}
-                    className={`h-[2px] flex-1 transition-colors duration-300 ${
+                    className={`h-0.5 flex-1 transition-colors duration-300 ${
                       isClickable ? "cursor-pointer" : "cursor-default"
                     } ${isCompletedOrCurrent ? "bg-[#18181B]" : "bg-[#D8D8DC]"}`}
                   />
@@ -614,7 +613,7 @@ export default function ModalForm({
             autoComplete="off"
             value={honeypot}
             onChange={(e) => setHoneypot(e.target.value)}
-            className="opacity-0 absolute -top-[9999px] left-0 h-0 w-0 pointer-events-none"
+            className="opacity-0 absolute top-[-9999px] left-0 h-0 w-0 pointer-events-none"
             aria-hidden="true"
           />
           {submitted ? (

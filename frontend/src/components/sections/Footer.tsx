@@ -258,8 +258,8 @@ export default function Footer({ data }: FooterProps) {
       <span className="font-delight text-[clamp(44px,4.2vw,100px)] font-medium leading-none text-white whitespace-nowrap">
         {marqueeText}
       </span>
-      <div className="group relative flex h-[78px] w-[78px] sm:h-[114px] sm:w-[114px] lg:h-[122px] lg:w-[122px] shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-[#7DE7D0]">
-        <div className="relative h-[32px] w-[32px] sm:h-[46px] sm:w-[46px] lg:h-[48px] lg:w-[48px]">
+      <div className="group relative flex h-19.5 w-19.5 sm:h-28.5 sm:w-28.5 lg:h-30.5 lg:w-30.5 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-[#7DE7D0]">
+        <div className="relative h-8 w-8 sm:h-11.5 sm:w-11.5 lg:h-12 lg:w-12">
           <svg
             viewBox="0 0 54 54"
             fill="none"
@@ -304,7 +304,7 @@ export default function Footer({ data }: FooterProps) {
                   alt="Logo"
                   width={64}
                   height={64}
-                  className="w-[clamp(48px,3.8vw,72px)] h-[clamp(48px,3.8vw,72px)] -translate-y-[0.05em] animate-spin-pause shrink-0 object-contain"
+                  className="w-[clamp(48px,3.8vw,72px)] h-[clamp(48px,3.8vw,72px)] translate-y-[-0.05em] animate-spin-pause shrink-0 object-contain"
                 />
               )}
               {hasLogoPlaceholder && headingParts[1]?.trim() && (
@@ -312,7 +312,7 @@ export default function Footer({ data }: FooterProps) {
               )}
             </h2>
 
-            <div className="mt-4 space-y-2 text-white font-satoshi text-[10.5px] sm:text-[12px] leading-[1.65] max-w-[550px]">
+            <div className="mt-4 space-y-2 text-white font-satoshi text-[10.5px] sm:text-[12px] leading-[1.65] max-w-137.5">
               {description && (
                 <p className="font-medium text-white/95">{description}</p>
               )}
@@ -358,7 +358,7 @@ export default function Footer({ data }: FooterProps) {
 
           <div className="flex flex-col w-full lg:contents">
             <div className="grid grid-cols-2 gap-x-6 sm:gap-x-10 gap-y-8 lg:contents">
-              <div className="order-2 lg:order-none flex flex-col">
+              <div className="order-2 lg:order-0 flex flex-col">
                 <p className="font-satoshi! text-[clamp(13px,0.95vw,15px)] font-bold text-white tracking-wide mb-3 sm:mb-4 lg:mb-5">
                   Contact
                 </p>
@@ -404,7 +404,7 @@ export default function Footer({ data }: FooterProps) {
                 </div>
               </div>
 
-              <div className="order-1 lg:order-none flex flex-col">
+              <div className="order-1 lg:order-0 flex flex-col">
                 <p className="font-satoshi! text-[clamp(13px,0.95vw,15px)] font-bold text-white tracking-wide mb-3 sm:mb-4 lg:mb-5">
                   Quick Links
                 </p>

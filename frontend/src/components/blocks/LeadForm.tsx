@@ -485,7 +485,7 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
           autoComplete="off"
           value={honeypot}
           onChange={(e) => setHoneypot(e.target.value)}
-          className="opacity-0 absolute -top-[9999px] left-0 h-0 w-0 pointer-events-none"
+          className="opacity-0 absolute top-[-9999px] left-0 h-0 w-0 pointer-events-none"
           aria-hidden="true"
         />
         {submitted ? (

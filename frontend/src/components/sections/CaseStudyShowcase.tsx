@@ -9,11 +9,55 @@ interface CaseStudyShowcaseProps {
   data?: CaseStudyShowcaseSection;
 }
 
+const DESKTOP_DUST_DOTS = [
+  { left: "4px", top: "48%", size: "5px", bg: "#FFFFFF", glow: "0 0 8px #FFFFFF, 0 0 16px #38BDF8, 0 0 24px rgba(49,69,221,0.8)", anim: "animate-dust-1", delay: "0s" },
+  { left: "6px", top: "36%", size: "2.5px", bg: "#93C5FD", glow: "0 0 6px #38BDF8", anim: "animate-dust-2", delay: "0.4s" },
+  { left: "5px", top: "62%", size: "2.5px", bg: "#A78BFA", glow: "0 0 6px #C084FC", anim: "animate-dust-3", delay: "0.8s" },
+  { left: "8px", top: "25%", size: "1.5px", bg: "#E0F2FE", glow: "0 0 4px #38BDF8", anim: "animate-dust-1", delay: "1.2s" },
+  { left: "7px", top: "75%", size: "2px", bg: "#60A5FA", glow: "0 0 5px #3145DD", anim: "animate-dust-2", delay: "0.6s" },
+  { left: "14px", top: "42%", size: "5.5px", bg: "#FFFFFF", glow: "0 0 10px #FFFFFF, 0 0 20px #38BDF8, 0 0 28px rgba(49,69,221,0.9)", anim: "animate-dust-3", delay: "0.3s" },
+  { left: "16px", top: "54%", size: "3px", bg: "#38BDF8", glow: "0 0 8px #38BDF8", anim: "animate-dust-1", delay: "1.5s" },
+  { left: "18px", top: "28%", size: "3.5px", bg: "#67E8F9", glow: "0 0 8px #38BDF8", anim: "animate-dust-2", delay: "0.9s" },
+  { left: "20px", top: "66%", size: "3px", bg: "#C084FC", glow: "0 0 8px #A855F7", anim: "animate-dust-3", delay: "0.1s" },
+  { left: "22px", top: "38%", size: "2px", bg: "#BAE6FD", glow: "0 0 5px #38BDF8", anim: "animate-dust-1", delay: "1.8s" },
+  { left: "25px", top: "78%", size: "2.5px", bg: "#818CF8", glow: "0 0 6px #4F46E5", anim: "animate-dust-2", delay: "1.1s" },
+  { left: "28px", top: "18%", size: "1.5px", bg: "#E0E7FF", glow: "0 0 4px #818CF8", anim: "animate-dust-3", delay: "0.5s" },
+  { left: "30px", top: "48%", size: "2px", bg: "#E0F2FE", glow: "0 0 5px #38BDF8", anim: "animate-dust-1", delay: "2.1s" },
+  { left: "34px", top: "32%", size: "4px", bg: "#FFFFFF", glow: "0 0 8px #FFFFFF, 0 0 14px #38BDF8", anim: "animate-dust-2", delay: "1.3s" },
+  { left: "38px", top: "58%", size: "4px", bg: "#38BDF8", glow: "0 0 10px #38BDF8, 0 0 18px #3145DD", anim: "animate-dust-3", delay: "0.7s" },
+  { left: "42px", top: "24%", size: "2.5px", bg: "#C084FC", glow: "0 0 6px #C084FC", anim: "animate-dust-1", delay: "1.6s" },
+  { left: "45px", top: "68%", size: "3px", bg: "#60A5FA", glow: "0 0 7px #38BDF8", anim: "animate-dust-2", delay: "0.2s" },
+  { left: "48px", top: "44%", size: "2px", bg: "#E0F2FE", glow: "0 0 5px #38BDF8", anim: "animate-dust-3", delay: "1.9s" },
+  { left: "52px", top: "82%", size: "1.5px", bg: "#A78BFA", glow: "0 0 4px #A78BFA", anim: "animate-dust-1", delay: "0.8s" },
+  { left: "56px", top: "34%", size: "3px", bg: "#BAE6FD", glow: "0 0 7px #38BDF8", anim: "animate-dust-2", delay: "1.4s" },
+  { left: "60px", top: "54%", size: "3.5px", bg: "#38BDF8", glow: "0 0 8px #38BDF8", anim: "animate-dust-3", delay: "0.6s" },
+  { left: "64px", top: "28%", size: "1.5px", bg: "#FFFFFF", glow: "0 0 5px #FFFFFF", anim: "animate-dust-1", delay: "2.3s" },
+  { left: "68px", top: "64%", size: "2px", bg: "#818CF8", glow: "0 0 5px #818CF8", anim: "animate-dust-2", delay: "1.0s" },
+  { left: "72px", top: "42%", size: "2px", bg: "#67E8F9", glow: "0 0 5px #38BDF8", anim: "animate-dust-3", delay: "1.7s" },
+  { left: "76px", top: "50%", size: "1.5px", bg: "#C084FC", glow: "0 0 4px #C084FC", anim: "animate-dust-1", delay: "0.4s" },
+];
+
+const MOBILE_DUST_DOTS = [
+  { left: "48%", top: "3px", size: "3.5px", bg: "#FFFFFF", glow: "0 0 6px #FFFFFF, 0 0 12px #38BDF8", anim: "animate-dust-1", delay: "0s" },
+  { left: "38%", top: "5px", size: "2px", bg: "#93C5FD", glow: "0 0 4px #38BDF8", anim: "animate-dust-2", delay: "0.4s" },
+  { left: "58%", top: "6px", size: "2px", bg: "#A78BFA", glow: "0 0 5px #C084FC", anim: "animate-dust-3", delay: "0.8s" },
+  { left: "50%", top: "11px", size: "4px", bg: "#FFFFFF", glow: "0 0 8px #FFFFFF, 0 0 14px #38BDF8", anim: "animate-dust-1", delay: "0.2s" },
+  { left: "42%", top: "14px", size: "2.5px", bg: "#38BDF8", glow: "0 0 6px #38BDF8", anim: "animate-dust-2", delay: "1.2s" },
+  { left: "62%", top: "16px", size: "2px", bg: "#C084FC", glow: "0 0 5px #A855F7", anim: "animate-dust-3", delay: "0.6s" },
+  { left: "32%", top: "18px", size: "1.5px", bg: "#BAE6FD", glow: "0 0 4px #38BDF8", anim: "animate-dust-1", delay: "1.5s" },
+  { left: "52%", top: "22px", size: "3px", bg: "#38BDF8", glow: "0 0 7px #38BDF8", anim: "animate-dust-2", delay: "0.9s" },
+  { left: "68%", top: "24px", size: "1.5px", bg: "#818CF8", glow: "0 0 4px #818CF8", anim: "animate-dust-3", delay: "1.7s" },
+  { left: "44%", top: "28px", size: "2px", bg: "#FFFFFF", glow: "0 0 4px #FFFFFF", anim: "animate-dust-1", delay: "0.5s" },
+  { left: "56%", top: "32px", size: "2.5px", bg: "#93C5FD", glow: "0 0 5px #38BDF8", anim: "animate-dust-2", delay: "1.4s" },
+  { left: "36%", top: "36px", size: "1.5px", bg: "#A78BFA", glow: "0 0 4px #A78BFA", anim: "animate-dust-3", delay: "0.7s" },
+  { left: "48%", top: "40px", size: "2px", bg: "#38BDF8", glow: "0 0 5px #38BDF8", anim: "animate-dust-1", delay: "1.1s" },
+  { left: "60%", top: "44px", size: "1.5px", bg: "#C084FC", glow: "0 0 4px #C084FC", anim: "animate-dust-2", delay: "1.8s" },
+];
+
 function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
   const [position, setPosition] = useState(50);
   const [isVertical, setIsVertical] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [studyKey, setStudyKey] = useState(study?.id);
 
   useEffect(() => {
     const checkOrientation = () => {
@@ -24,13 +68,11 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
     return () => window.removeEventListener("resize", checkOrientation);
   }, []);
 
-  // Reset to 50% instantly when switching to a different study (no animation flash)
-  useEffect(() => {
-    if (study?.id !== studyKey) {
-      setPosition(50);
-      setStudyKey(study?.id);
-    }
-  }, [study?.id, studyKey]);
+  const [prevStudyId, setPrevStudyId] = useState(study?.id);
+  if (study?.id !== prevStudyId) {
+    setPrevStudyId(study?.id);
+    setPosition(50);
+  }
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -95,7 +137,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
   return (
     <div
       ref={containerRef}
-      className={`relative w-full aspect-[9/16] md:aspect-[1720/969] rounded-xl md:rounded-2xl overflow-hidden select-none bg-white ${
+      className={`relative w-full aspect-9/16 md:aspect-1720/969 rounded-xl md:rounded-2xl overflow-hidden select-none bg-white ${
         isVertical ? "touch-pan-y cursor-default" : "touch-none cursor-pointer"
       }`}
       onPointerDown={handleContainerPointerDown}
@@ -196,7 +238,6 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
         {study?.afterLabel || "After"}
       </div>
 
-      {/* Slider Line & Thumb Drag Handler */}
       <div
         className={`absolute z-30 flex items-center justify-center select-none ${
           isVertical
@@ -214,68 +255,57 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
             isVertical ? "left-0 right-0 h-0.5" : "top-0 bottom-0 w-0.5"
           }`}
         />
-        <div className="relative z-10 flex h-11 w-11 sm:h-13 sm:w-13 items-center justify-center rounded-full bg-black text-white shadow-[0_8px_24px_rgba(0,0,0,0.24)] pointer-events-none">
+        <div className="relative z-10 flex h-11 w-11 sm:h-13 sm:w-13 shrink-0 aspect-square items-center justify-center rounded-full bg-[#090C15] border border-white/35 animate-slider-handle-pulse pointer-events-none transition-transform duration-200">
+          <div className="relative w-6 h-6 sm:w-7 sm:h-7 shrink-0 aspect-square flex items-center justify-center pointer-events-none select-none">
+            <Image
+              src="/footercircle.avif"
+              alt="Thumbstack Logo"
+              width={40}
+              height={40}
+              className="w-full h-full object-contain brightness-125 pointer-events-none select-none"
+              style={{
+                filter:
+                  "drop-shadow(0 0 4px #ffffff) drop-shadow(0 0 10px #38bdf8) drop-shadow(0 0 20px rgba(49,69,221,0.7))",
+              }}
+              draggable={false}
+            />
+          </div>
+
           {isVertical ? (
-            <div className="flex flex-col items-center gap-1">
-              <svg
-                viewBox="0 0 14 8"
-                fill="none"
-                className="w-3.5 h-2"
-                aria-hidden="true"
-              >
-                <path
-                  d="M1.5 6.5L7 1.5L12.5 6.5"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+            <div className="absolute top-[calc(100%+4px)] left-1/2 -translate-x-1/2 w-20 h-14 pointer-events-none">
+              {MOBILE_DUST_DOTS.map((dot, idx) => (
+                <span
+                  key={idx}
+                  className={`absolute rounded-full pointer-events-none ${dot.anim}`}
+                  style={{
+                    left: dot.left,
+                    top: dot.top,
+                    width: dot.size,
+                    height: dot.size,
+                    backgroundColor: dot.bg,
+                    boxShadow: dot.glow,
+                    animationDelay: dot.delay,
+                  }}
                 />
-              </svg>
-              <svg
-                viewBox="0 0 14 8"
-                fill="none"
-                className="w-3.5 h-2"
-                aria-hidden="true"
-              >
-                <path
-                  d="M1.5 1.5L7 6.5L12.5 1.5"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              ))}
             </div>
           ) : (
-            <div className="flex items-center gap-2">
-              <svg
-                viewBox="0 0 8 14"
-                fill="none"
-                className="h-4 w-2.5"
-                aria-hidden="true"
-              >
-                <path
-                  d="M6.5 1.5L1.5 7L6.5 12.5"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+            <div className="absolute left-[calc(100%+6px)] top-1/2 -translate-y-1/2 w-20 sm:w-24 h-20 sm:h-24 pointer-events-none">
+              {DESKTOP_DUST_DOTS.map((dot, idx) => (
+                <span
+                  key={idx}
+                  className={`absolute rounded-full pointer-events-none ${dot.anim}`}
+                  style={{
+                    left: dot.left,
+                    top: dot.top,
+                    width: dot.size,
+                    height: dot.size,
+                    backgroundColor: dot.bg,
+                    boxShadow: dot.glow,
+                    animationDelay: dot.delay,
+                  }}
                 />
-              </svg>
-              <svg
-                viewBox="0 0 8 14"
-                fill="none"
-                className="h-4 w-2.5"
-                aria-hidden="true"
-              >
-                <path
-                  d="M1.5 1.5L6.5 7L1.5 12.5"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              ))}
             </div>
           )}
         </div>
@@ -313,7 +343,7 @@ export default function CaseStudyShowcase({ data }: CaseStudyShowcaseProps) {
               title
             )}
           </h2>
-          <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-medium leading-[1.5] tracking-normal w-full lg:w-[60%]">
+          <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.125rem)] font-medium leading-normal tracking-normal w-full lg:w-[60%]">
             {header?.mobileDescription ? (
               <>
                 <span className="block lg:hidden">{header.mobileDescription}</span>

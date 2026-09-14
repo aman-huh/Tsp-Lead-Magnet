@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { OurWorkSection, Brand } from "@/types";
+import { OurWorkSection } from "@/types";
 import { getStrapiMediaUrl } from "@/lib/fetcher";
 
 interface OurWorkProps {
@@ -138,7 +138,7 @@ export default function OurWork({ data }: OurWorkProps) {
                 )}
               </h2>
               {(description || header?.mobileDescription) && (
-                <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.2rem)] font-semibold leading-[1.5] tracking-normal w-full sm:w-[85%] lg:w-[77%]">
+                <p className="font-satoshi text-[clamp(0.8125rem,4.2vw,1.2rem)] font-semibold leading-normal tracking-normal w-full sm:w-[85%] lg:w-[77%]">
                   {header?.mobileDescription ? (
                     <>
                       <span className="block lg:hidden">{header.mobileDescription}</span>
@@ -217,7 +217,7 @@ export default function OurWork({ data }: OurWorkProps) {
       </div>
 
       <div
-        className="relative w-full aspect-[375/580] sm:aspect-[1920/680] overflow-hidden shadow-sm touch-pan-y select-none cursor-grab active:cursor-grabbing"
+        className="relative w-full aspect-375/580 sm:aspect-1920/680 overflow-hidden shadow-sm touch-pan-y select-none cursor-grab active:cursor-grabbing"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}

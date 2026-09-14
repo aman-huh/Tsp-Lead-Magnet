@@ -226,7 +226,7 @@ export default function Navbar({ className = "", data }: NavbarProps) {
     <>
       <header
         ref={headerRef}
-        className={`fixed top-0 left-0 w-full h-[clamp(4.25rem,5vw,5.5rem)] flex items-center justify-between px-[clamp(1.25rem,4.2vw,2rem)] lg:px-[clamp(3.5rem,5.2vw,6.25rem)] transition-all duration-500 z-[10001] ${className}`}
+        className={`fixed top-0 left-0 w-full h-[clamp(4.25rem,5vw,5.5rem)] flex items-center justify-between px-[clamp(1.25rem,4.2vw,2rem)] lg:px-[clamp(3.5rem,5.2vw,6.25rem)] transition-all duration-500 z-10001 ${className}`}
         style={{ background: "transparent", backdropFilter: "none" }}
       >
         <div ref={logoRef} className="flex items-center">
@@ -245,7 +245,7 @@ export default function Navbar({ className = "", data }: NavbarProps) {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 preserveAspectRatio="xMinYMin meet"
-                className="h-[clamp(1.25rem,4.2vw,1.625rem)] w-auto max-w-none inline-block overflow-hidden transition-all duration-600 ease-[cubic-bezier(0.76,0,0.24,1)] aspect-[194/32]"
+                className="h-[clamp(1.25rem,4.2vw,1.625rem)] w-auto max-w-none inline-block overflow-hidden transition-all duration-600 ease-[cubic-bezier(0.76,0,0.24,1)] aspect-194/32"
               >
                 <path
                   d="M19.36 5.832H11.92V25H7.712V5.832H0.272V2.12H19.36V5.832Z"
@@ -268,7 +268,7 @@ export default function Navbar({ className = "", data }: NavbarProps) {
         <button
           ref={buttonRef}
           type="button"
-          className="group relative flex items-center justify-center rounded-full transition-all duration-300 w-[44px] h-[44px] sm:w-[48px] sm:h-[48px] md:w-[54px] md:h-[54px] lg:w-[56px] lg:h-[56px] shrink-0 cursor-pointer"
+          className="group relative flex items-center justify-center rounded-full transition-all duration-300 w-11 h-11 sm:w-12 sm:h-12 md:w-13.5 md:h-13.5 lg:w-14 lg:h-14 shrink-0 cursor-pointer"
           aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
           onClick={() => setIsMenuOpen((prev) => !prev)}
           style={{
@@ -285,7 +285,7 @@ export default function Navbar({ className = "", data }: NavbarProps) {
             viewBox="0 0 30 30"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="w-[24px] h-[24px] sm:w-[26px] sm:h-[26px] md:w-[28px] md:h-[28px] lg:w-[30px] lg:h-[30px] transition-colors duration-400 ease-[cubic-bezier(0.76,0,0.24,1)]"
+            className="w-6 h-6 sm:w-6.5 sm:h-6.5 md:w-7 md:h-7 lg:w-7.5 lg:h-7.5 transition-colors duration-400 ease-[cubic-bezier(0.76,0,0.24,1)]"
             style={{
               color: effectiveButtonDark ? "#FFFFFF" : "#3145DD",
             }}
@@ -352,7 +352,7 @@ export default function Navbar({ className = "", data }: NavbarProps) {
         data-lenis-prevent="true"
         data-lenis-prevent-wheel="true"
         data-lenis-prevent-touch="true"
-        className={`fixed top-0 right-0 w-full z-[9999] transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] h-[100dvh] md:h-full md:grid md:grid-cols-[1.4fr_1fr] custom-menu-overlay overflow-hidden ${isMenuOpen
+        className={`fixed top-0 right-0 w-full z-9999 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] h-dvh md:h-full md:grid md:grid-cols-[1.4fr_1fr] custom-menu-overlay overflow-hidden ${isMenuOpen
             ? "translate-x-0 pointer-events-auto"
             : "translate-x-full pointer-events-none"
           }`}
@@ -365,7 +365,7 @@ export default function Navbar({ className = "", data }: NavbarProps) {
         aria-hidden={!isMenuOpen}
       >
         <div className="w-full h-full md:contents custom-menu-wrapper">
-          <div className="bg-transparent h-full md:h-full w-full flex flex-col relative overflow-y-auto scrollbar-hide px-6 sm:px-16 pt-[72px] pb-6 md:pt-[120px] md:pb-[100px] custom-menu-left">
+          <div className="bg-transparent h-full md:h-full w-full flex flex-col relative overflow-y-auto scrollbar-hide px-6 sm:px-16 pt-18 pb-6 md:pt-30 md:pb-25 custom-menu-left">
             <nav className="flex flex-col gap-5 sm:gap-7 md:gap-9 pl-4 sm:pl-6 md:pl-12 lg:pl-20 xl:pl-24 custom-menu-nav">
               {pageLinks.map((item, idx) => {
                 const resolved = resolveLink(item.URL, item.text);
@@ -431,14 +431,14 @@ export default function Navbar({ className = "", data }: NavbarProps) {
             </div>
 
             {/* Social Icons */}
-            <div className="absolute bottom-4 right-4 md:fixed md:bottom-[40px] md:left-1/2 md:-translate-x-1/2 md:right-auto ml-0 md:ml-[4px] z-[10000] flex gap-6 text-white/70 justify-center">
+            <div className="absolute bottom-4 right-4 md:fixed md:bottom-10 md:left-1/2 md:-translate-x-1/2 md:right-auto ml-0 md:ml-1 z-10000 flex gap-6 text-white/70 justify-center">
               <svg
                 width="140"
                 height="27"
                 viewBox="0 0 140 27"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-[100px] h-auto md:w-[140px] hover:opacity-80 transition-opacity cursor-pointer"
+                className="w-25 h-auto md:w-35 hover:opacity-80 transition-opacity cursor-pointer"
               >
                 <g style={{ mixBlendMode: "luminosity" }}>
                   <a
@@ -545,9 +545,9 @@ export default function Navbar({ className = "", data }: NavbarProps) {
           </div>
 
           {/* Desktop Right Column */}
-          <div className="bg-transparent pt-[118px] h-full w-full hidden md:flex flex-col items-start justify-start px-12 md:pl-24 lg:px-24 lg:pl-40 xl:pl-48 overflow-y-auto custom-menu-right">
+          <div className="bg-transparent pt-29.5 h-full w-full hidden md:flex flex-col items-start justify-start px-12 md:pl-24 lg:px-24 lg:pl-40 xl:pl-48 overflow-y-auto custom-menu-right">
             <div
-              className="flex flex-col w-full lg:min-w-[280px] max-w-sm font-satoshi"
+              className="flex flex-col w-full lg:min-w-70 max-w-sm font-satoshi"
               style={{ fontFamily: "var(--font-satoshi)" }}
             >
               <h3 className="text-white text-[18px] font-bold mb-5">Contact</h3>
@@ -572,7 +572,7 @@ export default function Navbar({ className = "", data }: NavbarProps) {
                     {c.email && (
                       <a
                         href={`mailto:${c.email}`}
-                        className="text-white/70 text-[14px] font-normal underline underline-offset-[4px] decoration-white/30 hover:text-white hover:decoration-white transition-colors block"
+                        className="text-white/70 text-[14px] font-normal underline underline-offset-4 decoration-white/30 hover:text-white hover:decoration-white transition-colors block"
                       >
                         {c.email}
                       </a>
@@ -580,13 +580,13 @@ export default function Navbar({ className = "", data }: NavbarProps) {
                   </div>
                 ))}
 
-                <div className="relative group shrink-0 w-[150px] h-[45px] mt-2">
+                <div className="relative group shrink-0 w-37.5 h-11.25 mt-2">
                   <div
-                    className="absolute inset-0 bg-[#95E7D3] rounded-[16px] opacity-0 scale-95 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
+                    className="absolute inset-0 bg-[#95E7D3] rounded-2xl opacity-0 scale-95 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100"
                     style={{ transform: "translate(3px, 3px)" }}
                   />
                   <a
-                    className="absolute inset-0 bg-[#3145DD] text-white rounded-[16px] text-[14px] font-bold flex items-center justify-center gap-2 border border-[#3145DD] transition-transform duration-300 translate-x-0 translate-y-0 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 font-satoshi cursor-pointer"
+                    className="absolute inset-0 bg-[#3145DD] text-white rounded-2xl text-[14px] font-bold flex items-center justify-center gap-2 border border-[#3145DD] transition-transform duration-300 translate-x-0 translate-y-0 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 font-satoshi cursor-pointer"
                     style={{ fontFamily: "var(--font-satoshi)" }}
                     href={ctaUrl}
                     onClick={() => setIsMenuOpen(false)}
