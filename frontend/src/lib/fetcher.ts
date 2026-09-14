@@ -18,8 +18,8 @@ export async function fetcher<T>(
   options: FetcherOptions = {}
 ): Promise<T> {
   const { params, ...fetchOptions } = options;
-
-  const url = new URL(endpoint, STRAPI_URL);
+  const cleanEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+  const url = new URL(`${STRAPI_URL}${cleanEndpoint}`);
 
   if (params) {
     Object.entries(params).forEach(([key, value]) => {

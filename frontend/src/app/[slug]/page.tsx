@@ -8,6 +8,8 @@ import { getAllPages, getPageBySlug } from "@/services/page";
 import { getBrands } from "@/services/brand";
 import { HeroSection, AuditBarData, SharedButtonSection, NavbarSection } from "@/types";
 
+export const dynamic = "force-dynamic";
+
 interface PageProps {
   params: Promise<{ slug: string }>;
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export interface ButtonProps {
   text?: string;
@@ -99,16 +100,10 @@ export default function Button({
       ? "outline"
       : variant;
 
-  const customRadiusMatch = className.match(/(^|\s)(rounded(?:-[a-z0-9\[\]]+)?)/);
-  const customRadius = customRadiusMatch ? customRadiusMatch[2] : null;
-  const shapeClass = customRadius || (shape === "rounded" ? "rounded-xl sm:rounded-[14px]" : "rounded-full");
+  const shapeClass = shape === "rounded" ? "rounded-xl sm:rounded-[14px]" : "rounded-full";
 
   const offsetColorClass =
     theme === "light" ? "bg-[#3145DD]" : "bg-[#95E7D3]";
-
-  const hasCustomText = /(^|\s)text-/.test(className);
-  const hasCustomPadding = /(^|\s)(p-|px-|py-)/.test(className);
-  const hasCustomGap = /(^|\s)gap-/.test(className);
 
   const pillPaddings = {
     sm: "px-[clamp(0.75rem,1.5vw,1rem)] py-[clamp(0.25rem,0.7vw,0.4rem)]",
@@ -136,10 +131,6 @@ export default function Button({
     lg: "gap-[clamp(0.5rem,1vw,0.625rem)]",
   };
 
-  const appliedPadding = hasCustomPadding ? "" : sizePaddings[size];
-  const appliedTextSize = hasCustomText ? "" : sizeTextSizes[size];
-  const appliedGap = hasCustomGap ? "" : sizeGaps[size];
-
   let surfaceVariantClass = "";
   if (normalizedVariant === "action") {
     surfaceVariantClass =
@@ -166,11 +157,28 @@ export default function Button({
     ? ""
     : "group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 sm:group-hover:-translate-x-1 sm:group-hover:-translate-y-1 active:translate-x-0 active:translate-y-0";
 
-  const surfaceClasses = `relative z-10 inline-flex items-center justify-center font-satoshi cursor-pointer transition-transform duration-300 translate-x-0 translate-y-0 ${hoverElevationClasses} disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none ${shapeClass} ${appliedPadding} ${appliedTextSize} ${appliedGap} ${surfaceVariantClass} ${className}`;
+  const surfaceClasses = cn(
+    "relative z-10 inline-flex items-center justify-center font-satoshi cursor-pointer transition-transform duration-300 translate-x-0 translate-y-0",
+    hoverElevationClasses,
+    "disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none",
+    shapeClass,
+    sizePaddings[size],
+    sizeTextSizes[size],
+    sizeGaps[size],
+    surfaceVariantClass,
+    className
+  );
+
+  const customRadiusMatch = className.match(/(^|\s)(rounded(?:-[a-z0-9\[\]]+)?)/);
+  const backingShapeClass = customRadiusMatch ? customRadiusMatch[2] : shapeClass;
 
   const backingClasses = noHover
     ? "hidden"
-    : `absolute inset-0 z-0 ${shapeClass} ${offsetColorClass} opacity-0 scale-95 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 pointer-events-none`;
+    : cn(
+        "absolute inset-0 z-0 opacity-0 scale-95 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 pointer-events-none",
+        backingShapeClass,
+        offsetColorClass
+      );
 
   const arrow =
     showArrow &&

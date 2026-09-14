@@ -42,17 +42,6 @@ export default function BrandFit({ data }: BrandFitProps) {
         ));
     }
 
-    const match = text.match(/^(where\s+this)\s+(engagement\s+works,?)\s+(.*)$/i);
-    if (match) {
-      return (
-        <>
-          <span className="block whitespace-nowrap">{match[1]}</span>
-          <span className="block whitespace-nowrap">{match[2]}</span>
-          <span className="block whitespace-nowrap">{match[3]}</span>
-        </>
-      );
-    }
-
     const words = text.trim().split(/\s+/);
     if (words.length <= 3) {
       return <span className="block whitespace-nowrap">{text}</span>;

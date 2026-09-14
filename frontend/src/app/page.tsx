@@ -8,6 +8,8 @@ import { getHomePage } from "@/services/page";
 import { getBrands } from "@/services/brand";
 import { HeroSection, AuditBarData, SharedButtonSection, NavbarSection } from "@/types";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Thumbstack - Lead Magnet",
   description: "Lead Magnet Platform",

@@ -40,10 +40,6 @@ export default function OurWork({ data }: OurWorkProps) {
   );
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-
-  const [swiped, setSwiped] = useState(false);
 
   const [dragStartX, setDragStartX] = useState<number | null>(null);
   const [dragOffset, setDragOffset] = useState(0);
@@ -58,30 +54,6 @@ export default function OurWork({ data }: OurWorkProps) {
 
   const handleNext = () => {
     setActiveIndex((prev) => (prev === projects.length - 1 ? 0 : prev + 1));
-  };
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    setSwiped(false);
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-    if (isLeftSwipe) {
-      setSwiped(true);
-      handleNext();
-    } else if (isRightSwipe) {
-      setSwiped(true);
-      handlePrev();
-    }
   };
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -218,9 +190,6 @@ export default function OurWork({ data }: OurWorkProps) {
 
       <div
         className="relative w-full aspect-375/580 sm:aspect-1920/680 overflow-hidden shadow-sm touch-pan-y select-none cursor-grab active:cursor-grabbing"
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -232,7 +201,7 @@ export default function OurWork({ data }: OurWorkProps) {
               type="button"
               aria-label="Previous project"
               onClick={() => {
-                if (!swiped) handlePrev();
+                if (!isDragging) handlePrev();
               }}
               className="w-1/2 h-full pointer-events-auto cursor-pointer focus:outline-none"
             />
@@ -240,7 +209,7 @@ export default function OurWork({ data }: OurWorkProps) {
               type="button"
               aria-label="Next project"
               onClick={() => {
-                if (!swiped) handleNext();
+                if (!isDragging) handleNext();
               }}
               className="w-1/2 h-full pointer-events-auto cursor-pointer focus:outline-none"
             />
