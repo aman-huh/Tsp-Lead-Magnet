@@ -365,7 +365,7 @@ export default function Navbar({ className = "", data }: NavbarProps) {
         aria-hidden={!isMenuOpen}
       >
         <div className="w-full h-full md:contents custom-menu-wrapper">
-          <div className="bg-transparent h-full md:h-full w-full flex flex-col relative overflow-y-auto scrollbar-hide px-6 sm:px-16 pt-18 pb-6 md:pt-30 md:pb-25 custom-menu-left">
+          <div className="bg-transparent h-full md:h-full w-full flex flex-col relative overflow-y-auto px-6 sm:px-16 pt-18 pb-6 md:pt-30 md:pb-25 custom-menu-left">
             <nav className="flex flex-col gap-5 sm:gap-7 md:gap-9 pl-4 sm:pl-6 md:pl-12 lg:pl-20 xl:pl-24 custom-menu-nav">
               {pageLinks.map((item, idx) => {
                 const resolved = resolveLink(item.URL, item.text);

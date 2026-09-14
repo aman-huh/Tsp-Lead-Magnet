@@ -24,6 +24,10 @@
   }
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -84,11 +88,11 @@ h6 {
   inset: 0;
   width: 100%;
   height: 100%;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .group:hover .arrow-slide-out {
-  transform: translate(150%, -150%);
+  transform: translate(120%, -120%);
 }
 
 .arrow-slide-in {
@@ -96,8 +100,8 @@ h6 {
   inset: 0;
   width: 100%;
   height: 100%;
-  transform: translate(-150%, 150%);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translate(-120%, 120%);
+  transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .group:hover .arrow-slide-in {
@@ -135,7 +139,8 @@ html.lenis body {
 }
 
 .lenis.lenis-stopped {
-  overflow: hidden;
+  overflow-y: scroll;
+  overscroll-behavior: contain;
 }
 
 .lenis.lenis-scrolling iframe {
@@ -215,10 +220,10 @@ body.modal-open header {
 
 @keyframes slider-handle-pulse {
   0%, 100% {
-    box-shadow: 0 0 10px 1.5px rgba(220, 240, 255, 0.85), 0 0 20px 3px rgba(80, 140, 255, 0.6), 0 0 35px 5px rgba(49, 69, 221, 0.4);
+    box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.75), 0 0 10px 2px rgba(56, 189, 248, 0.45), 0 0 20px 4px rgba(49, 69, 221, 0.28);
   }
   50% {
-    box-shadow: 0 0 14px 2px rgba(240, 250, 255, 0.95), 0 0 26px 4px rgba(96, 165, 250, 0.75), 0 0 45px 6px rgba(49, 69, 221, 0.5);
+    box-shadow: 0 0 6px 1.5px rgba(255, 255, 255, 0.9), 0 0 15px 3px rgba(56, 189, 248, 0.6), 0 0 28px 6px rgba(49, 69, 221, 0.38);
   }
 }
 

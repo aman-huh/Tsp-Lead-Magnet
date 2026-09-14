@@ -205,7 +205,7 @@ export default function Button({
         />
       )}
       {url ? (
-        <Link href={url} className={surfaceClasses}>
+        <Link href={url} onClick={onClick} className={surfaceClasses}>
           {content}
         </Link>
       ) : (

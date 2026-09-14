@@ -48,6 +48,13 @@ export default function ProblemSelector({
 
   const formattedSummary = getDisplayerText(selectedCount, summaryText);
 
+  const handleSubmit = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("open-lead-modal"));
+    }
+  };
+
   return (
     <div className="space-y-[clamp(1.5rem,4.2vw,3.25rem)]">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[clamp(1rem,4.2vw,2.375rem)] w-full">
@@ -58,7 +65,7 @@ export default function ProblemSelector({
             <div
               key={card.id || card.identifier}
               onClick={() => toggleCard(card.identifier)}
-              className={`w-full min-h-[clamp(9rem,4.2vw,10rem)] sm:min-h-[clamp(12rem,4.2vw,15.375rem)] rounded-[clamp(8px,4.2vw,10px)] p-[clamp(1rem,4.2vw,1.3rem)] flex flex-col justify-between gap-3 relative transition-colors duration-200 cursor-pointer ${
+              className={`w-full min-h-[clamp(9rem,4.2vw,10rem)] sm:min-h-[clamp(12rem,4.2vw,15.375rem)] rounded-[clamp(8px,4.2vw,10px)] p-[clamp(1rem,4.2vw,1.3rem)] flex flex-col justify-between gap-3 relative transition-colors duration-200 cursor-pointer select-none ${
                 isSelected
                   ? "bg-[#CACDEB]"
                   : "bg-[#3145DD]/8 hover:bg-[#CACDEB]"
@@ -116,12 +123,12 @@ export default function ProblemSelector({
                 </div>
               </button>
 
-              <div className="w-full pr-11">
-                <h3 className="font-delight! text-[clamp(1.1rem,4.2vw,1.1rem)] md:text-[clamp(1rem,4.2vw,1.3rem)] font-medium leading-snug tracking-normal text-[#0F1D07] mb-2">
+              <div className="w-full pr-11 select-none">
+                <h3 className="font-delight! text-[clamp(1.1rem,4.2vw,1.1rem)] md:text-[clamp(1rem,4.2vw,1.3rem)] font-medium leading-snug tracking-normal text-[#0F1D07] mb-2 select-none">
                   {card.title}
                 </h3>
 
-                <p className="text-[clamp(0.8rem,4.2vw,0.9rem)] sm:text-[clamp(0.9rem,4.2vw,0.9rem)] leading-[1.6] text-[#0F1D07] w-[85%] sm:w-[80%]">
+                <p className="text-[clamp(0.8rem,4.2vw,0.9rem)] sm:text-[clamp(0.9rem,4.2vw,0.9rem)] leading-[1.6] text-[#0F1D07] w-[85%] sm:w-[80%] select-none">
                   {card.description}
                 </p>
               </div>
@@ -137,7 +144,7 @@ export default function ProblemSelector({
 
         <Button
           text={submitButton?.text || "Submit"}
-          url={submitButton?.url || "#lead-form"}
+          onClick={handleSubmit}
           variant="action"
           shape="pill"
           size="lg"
