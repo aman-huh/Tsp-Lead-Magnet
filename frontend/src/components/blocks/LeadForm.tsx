@@ -243,7 +243,7 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
     const isMulti = isMultiSelectField(field);
     return (
       <div key={field.id}>
-        <label className="font-heading text-[clamp(0.9375rem,4.2vw,1.25rem)] leading-[160%] tracking-tight text-[#1F2A37] block mb-2.5">
+        <label className="font-heading text-[clamp(0.85rem,4.2vw,1.17rem)] leading-[160%] tracking-tight text-[#1F2A37] block mb-2.5">
           {field.label}
         </label>
         <div className="flex flex-wrap gap-2">
@@ -284,7 +284,7 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
     if (field.type === "textarea") {
       return (
         <div key={field.id}>
-          <label htmlFor={inputId} className="font-heading text-[clamp(0.9375rem,4.2vw,1.25rem)] leading-[160%] tracking-tight text-[#1F2A37] block mb-2.5">
+          <label htmlFor={inputId} className="font-heading text-[clamp(0.85rem,4.2vw,1.17rem)] leading-[160%] tracking-tight text-[#1F2A37] block mb-2.5">
             {field.label}
           </label>
           <textarea
@@ -302,7 +302,7 @@ export default function LeadForm({ data, className = "" }: LeadFormProps) {
 
     return (
       <div key={field.id}>
-        <label htmlFor={inputId} className="font-heading text-[clamp(0.9375rem,4.2vw,1.25rem)] leading-[160%] tracking-tight text-[#1F2A37] block mb-2.5">
+        <label htmlFor={inputId} className="font-heading text-[clamp(0.85rem,4.2vw,1.17rem)] leading-[160%] tracking-tight text-[#1F2A37] block mb-2.5">
           {field.label}
         </label>
         <input
