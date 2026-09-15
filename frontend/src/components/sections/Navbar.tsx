@@ -79,6 +79,7 @@ export default function Navbar({ className = "", data }: NavbarProps) {
   const ctaText = data?.cta?.text || "Talk to us";
   const ctaUrl = data?.cta?.url || "/#footer";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [menuMounted, setMenuMounted] = useState(false);
   const [logoIsDark, setLogoIsDark] = useState(true);
   const [buttonIsDark, setButtonIsDark] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -124,6 +125,10 @@ export default function Navbar({ className = "", data }: NavbarProps) {
           ? window.scrollY || document.documentElement.scrollTop || 0
           : 0;
       const isAtTop = scrollY < 50;
+
+      if (isAtTop) {
+        return true;
+      }
 
       if (!el || typeof window === "undefined" || typeof document === "undefined") {
         return isAtTop;
@@ -278,7 +283,13 @@ export default function Navbar({ className = "", data }: NavbarProps) {
           type="button"
           className="group relative flex items-center justify-center rounded-full transition-all duration-300 w-11 h-11 sm:w-12 sm:h-12 md:w-13.5 md:h-13.5 lg:w-14 lg:h-14 shrink-0 cursor-pointer"
           aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
-          onClick={() => setIsMenuOpen((prev) => !prev)}
+          onPointerDown={() => setMenuMounted(true)}
+          onMouseEnter={() => setMenuMounted(true)}
+          onFocus={() => setMenuMounted(true)}
+          onClick={() => {
+            setMenuMounted(true);
+            setIsMenuOpen((prev) => !prev);
+          }}
           style={{
             backgroundColor: showButtonBg
               ? effectiveButtonDark
@@ -356,10 +367,11 @@ export default function Navbar({ className = "", data }: NavbarProps) {
         </button>
       </header>
 
-      <div
-        data-lenis-prevent="true"
-        data-lenis-prevent-wheel="true"
-        data-lenis-prevent-touch="true"
+      {menuMounted && (
+        <div
+          data-lenis-prevent="true"
+          data-lenis-prevent-wheel="true"
+          data-lenis-prevent-touch="true"
         className={`fixed top-0 right-0 w-full z-9999 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] h-dvh md:h-full md:grid md:grid-cols-[1.4fr_1fr] custom-menu-overlay overflow-hidden ${isMenuOpen
             ? "translate-x-0 pointer-events-auto"
             : "translate-x-full pointer-events-none"
@@ -518,6 +530,7 @@ export default function Navbar({ className = "", data }: NavbarProps) {
           </div>
         </div>
       </div>
+      )}
     </>
   );
 }

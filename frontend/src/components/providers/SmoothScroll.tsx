@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, createContext, useContext } from "react";
-import Lenis from "lenis";
+import type Lenis from "lenis";
 
 export const LenisContext = createContext<Lenis | null>(null);
 
@@ -27,32 +27,42 @@ export default function SmoothScroll({
 
     if (prefersReducedMotion || isTouchDevice) return;
 
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 1,
-      infinite: false,
-    });
+    let destroyed = false;
+    let lenis: Lenis | null = null;
+    let rafId: number | null = null;
 
-    let rafId: number;
+    import("lenis").then(({ default: LenisClass }) => {
+      if (destroyed) return;
+      lenis = new LenisClass({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: "vertical",
+        gestureOrientation: "vertical",
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 1,
+        infinite: false,
+      });
 
-    rafId = requestAnimationFrame((time) => {
-      setLenisInstance(lenis);
-      function loop(t: number) {
-        lenis.raf(t);
-        rafId = requestAnimationFrame(loop);
-      }
-      loop(time);
+      rafId = requestAnimationFrame((time) => {
+        if (destroyed || !lenis) return;
+        setLenisInstance(lenis);
+        function loop(t: number) {
+          if (destroyed || !lenis) return;
+          lenis.raf(t);
+          rafId = requestAnimationFrame(loop);
+        }
+        loop(time);
+      });
     });
 
     return () => {
-      cancelAnimationFrame(rafId);
-      lenis.destroy();
-      setLenisInstance(null);
+      destroyed = true;
+      if (rafId) cancelAnimationFrame(rafId);
+      if (lenis) {
+        lenis.destroy();
+        setLenisInstance(null);
+      }
     };
   }, []);
 

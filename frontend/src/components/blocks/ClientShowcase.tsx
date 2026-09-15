@@ -20,7 +20,7 @@ export default function ClientShowcase({
     return null;
   }
 
-  const repeatCount = Math.max(2, Math.ceil(10 / displayLogos.length));
+  const repeatCount = Math.max(1, Math.ceil(6 / displayLogos.length));
   const marqueeLogos = Array.from({ length: repeatCount }).flatMap(() => displayLogos);
 
   return (

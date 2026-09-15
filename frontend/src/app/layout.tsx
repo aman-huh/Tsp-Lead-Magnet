@@ -24,6 +24,7 @@ const delight = localFont({
   src: "../../public/fonts/delight-font-family/delight-vf.ttf",
   variable: "--font-delight",
   display: "swap",
+  preload: false,
 });
 
 const satoshi = localFont({

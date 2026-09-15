@@ -278,7 +278,7 @@ export default function ClientShowcase({ data, brands }: ClientShowcaseProps) {
               className="flex items-center shrink-0"
               aria-hidden={copyIndex === 1 ? true : undefined}
             >
-              {[...services, ...services, ...services, ...services].map((service, idx) => (
+              {[...services, ...services].map((service, idx) => (
                 <span key={`${copyIndex}-${idx}`} className="inline-flex items-center">
                   <span className="text-white font-satoshi sm:font-heading text-[clamp(0.8125rem,3.2vw,0.9375rem)] sm:text-[clamp(1.0625rem,1.25vw,1.25rem)] leading-4.5 tracking-normal uppercase sm:lowercase">
                     {service}
