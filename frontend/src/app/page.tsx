@@ -1,9 +1,11 @@
 import { Metadata } from "next";
+import dynamicImport from "next/dynamic";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/sections/Navbar";
 import Footer from "@/components/sections/Footer";
-import AuditBarModal from "@/components/shared/AuditBarModal";
 import SectionRenderer from "@/components/shared/SectionRenderer";
+
+const AuditBarModal = dynamicImport(() => import("@/components/shared/AuditBarModal"));
 import { getHomePage } from "@/services/page";
 import { getBrands } from "@/services/brand";
 import { HeroSection, AuditBarData, SharedButtonSection, NavbarSection } from "@/types";

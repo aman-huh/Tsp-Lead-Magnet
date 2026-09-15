@@ -1,14 +1,16 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import Hero from "@/components/sections/Hero";
 import ProblemAssessment from "@/components/sections/ProblemAssessment";
 import SolutionHighlights from "@/components/sections/SolutionHighlights";
-import CaseStudyShowcase from "@/components/sections/CaseStudyShowcase";
-import BrandFit from "@/components/sections/BrandFit";
-import OurWork from "@/components/sections/OurWork";
-import ClientShowcase from "@/components/sections/ClientShowcase";
-import OurProcess from "@/components/sections/OurProcess";
-import FAQ from "@/components/sections/Faq";
-import Footer from "@/components/sections/Footer";
+
+const CaseStudyShowcase = dynamic(() => import("@/components/sections/CaseStudyShowcase"));
+const BrandFit = dynamic(() => import("@/components/sections/BrandFit"));
+const OurWork = dynamic(() => import("@/components/sections/OurWork"));
+const ClientShowcase = dynamic(() => import("@/components/sections/ClientShowcase"));
+const OurProcess = dynamic(() => import("@/components/sections/OurProcess"));
+const FAQ = dynamic(() => import("@/components/sections/Faq"));
+const Footer = dynamic(() => import("@/components/sections/Footer"));
 import {
   LandingPageSection,
   HeroSection,

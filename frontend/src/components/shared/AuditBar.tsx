@@ -23,40 +23,25 @@ export default function AuditBar({
   const lenis = useLenis();
 
   useEffect(() => {
-    let rafId: number | null = null;
+    const hero = document.getElementById("hero") || document.querySelector("section");
+    if (!hero) return;
 
-    const checkHeroPassed = () => {
-      if (rafId) return;
-      rafId = requestAnimationFrame(() => {
-        rafId = null;
-        const hero = document.getElementById("hero") || document.querySelector("section");
-        if (hero) {
-          const rect = hero.getBoundingClientRect();
-          setIsVisible(rect.bottom <= 60);
-        } else {
-          const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
-          setIsVisible(scrollY > (window.innerHeight * 0.8));
-        }
-      });
-    };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(!entry.isIntersecting);
+      },
+      {
+        rootMargin: "-60px 0px 0px 0px",
+        threshold: 0,
+      }
+    );
 
-    checkHeroPassed();
-
-    if (lenis) {
-      lenis.on("scroll", checkHeroPassed);
-    }
-    window.addEventListener("scroll", checkHeroPassed, { passive: true });
-    window.addEventListener("resize", checkHeroPassed, { passive: true });
+    observer.observe(hero);
 
     return () => {
-      if (rafId) cancelAnimationFrame(rafId);
-      if (lenis) {
-        lenis.off("scroll", checkHeroPassed);
-      }
-      window.removeEventListener("scroll", checkHeroPassed);
-      window.removeEventListener("resize", checkHeroPassed);
+      observer.disconnect();
     };
-  }, [lenis]);
+  }, []);
 
   const handlePrimaryClick = () => {
     if (onPrimaryClick) {

@@ -30,18 +30,24 @@ export default function AuditBarModal({
     useState<LeadFormType>(DEFAULT_CALLBACK_FORM);
 
   useEffect(() => {
-    getFormBySlug("instant-quote")
-      .then((form) => {
-        if (form) setQuoteForm(form);
-      })
-      .catch(() => {});
+    if (quoteModalOpen) {
+      getFormBySlug("instant-quote")
+        .then((form) => {
+          if (form) setQuoteForm(form);
+        })
+        .catch(() => {});
+    }
+  }, [quoteModalOpen]);
 
-    getFormBySlug("callback")
-      .then((form) => {
-        if (form) setCallbackForm(form);
-      })
-      .catch(() => {});
-  }, []);
+  useEffect(() => {
+    if (callbackModalOpen) {
+      getFormBySlug("callback")
+        .then((form) => {
+          if (form) setCallbackForm(form);
+        })
+        .catch(() => {});
+    }
+  }, [callbackModalOpen]);
 
   useEffect(() => {
     const handleOpenQuote = () => setQuoteModalOpen(true);

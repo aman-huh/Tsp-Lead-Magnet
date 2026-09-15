@@ -17,17 +17,20 @@ const nohemi = localFont({
     },
   ],
   variable: "--font-heading",
+  display: "swap",
 });
 
 const delight = localFont({
   src: "../../public/fonts/delight-font-family/delight-vf.ttf",
   variable: "--font-delight",
+  display: "swap",
 });
 
 const satoshi = localFont({
   src: "../../public/fonts/satoshi/Satoshi-Variable.woff2",
   variable: "--font-satoshi",
   weight: "100 900",
+  display: "swap",
 });
 
 export const metadata: Metadata = {

@@ -248,7 +248,6 @@ export default function OurWork({ data }: OurWorkProps) {
                       }
                       fill
                       sizes="100vw"
-                      priority={idx <= 1}
                       className="object-contain object-bottom select-none pointer-events-none"
                       draggable={false}
                     />
@@ -266,7 +265,6 @@ export default function OurWork({ data }: OurWorkProps) {
                       }
                       fill
                       sizes="100vw"
-                      priority={idx <= 1}
                       className="object-cover object-top select-none pointer-events-none"
                       draggable={false}
                     />

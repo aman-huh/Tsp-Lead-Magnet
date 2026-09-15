@@ -20,8 +20,12 @@ export default function SmoothScroll({
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
+    const isTouchDevice =
+      window.matchMedia("(pointer: coarse)").matches ||
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0;
 
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || isTouchDevice) return;
 
     const lenis = new Lenis({
       duration: 1.2,
