@@ -308,17 +308,31 @@ export default function ModalForm({
                     )}
                   </span>
                 ) : (
-                  <span
-                    className={`w-4 h-4 rounded-full border-[1.5px] flex items-center justify-center shrink-0 transition-colors ${
-                      active
-                        ? "border-[#18181B]"
-                        : "border-[#4B5563]"
-                    }`}
+                  <svg
+                    className="w-4 h-4 shrink-0 aspect-square"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
                   >
+                    <circle
+                      cx="8"
+                      cy="8"
+                      r="6.75"
+                      stroke={active ? "#18181B" : "#4B5563"}
+                      strokeWidth="1.5"
+                      className="transition-colors duration-200"
+                    />
                     {active && (
-                      <span className="w-2 h-2 rounded-full bg-[#18181B]" />
+                      <circle
+                        cx="8"
+                        cy="8"
+                        r="3.5"
+                        fill="#18181B"
+                        className="transition-all duration-200"
+                      />
                     )}
-                  </span>
+                  </svg>
                 )}
                 <div className="flex flex-col text-left">
                   <span className="leading-tight">

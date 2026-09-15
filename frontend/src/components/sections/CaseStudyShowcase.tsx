@@ -41,8 +41,10 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
   const [position, setPosition] = useState(50);
   const [isVertical, setIsVertical] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const checkOrientation = () => {
       setIsVertical(window.innerWidth < 600);
     };
@@ -131,22 +133,24 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
       {study?.afterMobileImage?.url ? (
         <>
           <div className="block min-[600px]:hidden absolute inset-0 w-full h-full pointer-events-none select-none">
-            <Image
-              src={getStrapiMediaUrl(study.afterMobileImage.url)}
-              alt={study.afterMobileImage.alternativeText || study?.afterLabel || "After"}
-              fill
-              sizes="100vw"
-              className="object-cover object-top pointer-events-none select-none"
-              draggable={false}
-            />
+            {(!mounted || isVertical) && (
+              <Image
+                src={getStrapiMediaUrl(study.afterMobileImage.url)}
+                alt={study.afterMobileImage.alternativeText || study?.afterLabel || "After"}
+                fill
+                sizes="(max-width: 600px) 100vw, (max-width: 1280px) 90vw, 1400px"
+                className="object-cover object-top pointer-events-none select-none"
+                draggable={false}
+              />
+            )}
           </div>
           <div className="hidden min-[600px]:block absolute inset-0 w-full h-full pointer-events-none select-none">
-            {afterImage && (
+            {afterImage && (!mounted || !isVertical) && (
               <Image
                 src={getStrapiMediaUrl(afterImage)}
                 alt={study?.afterImage?.alternativeText || study?.afterLabel || "After"}
                 fill
-                sizes="100vw"
+                sizes="(max-width: 600px) 100vw, (max-width: 1280px) 90vw, 1400px"
                 className="object-cover object-top pointer-events-none select-none"
                 draggable={false}
               />
@@ -158,7 +162,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
           src={getStrapiMediaUrl(afterImage)}
           alt={study?.afterImage?.alternativeText || study?.afterLabel || "After"}
           fill
-          sizes="100vw"
+          sizes="(max-width: 600px) 100vw, (max-width: 1280px) 90vw, 1400px"
           className="object-cover object-top pointer-events-none select-none"
           draggable={false}
         />
@@ -175,22 +179,24 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
         {study?.mobileBeforeImage?.url ? (
           <>
             <div className="block min-[600px]:hidden absolute inset-0 w-full h-full pointer-events-none select-none">
-              <Image
-                src={getStrapiMediaUrl(study.mobileBeforeImage.url)}
-                alt={study.mobileBeforeImage.alternativeText || study?.beforeLabel || "Before"}
-                fill
-                sizes="100vw"
-                className="object-cover object-top pointer-events-none select-none"
-                draggable={false}
-              />
+              {(!mounted || isVertical) && (
+                <Image
+                  src={getStrapiMediaUrl(study.mobileBeforeImage.url)}
+                  alt={study.mobileBeforeImage.alternativeText || study?.beforeLabel || "Before"}
+                  fill
+                  sizes="(max-width: 600px) 100vw, (max-width: 1280px) 90vw, 1400px"
+                  className="object-cover object-top pointer-events-none select-none"
+                  draggable={false}
+                />
+              )}
             </div>
             <div className="hidden min-[600px]:block absolute inset-0 w-full h-full pointer-events-none select-none">
-              {beforeImage && (
+              {beforeImage && (!mounted || !isVertical) && (
                 <Image
                   src={getStrapiMediaUrl(beforeImage)}
                   alt={study?.beforeImage?.alternativeText || study?.beforeLabel || "Before"}
                   fill
-                  sizes="100vw"
+                  sizes="(max-width: 600px) 100vw, (max-width: 1280px) 90vw, 1400px"
                   className="object-cover object-top pointer-events-none select-none"
                   draggable={false}
                 />
@@ -202,7 +208,7 @@ function BeforeAfterSlider({ study }: { study?: CaseStudy }) {
             src={getStrapiMediaUrl(beforeImage)}
             alt={study?.beforeImage?.alternativeText || study?.beforeLabel || "Before"}
             fill
-            sizes="100vw"
+            sizes="(max-width: 600px) 100vw, (max-width: 1280px) 90vw, 1400px"
             className="object-cover object-top pointer-events-none select-none"
             draggable={false}
           />

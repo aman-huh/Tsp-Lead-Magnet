@@ -163,11 +163,15 @@ function LazyProcessVideo({
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const fullMediaUrl = getStrapiMediaUrl(url);
-  const posterUrl =
+  const rawPoster =
     poster ||
     (url.includes("cloudinary.com")
-      ? fullMediaUrl.replace(/\.[^.]+$/, ".jpg")
+      ? fullMediaUrl.replace(/\.[^.]+$/, ".webp")
       : undefined);
+  const posterUrl =
+    rawPoster && rawPoster.includes("cloudinary.com")
+      ? rawPoster.replace(/\.[^.]+$/, ".webp")
+      : rawPoster;
 
   useEffect(() => {
     const el = containerRef.current;
